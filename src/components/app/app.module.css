@@ -10,4 +10,6 @@
 .content {
   display: flex;
   column-gap: 40px;
+  max-height: 80%;
+  overflow: hidden;
 }
