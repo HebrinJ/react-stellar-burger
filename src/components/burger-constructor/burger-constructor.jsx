@@ -3,13 +3,16 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './burger-constructor.module.css'
-import { data } from '../../utils/data.js'
+//import { data } from '../../utils/data.js'
+import PropTypes from 'prop-types'
+import React from 'react'
 
-function BurgerConstructor() {
+function BurgerConstructor(props) {    
+    
     return (
         <section style={{ display: 'flex', flexDirection: 'column'}}>
             <div className={`${style.list} custom-scroll`}>
-                {data.map(component => 
+                {props.data.map(component => 
                     // if(element === data[0]) return <ConstructorElement type='top' text={element.name} price={element.price} thumbnail={element.image}/>
                     // if(element === data[data.length - 1]) return <ConstructorElement type='bottom' text={element.name} price={element.price} thumbnail={element.image}/>
                     // else return <ConstructorElement text={element.name} price={element.price} thumbnail={element.image}/>
@@ -27,6 +30,10 @@ function BurgerConstructor() {
     )
 }
 
+BurgerConstructor.propTypes = {
+
+}
+
 function AddElement(component) {
     
     if(component.type === 'bun') {
@@ -35,7 +42,8 @@ function AddElement(component) {
             <ConstructorElement type='bottom' text={component.name} price={component.price} thumbnail={component.image} isLocked={true}/>
         </>
     } else {
-        return <ul style={{display: 'flex', alignItems: 'center', margin: '0 0 0 -14px', gap: '14px', minWidth: '568px'}}><DragIcon type="primary"/><ConstructorElement text={component.name} price={component.price} thumbnail={component.image}/></ul>
+        return <ul style={{display: 'flex', alignItems: 'center', margin: '0 0 0 -14px', gap: '14px', minWidth: '568px'}}><DragIcon type="primary"/>
+        <ConstructorElement text={component.name} price={component.price} thumbnail={component.image}/></ul>
     }
 }
 
