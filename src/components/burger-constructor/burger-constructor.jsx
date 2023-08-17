@@ -7,7 +7,7 @@ import { data } from '../../utils/data.js'
 
 function BurgerConstructor() {
     return (
-        <div style={{ display: 'flex', flexDirection: 'column'}}>
+        <section style={{ display: 'flex', flexDirection: 'column'}}>
             <div className={`${style.list} custom-scroll`}>
                 {data.map(component => 
                     // if(element === data[0]) return <ConstructorElement type='top' text={element.name} price={element.price} thumbnail={element.image}/>
@@ -23,7 +23,7 @@ function BurgerConstructor() {
                 </div>
                 <Button htmlType="button" type="primary" size="medium">Оформить заказ</Button>
             </div>
-        </div>
+        </section>
     )
 }
 

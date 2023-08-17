@@ -6,18 +6,18 @@ import { data } from '../../utils/data.js'
 
 function BurgerIngredients() {
     return (
-        <div>
-            <div style={{ display: 'flex' }}>
+        <section>
+            <nav style={{ display: 'flex' }}>
                 <Tab>Булки</Tab>
                 <Tab>Соусы</Tab>
                 <Tab>Начинки</Tab>
-            </div>            
+            </nav>            
             <div className={`${style.mainBox} custom-scroll`}>
                 <ItemsBlock label='Булки' type='bun' data={data} />
                 <ItemsBlock label='Соусы' type='sauce' data={data} />
                 <ItemsBlock label='Основное' type='main' data={data} />
             </div>
-        </div>
+        </section>
     )
 }
 

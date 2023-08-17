@@ -8,10 +8,10 @@ function App() {
   return (
     <div className={styles.app}>      
       	<AppHeader />
-        <div className={styles.content}>
+        <main className={styles.content}>
           <BurgerIngredients />
           <BurgerConstructor />
-        </div>
+        </main>
     </div>
   );
 }

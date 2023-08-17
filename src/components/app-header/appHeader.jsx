@@ -6,8 +6,8 @@ import header from './app-header.module.css'
 
 function AppHeader() {
     return (
-        <div style={{ backgroundColor: '#1C1C21', color: 'white' }} className={header.appHeader}>
-            <div className={header.headerBox}>
+        <header style={{ backgroundColor: '#1C1C21', color: 'white' }} className={header.appHeader}>
+            <nav className={header.headerBox}>
                 <div className={header.constructor}>
                     <BurgerIcon type="primary" />
                     <p className="text text_type_main-default">Конструктор</p>
@@ -23,8 +23,8 @@ function AppHeader() {
                     <ProfileIcon type="secondary" />
                     <p className="text text_type_main-default">Личный кабинет</p>
                 </div>
-            </div>
-        </div>
+            </nav>
+        </header>
 
     )
 }
