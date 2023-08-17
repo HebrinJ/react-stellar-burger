@@ -1,0 +1,36 @@
+.mainBox {
+    display: flex;
+    width: 600px;
+    height: 756px;
+    overflow: hidden;
+    gap: 24px;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+}
+
+.container {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 272px;
+    height: 208px;
+    align-items: center;
+    justify-content: center;
+}
+
+.image {
+    object-fit: cover;
+}
+
+.textBox {
+    box-sizing: border-box;
+    padding-bottom: 20px;
+    text-align: center;
+}
+
+.price {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+    padding: 8px;
+}
