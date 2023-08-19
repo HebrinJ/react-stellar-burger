@@ -11,6 +11,14 @@ function App() {
   function addIngredient(event) {
     const id = event.currentTarget.id;
     const item = data.find(item => item._id === id);
+    
+    if(item.type === 'bun') {
+      constructorItems.forEach((element, index) => {
+        if(element.type === 'bun') {
+          constructorItems.splice(index, index+1);
+        }
+      })
+    }    
 
     setItems([...constructorItems, item]);
   }

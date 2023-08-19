@@ -8,16 +8,30 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 function BurgerConstructor(props) {    
-    
+    let bun = props.data.find((item) => item.type === 'bun');
+
     return (
         <section style={{ display: 'flex', flexDirection: 'column'}}>
             <div className={`${style.list} custom-scroll`}>
-                {props.data.map(component => 
-                    // if(element === data[0]) return <ConstructorElement type='top' text={element.name} price={element.price} thumbnail={element.image}/>
-                    // if(element === data[data.length - 1]) return <ConstructorElement type='bottom' text={element.name} price={element.price} thumbnail={element.image}/>
-                    // else return <ConstructorElement text={element.name} price={element.price} thumbnail={element.image}/>
-                    AddElement(component)
-                )}
+                <div>
+                    {                            
+                        bun && AddBun('top', bun)                        
+                    }                    
+                </div>
+                <div>
+                    {
+                        props.data.map(component => {                             
+                            if(component.type !== 'bun') {                                
+                                return AddIngredient(component);
+                            }})
+                    }
+                </div>
+                <div>
+                    {                       
+                        bun && AddBun('bottom', bun) 
+                    }                    
+                </div>
+                
             </div>
             <div className={style.order}>
                 <div style={{ display: 'flex', margin: '40px', alignItems: 'center', gap: '10px'}}>
@@ -34,17 +48,19 @@ BurgerConstructor.propTypes = {
 
 }
 
-function AddElement(component) {
-    
-    if(component.type === 'bun') {
-        return <>
-            <ConstructorElement type='top' text={component.name} price={component.price} thumbnail={component.image} isLocked={true}/>
-            <ConstructorElement type='bottom' text={component.name} price={component.price} thumbnail={component.image} isLocked={true}/>
-        </>
-    } else {
-        return <ul style={{display: 'flex', alignItems: 'center', margin: '0 0 0 -14px', gap: '14px', minWidth: '568px'}}><DragIcon type="primary"/>
-        <ConstructorElement text={component.name} price={component.price} thumbnail={component.image}/></ul>
+function AddBun(type, component) {
+    if(type === 'top') {
+        return <ConstructorElement type='top' text={component.name} price={component.price} thumbnail={component.image} isLocked={true}/>
+    } else if (type === 'bottom') {
+        return <ConstructorElement type='bottom' text={component.name} price={component.price} thumbnail={component.image} isLocked={true}/>
     }
+}
+
+function AddIngredient(component) {
+    return <ul style={{display: 'flex', alignItems: 'center', margin: '0 0 0 -14px', gap: '14px', minWidth: '568px'}}>
+            <DragIcon type="primary"/>
+            <ConstructorElement text={component.name} price={component.price} thumbnail={component.image}/>
+        </ul>
 }
 
 export default BurgerConstructor;
