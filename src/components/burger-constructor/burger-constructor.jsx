@@ -3,12 +3,34 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './burger-constructor.module.css'
-//import { data } from '../../utils/data.js'
 import PropTypes from 'prop-types'
 import React from 'react'
 
 function BurgerConstructor(props) {    
     let bun = props.data.find((item) => item.type === 'bun');
+    const [price, setPrice] = React.useState(0);
+
+    React.useEffect(() => {
+        countPrice();
+    }, [props.itemsCount])
+
+    const countPrice = () => {
+        const allProducts = props.data;
+        const selectedProducts = props.itemsCount;
+
+        let currentPrice = 0;
+
+        for (let id in selectedProducts) {
+            
+            for (let i = 0; i < allProducts.length; i++) { 
+                if(id === allProducts[i]._id) {                    
+                    currentPrice += allProducts[i].price;
+                }
+            }
+        }
+
+        setPrice(currentPrice);
+    }
 
     return (
         <section style={{ display: 'flex', flexDirection: 'column'}}>
@@ -35,7 +57,7 @@ function BurgerConstructor(props) {
             </div>
             <div className={style.order}>
                 <div style={{ display: 'flex', margin: '40px', alignItems: 'center', gap: '10px'}}>
-                    <p className="text text_type_digits-medium">600</p>
+                    <p className="text text_type_digits-medium">{price}</p>
                     <CurrencyIcon type="primary" />
                 </div>
                 <Button htmlType="button" type="primary" size="medium">Оформить заказ</Button>

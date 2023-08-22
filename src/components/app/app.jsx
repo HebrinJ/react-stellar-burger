@@ -43,7 +43,7 @@ function App() {
       	<AppHeader />
         <main className={styles.content}>
           <BurgerIngredients data={data} clickHandler={addIngredient} itemsCount={itemsCount}/>
-          <BurgerConstructor data={constructorItems}/>
+          <BurgerConstructor data={constructorItems} itemsCount={itemsCount}/>
         </main>
     </div>
   );
