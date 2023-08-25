@@ -14,28 +14,44 @@ function BurgerIngredients(props) {
                 <Tab>Начинки</Tab>
             </nav>            
             <div className={`${style.mainBox} custom-scroll`}>
-                <ItemsBlock label='Булки' type='bun' data={props.data} clickHandler={props.clickHandler} itemsCount={props.itemsCount} selectedItemCount={props.selectedItemCount}/>
-                <ItemsBlock label='Соусы' type='sauce' data={props.data} clickHandler={props.clickHandler} itemsCount={props.itemsCount} selectedItemCount={props.selectedItemCount}/>
-                <ItemsBlock label='Основное' type='main' data={props.data} clickHandler={props.clickHandler} itemsCount={props.itemsCount} selectedItemCount={props.selectedItemCount}/>
+                <ItemsBlock label='Булки' type='bun' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                <ItemsBlock label='Соусы' type='sauce' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                <ItemsBlock label='Основное' type='main' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
             </div>
         </section>
     )
 }
 
-function CatalogItem({image, name, price, _id, clickHandler, itemsCount}) {
+function CatalogItem({image, name, price, _id, clickHandler, cart, type}) {
     const [count, setCount] = React.useState(0);
     
+    // React.useEffect(() => {        
+    //     updateCount();
+    // }, [itemsCount]);    
+
+    // const updateCount = () => {
+    //     for (let id in itemsCount) {
+    //         if(id === _id) {                
+    //             setCount(itemsCount[id]);
+    //         }
+    //     }
+    // }     
+
     React.useEffect(() => {        
         updateCount();
-    }, [itemsCount]);    
+    }, [cart]);    
 
-    const updateCount = () => {
-        for (let id in itemsCount) {
-            if(id === _id) {                
-                setCount(itemsCount[id]);
-            }
+    const updateCount = () => {  
+        if (type === 'bun') {
+            setCount(0)
         }
-    }     
+        
+        cart.forEach((element) => {  
+            if(element.product.id === _id) { 
+                setCount(element.quantity);
+            } 
+        })
+    }  
 
     return (
         <div className={style.container} onClick={clickHandler} id={_id}>
@@ -52,7 +68,7 @@ function CatalogItem({image, name, price, _id, clickHandler, itemsCount}) {
     )
 }
 
-function ItemsBlock({label, type, data, clickHandler, itemsCount, selectedItemCount}) {
+function ItemsBlock({label, type, data, clickHandler, cart}) {
     return (
         <>
             <Label text={label} />
@@ -60,7 +76,7 @@ function ItemsBlock({label, type, data, clickHandler, itemsCount, selectedItemCo
                 {                    
                     data.map(element => {                    
                         if(element.type === type)
-                    return <CatalogItem image={element.image} name={element.name} price={element.price} _id={element._id} clickHandler={clickHandler} itemsCount={itemsCount}/>
+                    return <CatalogItem image={element.image} name={element.name} price={element.price} _id={element._id} clickHandler={clickHandler} cart={cart} type={type}/>
                 })}
             </div>
         </>
