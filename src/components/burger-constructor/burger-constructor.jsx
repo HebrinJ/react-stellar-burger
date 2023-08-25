@@ -7,12 +7,13 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 function BurgerConstructor(props) {    
-    let bun = props.data.find((item) => item.type === 'bun');
+    //let bun = props.data.find((item) => item.type === 'bun');
+    let bun = props.data.find((elem) => elem.type === 'bun');
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {
         countPrice();
-    }, [props.itemsCount])
+    }, [props.cart])
 
     const countPrice = () => {
         const allProducts = props.data;
@@ -32,6 +33,18 @@ function BurgerConstructor(props) {
         setPrice(currentPrice);
     }
 
+    function separateCart() {
+        const separatedCart = [];
+
+        props.cart.forEach((elem) => {
+            for (let i = 0; i < elem.quantity; i++) {
+                separatedCart.push(elem);
+            }
+        })
+
+        return separatedCart;
+    }
+
     return (
         <section style={{ display: 'flex', flexDirection: 'column'}}>
             <div className={`${style.list} custom-scroll`}>
@@ -41,11 +54,18 @@ function BurgerConstructor(props) {
                     }                    
                 </div>
                 <div>
-                    {
-                        props.data.map(component => {                             
-                            if(component.type !== 'bun') {                                
-                                return AddIngredient(component);
-                            }})
+                    {       
+                        separateCart().map(ingredient => {                             
+                        if(ingredient.product.type !== 'bun') {                                
+                            const ingredientAllData = props.data.find((elem) => elem._id === ingredient.product.id);                                 
+                                return AddIngredient(ingredientAllData);                                    
+                        }})                
+
+                        // props.cart.map(ingredient => {                             
+                        //     if(ingredient.product.type !== 'bun') {                                
+                        //         const ingredientAllData = props.data.find((elem) => elem._id === ingredient.product.id);                                 
+                        //             return AddIngredient(ingredientAllData);                                    
+                        //     }})
                     }
                 </div>
                 <div>
@@ -78,10 +98,10 @@ function AddBun(type, component) {
     }
 }
 
-function AddIngredient(component) {
-    return <ul style={{display: 'flex', alignItems: 'center', margin: '0 0 0 -14px', gap: '14px', minWidth: '568px'}}>
+function AddIngredient(data) {
+    return <ul style={{display: 'flex', alignItems: 'center', margin: '0 0 0 -14px', gap: '14px', minWidth: '568px'}}>        
             <DragIcon type="primary"/>
-            <ConstructorElement text={component.name} price={component.price} thumbnail={component.image}/>
+            <ConstructorElement text={data.name} price={data.price} thumbnail={data.image}/>
         </ul>
 }
 

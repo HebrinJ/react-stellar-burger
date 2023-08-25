@@ -145,7 +145,7 @@ function App() {
       	<AppHeader />
         <main className={styles.content}>
           <BurgerIngredients data={data} clickHandler={addToCart} cart={cart}/>
-          <BurgerConstructor data={constructorItems} cart={cart}/>
+          <BurgerConstructor data={data} cart={cart}/>
         </main>
     </div>
   );
