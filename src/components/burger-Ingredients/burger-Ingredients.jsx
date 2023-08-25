@@ -6,17 +6,31 @@ import style from './burger-ingredients.module.css'
 import { data } from '../../utils/data.js'
 
 function BurgerIngredients(props) {
+    const bun = React.useRef(null);
+    const sauce = React.useRef(null);
+    const main = React.useRef(null);
+
+    const handleClick = (elementRef) => {        
+        elementRef.current?.scrollIntoView({behavior: 'smooth'});
+    }
+
     return (
         <section>
             <nav style={{ display: 'flex' }}>
-                <Tab>Булки</Tab>
-                <Tab>Соусы</Tab>
-                <Tab>Начинки</Tab>
+                <Tab onClick={() => handleClick(bun)}>Булки</Tab>
+                <Tab onClick={() => handleClick(sauce)}>Соусы</Tab>
+                <Tab onClick={() => handleClick(main)}>Начинки</Tab>
             </nav>            
             <div className={`${style.mainBox} custom-scroll`}>
-                <ItemsBlock label='Булки' type='bun' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
-                <ItemsBlock label='Соусы' type='sauce' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
-                <ItemsBlock label='Основное' type='main' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                <div ref={bun}>
+                    <ItemsBlock label='Булки' type='bun' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                </div>
+                <div ref={sauce}>
+                    <ItemsBlock label='Соусы' type='sauce' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                </div>
+                <div ref={main}>
+                    <ItemsBlock label='Основное' type='main' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                </div>
             </div>
         </section>
     )
@@ -58,7 +72,7 @@ function CatalogItem({image, name, price, _id, clickHandler, cart, type}) {
 
 function ItemsBlock({label, type, data, clickHandler, cart}) {
     return (
-        <>
+        <>        
             <Label text={label} />
             <div className={style.typeBox}>
                 {                    
@@ -66,7 +80,7 @@ function ItemsBlock({label, type, data, clickHandler, cart}) {
                         if(element.type === type)
                     return <CatalogItem image={element.image} name={element.name} price={element.price} _id={element._id} clickHandler={clickHandler} cart={cart} type={type}/>
                 })}
-            </div>
+            </div>        
         </>
     )
 }
