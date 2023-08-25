@@ -7,27 +7,20 @@ import PropTypes from 'prop-types'
 import React from 'react'
 
 function BurgerConstructor(props) {    
-    //let bun = props.data.find((item) => item.type === 'bun');
-    let bun = props.data.find((elem) => elem.type === 'bun');
+    let selectedBun = props.cart.find((elem) => elem.product.type === 'bun');
+    
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {
         countPrice();
     }, [props.cart])
 
-    const countPrice = () => {
-        const allProducts = props.data;
-        const selectedProducts = props.itemsCount;
-
+    const countPrice = () => {        
+        const selectedProducts = separateCart();
         let currentPrice = 0;
 
-        for (let id in selectedProducts) {
-            
-            for (let i = 0; i < allProducts.length; i++) { 
-                if(id === allProducts[i]._id) {                    
-                    currentPrice += allProducts[i].price;
-                }
-            }
+        for (let i = 0; i < selectedProducts.length; i++) {            
+            currentPrice += selectedProducts[i].product.price;
         }
 
         setPrice(currentPrice);
@@ -50,7 +43,7 @@ function BurgerConstructor(props) {
             <div className={`${style.list} custom-scroll`}>
                 <div>
                     {                            
-                        bun && AddBun('top', bun)                        
+                        selectedBun && AddBun('top', selectedBun, props.data) 
                     }                    
                 </div>
                 <div>
@@ -59,24 +52,18 @@ function BurgerConstructor(props) {
                         if(ingredient.product.type !== 'bun') {                                
                             const ingredientAllData = props.data.find((elem) => elem._id === ingredient.product.id);                                 
                                 return AddIngredient(ingredientAllData);                                    
-                        }})                
-
-                        // props.cart.map(ingredient => {                             
-                        //     if(ingredient.product.type !== 'bun') {                                
-                        //         const ingredientAllData = props.data.find((elem) => elem._id === ingredient.product.id);                                 
-                        //             return AddIngredient(ingredientAllData);                                    
-                        //     }})
+                        }})
                     }
                 </div>
                 <div>
                     {                       
-                        bun && AddBun('bottom', bun) 
+                        selectedBun && AddBun('bottom', selectedBun, props.data) 
                     }                    
                 </div>
                 
             </div>
             <div className={style.order}>
-                <div style={{ display: 'flex', margin: '40px', alignItems: 'center', gap: '10px'}}>
+                <div className={style.priceBox}>
                     <p className="text text_type_digits-medium">{price}</p>
                     <CurrencyIcon type="primary" />
                 </div>
@@ -90,11 +77,13 @@ BurgerConstructor.propTypes = {
 
 }
 
-function AddBun(type, component) {
+function AddBun(type, ingredient, data) {
+    const ingredientAllData = data.find((elem) => elem._id === ingredient.product.id);
+
     if(type === 'top') {
-        return <ConstructorElement type='top' text={component.name} price={component.price} thumbnail={component.image} isLocked={true}/>
+        return <ConstructorElement type='top' text={ingredientAllData.name} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
     } else if (type === 'bottom') {
-        return <ConstructorElement type='bottom' text={component.name} price={component.price} thumbnail={component.image} isLocked={true}/>
+        return <ConstructorElement type='bottom' text={ingredientAllData.name} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
     }
 }
 

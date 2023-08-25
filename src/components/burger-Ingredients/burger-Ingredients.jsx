@@ -24,18 +24,6 @@ function BurgerIngredients(props) {
 
 function CatalogItem({image, name, price, _id, clickHandler, cart, type}) {
     const [count, setCount] = React.useState(0);
-    
-    // React.useEffect(() => {        
-    //     updateCount();
-    // }, [itemsCount]);    
-
-    // const updateCount = () => {
-    //     for (let id in itemsCount) {
-    //         if(id === _id) {                
-    //             setCount(itemsCount[id]);
-    //         }
-    //     }
-    // }     
 
     React.useEffect(() => {        
         updateCount();
@@ -72,7 +60,7 @@ function ItemsBlock({label, type, data, clickHandler, cart}) {
     return (
         <>
             <Label text={label} />
-            <div style={{ display: 'flex', alignContent: 'start', flexWrap: 'wrap'}}>
+            <div className={style.typeBox}>
                 {                    
                     data.map(element => {                    
                         if(element.type === type)

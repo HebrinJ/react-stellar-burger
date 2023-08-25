@@ -25,3 +25,10 @@
     height: 33px;
     object-fit: fill;
 }
+
+.priceBox {
+    display: flex;
+    margin: 40px;
+    align-items: center;
+    gap: 10px;
+}
