@@ -18,19 +18,22 @@
     display: flex;
     grid-column: 1;
     justify-self: start;
+    gap: 8px;
 }
 
 .orderList {
     display: flex;
     grid-column: 2;
     justify-self: start;
-    margin-left: -40px
+    margin-left: -40px;
+    gap: 8px;
 }
 
 .profile {
     display: flex;
     grid-column: 5;
     justify-self: end;
+    gap: 8px;
 }
 
 .logo {

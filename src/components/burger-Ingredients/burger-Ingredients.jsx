@@ -76,9 +76,9 @@ function ItemsBlock({label, type, data, clickHandler, cart}) {
             <Label text={label} />
             <div className={style.typeBox}>
                 {                    
-                    data.map(element => {                    
+                    data.map((element, index) => {                    
                         if(element.type === type)
-                    return <CatalogItem image={element.image} name={element.name} price={element.price} _id={element._id} clickHandler={clickHandler} cart={cart} type={type}/>
+                    return <CatalogItem key={index} image={element.image} name={element.name} price={element.price} _id={element._id} clickHandler={clickHandler} cart={cart} type={type}/>
                 })}
             </div>        
         </>
