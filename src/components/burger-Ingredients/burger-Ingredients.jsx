@@ -47,14 +47,16 @@ function CatalogItem({image, name, price, _id, clickHandler, cart, type}) {
         if (type === 'bun') {
             setCount(0)
         }
-        
-        cart.forEach((element) => {  
-            if(element.product.id === _id) { 
-                setCount(element.quantity);
-            } 
-        })
-    }  
 
+        const product = cart.find((elem) => elem.product.id === _id)
+
+        if(product) {
+            setCount(product.quantity);
+        } else {
+            setCount(0);
+        }        
+    }  
+    
     return (
         <div className={style.container} onClick={clickHandler} id={_id}>
             <Counter count={count}/>

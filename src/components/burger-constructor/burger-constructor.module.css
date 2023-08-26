@@ -32,3 +32,11 @@
     align-items: center;
     gap: 10px;
 }
+
+.ingredient {
+    display: flex;
+    align-items: center;
+    margin: 0 0 0 -14px;
+    gap: 14px;
+    min-width: 568px;
+}

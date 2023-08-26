@@ -62,12 +62,28 @@ function App() {
     }
   }
 
+  function removeFromCart(productName) {
+    const product = data.find(elem => elem.name === productName)
+    const selectedProduct = cart.find(elem => elem.product.id === product._id)
+
+    if(selectedProduct.quantity > 1) {
+      setCart([
+        ...cart.filter(element => element.product.id !== selectedProduct.product.id),
+         {...selectedProduct, quantity: selectedProduct.quantity - 1}
+      ]);
+
+      return;
+    }
+    
+    setCart([...cart.filter(element => element.product.id !== product._id)])
+  }
+
   return (
     <div className={styles.app}>
       	<AppHeader />
         <main className={styles.content}>
           <BurgerIngredients data={data} clickHandler={addToCart} cart={cart}/>
-          <BurgerConstructor data={data} cart={cart}/>
+          <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart}/>
         </main>
     </div>
   );

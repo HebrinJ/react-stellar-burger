@@ -34,8 +34,19 @@ function BurgerConstructor(props) {
                 separatedCart.push(elem);
             }
         })
+        
+        return separatedCart.sort((a, b) => { 
+            if(a.product.id > b.product.id) return 1;
+            if(a.product.id === b.product.id) return 0;
+            if(a.product.id < b.product.id) return -1;
+        });        
+    }
 
-        return separatedCart;
+    function handleClickClose(event) {
+        const parentNode = event.currentTarget.parentNode.parentNode;
+        const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
+        
+        props.handleClose(ingredientName);
     }
 
     return (
@@ -48,10 +59,10 @@ function BurgerConstructor(props) {
                 </div>
                 <div>
                     {       
-                        separateCart().map(ingredient => {                             
+                        separateCart().map((ingredient, index) => {                             
                         if(ingredient.product.type !== 'bun') {                                
                             const ingredientAllData = props.data.find((elem) => elem._id === ingredient.product.id);                                 
-                                return AddIngredient(ingredientAllData);                                    
+                                return AddIngredient(ingredientAllData, handleClickClose, index);                                    
                         }})
                     }
                 </div>
@@ -87,10 +98,10 @@ function AddBun(type, ingredient, data) {
     }
 }
 
-function AddIngredient(data) {
-    return <ul style={{display: 'flex', alignItems: 'center', margin: '0 0 0 -14px', gap: '14px', minWidth: '568px'}}>        
+function AddIngredient(data, handleClickClose, ingrId) {
+    return <ul className={style.ingredient} key={ingrId}>        
             <DragIcon type="primary"/>
-            <ConstructorElement text={data.name} price={data.price} thumbnail={data.image}/>
+            <ConstructorElement text={data.name} price={data.price} thumbnail={data.image} handleClose={handleClickClose}/>
         </ul>
 }
 
