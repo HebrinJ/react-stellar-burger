@@ -70,8 +70,7 @@ function BurgerConstructor(props) {
                     {                       
                         selectedBun && AddBun('bottom', selectedBun, props.data) 
                     }                    
-                </div>
-                
+                </div>                
             </div>
             <div className={style.order}>
                 <div className={style.priceBox}>
