@@ -3,7 +3,6 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './burger-constructor.module.css'
-import PropTypes from 'prop-types'
 import React from 'react'
 
 function BurgerConstructor(props) {    
@@ -81,10 +80,6 @@ function BurgerConstructor(props) {
             </div>
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-
 }
 
 function AddBun(type, ingredient, data) {
