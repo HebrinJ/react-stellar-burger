@@ -41,3 +41,7 @@
     align-content: start;
     flex-wrap: wrap;
 }
+
+.navBar {
+    display: flex;
+}

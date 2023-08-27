@@ -49,7 +49,7 @@ function BurgerConstructor(props) {
     }
 
     return (
-        <section style={{ display: 'flex', flexDirection: 'column'}}>
+        <section className={style.constructorSection}>
             <div className={`${style.list} custom-scroll`}>
                 <div>
                     {                            
@@ -86,9 +86,9 @@ function AddBun(type, ingredient, data) {
     const ingredientAllData = data.find((elem) => elem._id === ingredient.product.id);
 
     if(type === 'top') {
-        return <ConstructorElement type='top' text={ingredientAllData.name} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
+        return <ConstructorElement type='top' text={ingredientAllData.name+' верх'} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
     } else if (type === 'bottom') {
-        return <ConstructorElement type='bottom' text={ingredientAllData.name} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
+        return <ConstructorElement type='bottom' text={ingredientAllData.name+' низ'} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
     }
 }
 

@@ -16,7 +16,7 @@ function BurgerIngredients(props) {
 
     return (
         <section>
-            <nav style={{ display: 'flex' }}>
+            <nav className={style.navBar}>
                 <Tab onClick={() => handleClick(bun)}>Булки</Tab>
                 <Tab onClick={() => handleClick(sauce)}>Соусы</Tab>
                 <Tab onClick={() => handleClick(main)}>Начинки</Tab>

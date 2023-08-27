@@ -40,3 +40,8 @@
     gap: 14px;
     min-width: 568px;
 }
+
+.constructorSection {
+    display: flex;
+    flex-direction: column;
+}
