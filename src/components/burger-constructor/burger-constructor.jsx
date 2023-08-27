@@ -50,13 +50,13 @@ function BurgerConstructor(props) {
 
     return (
         <section className={style.constructorSection}>
-            <div className={`${style.list} custom-scroll`}>
+            <div className={`${style.bunContainer}`}>
                 <div>
                     {                            
                         selectedBun && AddBun('top', selectedBun, props.data) 
                     }                    
                 </div>
-                <div>
+                <div className={`${style.list} custom-scroll`}>
                     {       
                         separateCart().map((ingredient, index) => {                             
                         if(ingredient.product.type !== 'bun') {                                
