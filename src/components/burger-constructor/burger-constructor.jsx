@@ -100,7 +100,7 @@ function AddIngredient(data, handleClickClose, ingrId) {
         </ul>
 }
 
-BurgerConstructor.PropTypes = {
+BurgerConstructor.propTypes = {
     data: PropTypes.arrayOf(PropTypes.object),
     cart: PropTypes.arrayOf(PropTypes.object),
     handleClose: PropTypes.func,

@@ -9,7 +9,7 @@ function App() {
   const [cart, setCart] = React.useState([]);
 
   function addToCart(event) {
-    const id = event.currentTarget.id;
+    const id = event.currentTarget.getAttribute('name');
     const selectedProduct = data.find(item => item._id === id);    
     const inCartProduct = cart.find((cartProduct) => {
       return cartProduct.product.id === selectedProduct._id;

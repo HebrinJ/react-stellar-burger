@@ -69,7 +69,7 @@ function CatalogItem({image, name, price, _id, clickHandler, cart, type}) {
     }  
     
     return (
-        <div className={style.container} onClick={clickHandler} id={_id}>
+        <div className={style.container} onClick={clickHandler} name={_id}>
             <Counter count={count}/>
             <img className={style.image} src={image} alt=''/>
             <div className={style.textBox}>
