@@ -4,6 +4,7 @@ import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './burger-constructor.module.css'
 import React from 'react'
+import PropTypes from 'prop-types'
 
 function BurgerConstructor(props) {    
     let selectedBun = props.cart.find((elem) => elem.product.type === 'bun');
@@ -97,6 +98,12 @@ function AddIngredient(data, handleClickClose, ingrId) {
             <DragIcon type="primary"/>
             <ConstructorElement text={data.name} price={data.price} thumbnail={data.image} handleClose={handleClickClose}/>
         </ul>
+}
+
+BurgerConstructor.PropTypes = {
+    data: PropTypes.arrayOf(PropTypes.object),
+    cart: PropTypes.arrayOf(PropTypes.object),
+    handleClose: PropTypes.func,
 }
 
 export default BurgerConstructor;

@@ -1,9 +1,9 @@
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import React from "react";
+import React from 'react'
 import style from './burger-ingredients.module.css'
-import { data } from '../../utils/data.js'
+import PropTypes from 'prop-types'
 
 function BurgerIngredients(props) {
     const bun = React.useRef(null);
@@ -111,5 +111,34 @@ function Label({text}) {
         <p className="text text_type_main-medium">{text}</p>
     )
 }
+
+BurgerIngredients.propTypes = {
+    data: PropTypes.arrayOf(PropTypes.object),
+    clickHandler: PropTypes.func,
+    cart: PropTypes.arrayOf(PropTypes.object),
+}
+
+ItemsBlock.propTypes = {
+    label: PropTypes.string,
+    type: PropTypes.oneOf(['bun', 'sauce', 'main']),
+    data: PropTypes.arrayOf(PropTypes.object),
+    clickHandler: PropTypes.func,
+    cart: PropTypes.arrayOf(PropTypes.object),
+}
+
+CatalogItem.propTypes = {
+    image: PropTypes.string,
+    name: PropTypes.string,
+    price: PropTypes.number,
+    _id: PropTypes.string,
+    clickHandler: PropTypes.func,
+    cart: PropTypes.arrayOf(PropTypes.object),
+    type: PropTypes.oneOf(['bun', 'sauce', 'main']),
+}
+
+Label.propTypes = {
+    text: PropTypes.string,
+}
+
 
 export default BurgerIngredients
