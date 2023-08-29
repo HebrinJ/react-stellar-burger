@@ -1,12 +1,22 @@
 import styles from "./app.module.css";
 import React from "react";
-import { data } from "../../utils/data";
 import AppHeader from "../app-header/appHeader.jsx";
 import BurgerIngredients from "../burger-Ingredients/burger-Ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor"
+import { getData } from '../api.js'
 
 function App() {
   const [cart, setCart] = React.useState([]);
+  const [data, setData] = React.useState([]);
+  const [isLoading, setLoading] = React.useState(true);
+
+  React.useEffect(() => {
+    setLoading(true);
+    getData().then((newData) => {
+      setData(newData.data);
+      setLoading(false);
+    }).catch((err) => console.log(err));
+  }, [])
 
   function addToCart(event) {
     const id = event.currentTarget.getAttribute('name');
@@ -30,7 +40,7 @@ function App() {
 
   function addNewProduct(selectedProductData) {
     const newProduct = getNewProduct(selectedProductData);
-
+    
     setCart((prevState) => ([
       ...prevState, newProduct      
     ]));
@@ -78,15 +88,27 @@ function App() {
     setCart([...cart.filter(element => element.product.id !== product._id)])
   }
 
+  if(isLoading) {
+    return (
+      <div className={styles.app}>
+          <AppHeader />
+          <main className={styles.content}>
+            
+          </main>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.app}>
-      	<AppHeader />
+        <AppHeader />
         <main className={styles.content}>
           <BurgerIngredients data={data} clickHandler={addToCart} cart={cart}/>
           <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart}/>
         </main>
     </div>
   );
+  
 }
 
 export default App;
