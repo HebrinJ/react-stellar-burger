@@ -6,6 +6,7 @@ import style from './burger-constructor.module.css'
 import React from 'react'
 import PropTypes from 'prop-types'
 import { ingredientCartType, ingredientPropType } from '../../utils/prop-types'
+import ModalWindow from '../modals/modal-window'
 
 function BurgerConstructor(props) {    
     let selectedBun = props.cart.find((elem) => elem.product.type === 'bun');
@@ -50,6 +51,10 @@ function BurgerConstructor(props) {
         props.handleClose(ingredientName);
     }
 
+    function handleClickOrder() {
+        props.handleOpenModal('order');
+    }
+
     return (
         <section className={style.constructorSection}>
             <div className={`${style.bunContainer}`}>
@@ -78,7 +83,7 @@ function BurgerConstructor(props) {
                     <p className="text text_type_digits-medium">{price}</p>
                     <CurrencyIcon type="primary" />
                 </div>
-                <Button htmlType="button" type="primary" size="medium">Оформить заказ</Button>
+                <Button htmlType="button" type="primary" size="medium" onClick={handleClickOrder}>Оформить заказ</Button>
             </div>
         </section>
     )

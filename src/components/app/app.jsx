@@ -5,10 +5,13 @@ import BurgerIngredients from "../burger-Ingredients/burger-Ingredients";
 import BurgerConstructor from "../burger-constructor/burger-constructor"
 import { getData } from '../api.js'
 
+import ModalWindow from '../modals/modal-window';
+
 function App() {
   const [cart, setCart] = React.useState([]);
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
+  const [openModal, setModal] = React.useState({visible: false, type: ''});
 
   React.useEffect(() => {
     setLoading(true);
@@ -88,6 +91,14 @@ function App() {
     setCart([...cart.filter(element => element.product.id !== product._id)])
   }
 
+  function handleOpenModal(type) {
+    setModal({visible: true, type: type});           
+  }
+
+  function handleCloseModal() {
+    setModal(false);
+  }
+
   if(isLoading) {
     return (
       <div className={styles.app}>
@@ -103,8 +114,9 @@ function App() {
     <div className={styles.app}>
         <AppHeader />
         <main className={styles.content}>
+          {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} type={openModal.type}/>}
           <BurgerIngredients data={data} clickHandler={addToCart} cart={cart}/>
-          <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart}/>
+          <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOpenModal={handleOpenModal}/>
         </main>
     </div>
   );
