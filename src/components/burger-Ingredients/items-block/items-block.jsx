@@ -27,11 +27,11 @@ function ItemsBlock({label, type, data, clickHandler, cart}) {
 }
 
 ItemsBlock.propTypes = {
-    label: PropTypes.string,
-    type: PropTypes.oneOf(['bun', 'sauce', 'main']),
-    data: PropTypes.arrayOf(PropTypes.object),
-    clickHandler: PropTypes.func,
-    cart: PropTypes.arrayOf(PropTypes.object),
+    label: PropTypes.string.isRequired,
+    type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired,
+    data: PropTypes.arrayOf(PropTypes.object).isRequired,
+    clickHandler: PropTypes.func.isRequired,
+    cart: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default ItemsBlock
