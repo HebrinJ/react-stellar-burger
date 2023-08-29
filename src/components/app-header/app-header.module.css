@@ -1,0 +1,43 @@
+.appHeader {
+    box-sizing: border-box;
+    width: 1920px;
+    margin: 40px 40px;   
+}
+
+.headerBox {    
+    margin: auto;
+    display: grid;
+    justify-items: center;
+    width: 1280px;
+    height: 88px;
+    grid-template-columns: 1fr 1fr 2fr 1fr 1fr ;
+    align-items: center;
+}
+
+.constructor {
+    display: flex;
+    grid-column: 1;
+    justify-self: start;
+    gap: 8px;
+}
+
+.orderList {
+    display: flex;
+    grid-column: 2;
+    justify-self: start;
+    margin-left: -40px;
+    gap: 8px;
+}
+
+.profile {
+    display: flex;
+    grid-column: 5;
+    justify-self: end;
+    gap: 8px;
+}
+
+.logo {
+    grid-column: 3;
+    margin: auto;
+}
+

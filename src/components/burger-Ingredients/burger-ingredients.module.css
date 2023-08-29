@@ -1,0 +1,14 @@
+.mainBox {
+    display: flex;
+    width: 600px;
+    height: 756px;
+    overflow: hidden;
+    gap: 24px;
+    flex-wrap: wrap;
+    overflow-y: scroll;
+    max-height: 80%;
+}
+
+.navBar {
+    display: flex;
+}
