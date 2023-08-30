@@ -1,0 +1,32 @@
+.overlay {
+    width: 100%;
+    height: 100%;
+    background-color: #00000099;
+    position: absolute;
+    top: 0;
+    left: 0;
+}
+
+.container {
+    position: relative;
+    box-sizing: border-box;
+    border-radius: 30px;
+    width: 720px;
+    background-color: #1c1c21;
+    margin: auto;
+    padding: 40px;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.header {
+    display: flex;
+}
+
+.label {
+    min-width: 620px;
+}
+
+.closeButton {
+    align-self: flex-end;
+}

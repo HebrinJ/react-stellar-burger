@@ -11,7 +11,7 @@ function App() {
   const [cart, setCart] = React.useState([]);
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
-  const [openModal, setModal] = React.useState({visible: false, type: ''});
+  const [openModal, setModal] = React.useState({visible: false, type: '', selectedProduct: {}});
 
   React.useEffect(() => {
     setLoading(true);
@@ -20,7 +20,7 @@ function App() {
       setLoading(false);
     }).catch((err) => console.log(err));
   }, [])
-
+  // Заготовка метода для добавления ингредиентов в конструктор
   function addToCart(event) {
     const id = event.currentTarget.getAttribute('name');
     const selectedProduct = data.find(item => item._id === id);    
@@ -91,8 +91,8 @@ function App() {
     setCart([...cart.filter(element => element.product.id !== product._id)])
   }
 
-  function handleOpenModal(type) {
-    setModal({visible: true, type: type});           
+  function handleOpenModal(type, selectedProduct) {
+    setModal({visible: true, type: type, selectedProduct: selectedProduct});           
   }
 
   function handleCloseModal() {
@@ -114,8 +114,8 @@ function App() {
     <div className={styles.app}>
         <AppHeader />
         <main className={styles.content}>
-          {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} type={openModal.type}/>}
-          <BurgerIngredients data={data} clickHandler={addToCart} cart={cart}/>
+          {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} type={openModal.type} selectedProduct={openModal.selectedProduct}/>}
+          <BurgerIngredients data={data} handleOpenModal={handleOpenModal} cart={cart}/>
           <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOpenModal={handleOpenModal}/>
         </main>
     </div>

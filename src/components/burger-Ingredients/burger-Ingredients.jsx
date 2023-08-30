@@ -34,13 +34,13 @@ function BurgerIngredients(props) {
             </nav>            
             <div className={`${style.mainBox} custom-scroll`}>
                 <div ref={bun}>
-                    <ItemsBlock label='Булки' type='bun' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                    <ItemsBlock label='Булки' type='bun' data={props.data} handleOpenModal={props.handleOpenModal} cart={props.cart}/>
                 </div>
                 <div ref={sauce}>
-                    <ItemsBlock label='Соусы' type='sauce' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                    <ItemsBlock label='Соусы' type='sauce' data={props.data} handleOpenModal={props.handleOpenModal} cart={props.cart}/>
                 </div>
                 <div ref={main}>
-                    <ItemsBlock label='Основное' type='main' data={props.data} clickHandler={props.clickHandler} cart={props.cart}/>
+                    <ItemsBlock label='Основное' type='main' data={props.data} handleOpenModal={props.handleOpenModal} cart={props.cart}/>
                 </div>
             </div>
         </section>
@@ -49,7 +49,7 @@ function BurgerIngredients(props) {
 
 BurgerIngredients.propTypes = {
     data: PropTypes.arrayOf(ingredientPropType).isRequired,
-    clickHandler: PropTypes.func.isRequired,
+    handleOpenModal: PropTypes.func.isRequired,
     cart: PropTypes.arrayOf(ingredientCartType).isRequired,
 }
 

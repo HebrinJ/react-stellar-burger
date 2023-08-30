@@ -4,7 +4,7 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './catalog-item.module.css'
 
-function CatalogItem({image, name, price, _id, clickHandler, cart, type}) {
+function CatalogItem({image, name, price, _id, handleOpenModal, cart, type, data}) {
     const [count, setCount] = React.useState(0);
 
     React.useEffect(() => {        
@@ -24,9 +24,20 @@ function CatalogItem({image, name, price, _id, clickHandler, cart, type}) {
             setCount(0);
         }        
     }  
+
+    function handleClickOrder(event) {
+        const id = event.currentTarget.getAttribute('name');
+        const selectedProduct = data.find(item => item._id === id);
+
+        if(selectedProduct) {
+            handleOpenModal('info', selectedProduct);
+        } else {
+            console.log(`Продукт с id ${id} не найден среди полученных данных`);
+        }
+    }
     
     return (
-        <div className={style.container} onClick={clickHandler} name={_id}>
+        <div className={style.container} onClick={handleClickOrder} name={_id}>
             <Counter count={count}/>
             <img className={style.image} src={image} alt=''/>
             <div className={style.textBox}>
@@ -45,7 +56,7 @@ CatalogItem.propTypes = {
     name: PropTypes.string,
     price: PropTypes.number,
     _id: PropTypes.string,
-    clickHandler: PropTypes.func,
+    handleClickOrder: PropTypes.func,
     cart: PropTypes.arrayOf(PropTypes.object),
     type: PropTypes.oneOf(['bun', 'sauce', 'main']),
 }
