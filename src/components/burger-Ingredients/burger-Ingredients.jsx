@@ -1,9 +1,9 @@
-import { Tab } from '@ya.praktikum/react-developer-burger-ui-components'
-import ItemsBlock from './items-block/items-block'
-import React from 'react'
-import style from './burger-ingredients.module.css'
-import PropTypes from 'prop-types'
-import { ingredientCartType, ingredientPropType } from '../../utils/prop-types'
+import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
+import ItemsBlock from './items-block/items-block';
+import React from 'react';
+import style from './burger-ingredients.module.css';
+import PropTypes from 'prop-types';
+import { ingredientCartType, ingredientPropType } from '../../utils/prop-types';
 
 function BurgerIngredients(props) {
     const bun = React.useRef(null);

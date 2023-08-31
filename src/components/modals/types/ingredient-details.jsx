@@ -1,10 +1,12 @@
-import style from './ingredient-details.module.css'
+import style from './ingredient-details.module.css';
+import PropTypes from 'prop-types';
+import { ingredientPropType } from '../../../utils/prop-types';
 
 function IngredientDetails({details}) {
 
     return (
         <div className={style.position}>
-            <img className={style.image} src={details.image_large}></img>
+            <img className={style.image} src={details.image_large} alt={details.name}></img>
             <p className={style.label+ ' text text_type_main-medium'}>{details.name}</p>
             <div className={style.containerInfo}>
                 <div className={style.detailsBlock}>
@@ -26,6 +28,10 @@ function IngredientDetails({details}) {
             </div>
         </div>
     )
+}
+
+IngredientDetails.propTypes = {
+    details: PropTypes.arrayOf(ingredientPropType).isRequired
 }
 
 export default IngredientDetails;

@@ -1,8 +1,8 @@
-import PropTypes from 'prop-types'
-import React from 'react'
-import { Counter } from '@ya.praktikum/react-developer-burger-ui-components'
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import style from './catalog-item.module.css'
+import PropTypes from 'prop-types';
+import React from 'react';
+import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import style from './catalog-item.module.css';
 
 function CatalogItem({image, name, price, _id, handleOpenModal, cart, type, data}) {
     const [count, setCount] = React.useState(0);
@@ -13,7 +13,7 @@ function CatalogItem({image, name, price, _id, handleOpenModal, cart, type, data
 
     const updateCount = () => {  
         if (type === 'bun') {
-            setCount(0)
+            setCount(0);
         }
 
         const product = cart.find((elem) => elem.product.id === _id)
@@ -39,12 +39,12 @@ function CatalogItem({image, name, price, _id, handleOpenModal, cart, type, data
     return (
         <div className={style.container} onClick={handleClickOrder} name={_id}>
             <Counter count={count}/>
-            <img className={style.image} src={image} alt=''/>
+            <img className={style.image} src={image} alt={name}/>
             <div className={style.textBox}>
                 <div className={style.price}>
-                    <p className="text text_type_digits-default">{price}</p><CurrencyIcon type="primary" />
+                    <p className='text text_type_digits-default'>{price}</p><CurrencyIcon type='primary' />
                 </div>
-                <p className="text text_type_main-default">{name}</p>
+                <p className='text text_type_main-default'>{name}</p>
             </div>
             
         </div>

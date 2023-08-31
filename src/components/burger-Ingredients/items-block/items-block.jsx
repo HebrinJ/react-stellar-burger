@@ -1,7 +1,7 @@
-import PropTypes from 'prop-types'
-import Label from './label/label.jsx'
-import style from './items-block.module.css'
-import CatalogItem from '../catalog-item/catalog-item.jsx'
+import PropTypes from 'prop-types';
+import Label from './label/label.jsx';
+import style from './items-block.module.css';
+import CatalogItem from '../catalog-item/catalog-item.jsx';
 
 function ItemsBlock({label, type, data, handleOpenModal, cart}) {
     return (

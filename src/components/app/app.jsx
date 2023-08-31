@@ -1,10 +1,9 @@
-import styles from "./app.module.css";
-import React from "react";
-import AppHeader from "../app-header/appHeader.jsx";
-import BurgerIngredients from "../burger-Ingredients/burger-Ingredients";
-import BurgerConstructor from "../burger-constructor/burger-constructor"
-import { getData } from '../api.js'
-
+import styles from './app.module.css';
+import React from 'react';
+import AppHeader from '../app-header/appHeader.jsx';
+import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
+import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { getData } from '../api.js';
 import ModalWindow from '../modals/modal-window';
 
 function App() {
@@ -15,11 +14,13 @@ function App() {
 
   React.useEffect(() => {
     setLoading(true);
+
     getData().then((newData) => {
       setData(newData.data);
       setLoading(false);
     }).catch((err) => console.log(err));
   }, [])
+
   // Заготовка метода для добавления ингредиентов в конструктор
   function addToCart(event) {
     const id = event.currentTarget.getAttribute('name');
@@ -59,9 +60,7 @@ function App() {
   function addBun(selectedProductData) {
       const newProduct = getNewProduct(selectedProductData);
       
-      setCart([
-        ...cart.filter(element => element.product.type !== 'bun'), newProduct
-      ])
+      setCart([...cart.filter(element => element.product.type !== 'bun'), newProduct]);
   }
 
   function getNewProduct(data) {
@@ -76,8 +75,8 @@ function App() {
   }
 
   function removeFromCart(productName) {
-    const product = data.find(elem => elem.name === productName)
-    const selectedProduct = cart.find(elem => elem.product.id === product._id)
+    const product = data.find(elem => elem.name === productName);
+    const selectedProduct = cart.find(elem => elem.product.id === product._id);
 
     if(selectedProduct.quantity > 1) {
       setCart([
@@ -88,7 +87,7 @@ function App() {
       return;
     }
     
-    setCart([...cart.filter(element => element.product.id !== product._id)])
+    setCart([...cart.filter(element => element.product.id !== product._id)]);
   }
 
   function handleOpenModal(type, selectedProduct) {
