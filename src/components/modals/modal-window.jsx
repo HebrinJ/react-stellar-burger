@@ -36,8 +36,8 @@ function ModalWindow(props) {
     ), document.body);    
 }
 
-ModalWindow.propTypes = {
-    selectedProduct: PropTypes.arrayOf(ingredientPropType).isRequired,
+ModalWindow.propTypes = {    
+    selectedProduct: ingredientPropType,
     handleCloseModal: PropTypes.func.isRequired
 }
 
