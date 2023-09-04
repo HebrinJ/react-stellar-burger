@@ -1,4 +1,3 @@
-
 .container {
     position: absolute;
     box-sizing: border-box;
@@ -13,10 +12,7 @@
 
 .header {
     display: flex;
-}
-
-.label {
-    min-width: 620px;
+    justify-content: end;
 }
 
 .closeButton {

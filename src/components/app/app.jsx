@@ -6,11 +6,16 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { getData } from '../api.js';
 import ModalWindow from '../modals/modal-window';
 
+import IngredientDetails from '../modals/types/ingredient-details';
+import OrderDetails from '../modals/types/order-details';
+import LoadingError from '../modals/types/loading-error';
+
 function App() {
   const [cart, setCart] = React.useState([]);
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
-  const [openModal, setModal] = React.useState({visible: false, type: '', selectedProduct: {}});
+  const [openModal, setModal] = React.useState({visible: false, type: {}, selectedProduct: {}});
+  const [loadingError, setError] = React.useState({isError: false, errorText: ''});
 
   React.useEffect(() => {
     setLoading(true);
@@ -18,7 +23,10 @@ function App() {
     getData().then((newData) => {
       setData(newData.data);
       setLoading(false);
-    }).catch((err) => console.log(err));
+    }).catch((err) => {
+      console.log(err);
+      setError(true, err);
+    });
   }, [])
 
   // Заготовка метода для добавления ингредиентов в конструктор
@@ -98,6 +106,26 @@ function App() {
     setModal(false);
   }
 
+  function getModal(type) {
+    let modalTypeMarkup = null;
+
+    switch (type) {
+      case 'order':
+          modalTypeMarkup = <OrderDetails />
+          break;
+      case 'info':
+          modalTypeMarkup = <IngredientDetails details={openModal.selectedProduct} label='Детали ингридиента'/>
+          break;
+      case 'loadingError':
+          modalTypeMarkup = <LoadingError errorText={loadingError.errorText} label='Ошибка загрузки'/>
+      default:
+        console.log('Модальное окно не найдено');
+        break;        
+  }
+
+    return modalTypeMarkup;
+  }
+
   if(isLoading) {
     return (
       <div className={styles.app}>
@@ -113,7 +141,8 @@ function App() {
     <div className={styles.app}>
         <AppHeader />
         <main className={styles.content}>
-          {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} type={openModal.type} selectedProduct={openModal.selectedProduct}/>}
+          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal('loadingError')} />}
+          {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal(openModal.type)} />}
           <BurgerIngredients data={data} handleOpenModal={handleOpenModal} cart={cart}/>
           <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOpenModal={handleOpenModal}/>
         </main>
