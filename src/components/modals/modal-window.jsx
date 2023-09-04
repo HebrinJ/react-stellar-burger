@@ -5,6 +5,7 @@ import style from './modal-window.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../utils/prop-types';
+import ModalOverlay from './modal-overlay';
 
 function ModalWindow(props) { 
     let label = '';
@@ -21,18 +22,19 @@ function ModalWindow(props) {
             break;             
     }
 
-    return ReactDOM.createPortal((
-        <div className={style.overlay}>
-                    <div className={style.container}>
-                        <div className={style.header}>
-                            <h1 className={style.label+' text text_type_main-large'}>{label}</h1>
-                            <div className={style.closeButton}>
-                                <CloseIcon type='primary' onClick={props.handleCloseModal}/>
-                            </div>
-                        </div>            
-                        { modalTypeMarkup }
-                    </div>                    
-        </div>
+    return ReactDOM.createPortal((        
+        <>
+        <ModalOverlay handleCloseModal={props.handleCloseModal}/>
+            <div className={style.container}>
+                <div className={style.header}>
+                    <h1 className={style.label+' text text_type_main-large'}>{label}</h1>
+                    <div className={style.closeButton}>
+                        <CloseIcon type='primary' onClick={props.handleCloseModal}/>
+                    </div>
+                </div>            
+                { modalTypeMarkup }
+            </div>                    
+        </>        
     ), document.body);    
 }
 
