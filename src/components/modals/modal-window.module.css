@@ -1,0 +1,20 @@
+.container {
+    position: absolute;
+    box-sizing: border-box;
+    border-radius: 30px;
+    width: 720px;
+    background-color: #1c1c21;
+    padding: 40px;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.header {
+    display: flex;
+    justify-content: end;
+}
+
+.closeButton {
+    align-self: flex-end;
+}

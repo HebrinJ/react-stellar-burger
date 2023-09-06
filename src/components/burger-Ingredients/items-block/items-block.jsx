@@ -1,9 +1,9 @@
-import PropTypes from 'prop-types'
-import Label from './label/label.jsx'
-import style from './items-block.module.css'
-import CatalogItem from '../catalog-item/catalog-item.jsx'
+import PropTypes from 'prop-types';
+import Label from './label/label.jsx';
+import style from './items-block.module.css';
+import CatalogItem from '../catalog-item/catalog-item.jsx';
 
-function ItemsBlock({label, type, data, clickHandler, cart}) {
+function ItemsBlock({label, type, data, handleOpenModal, cart}) {
     return (
         <>        
             <Label text={label} />
@@ -17,9 +17,10 @@ function ItemsBlock({label, type, data, clickHandler, cart}) {
                         name={element.name} 
                         price={element.price} 
                         _id={element._id} 
-                        clickHandler={clickHandler} 
+                        handleOpenModal={handleOpenModal} 
                         cart={cart} 
-                        type={type}/>
+                        type={type}
+                        data={data}/>
                     })}
             </div>        
         </>
@@ -30,7 +31,7 @@ ItemsBlock.propTypes = {
     label: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired,
     data: PropTypes.arrayOf(PropTypes.object).isRequired,
-    clickHandler: PropTypes.func.isRequired,
+    handleOpenModal: PropTypes.func.isRequired,
     cart: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
