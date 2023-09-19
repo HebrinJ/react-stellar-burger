@@ -5,16 +5,20 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor.module.css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { ingredientCartType, ingredientPropType } from '../../utils/prop-types';
+import { DataContext } from '../app/data-context.js';
+import { OrderContext } from '../app/order-context.js';
 
-function BurgerConstructor(props) {    
-    let selectedBun = props.cart.find((elem) => elem.product.type === 'bun');
+function BurgerConstructor(props) {
+    const data = React.useContext(DataContext);
+    const cart = React.useContext(OrderContext);
+    
+    let selectedBun = cart.find((elem) => elem.product.type === 'bun');
     
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {
         countPrice();
-    }, [props.cart])
+    }, [cart])
 
     const countPrice = () => {        
         const selectedProducts = separateCart();
@@ -30,7 +34,7 @@ function BurgerConstructor(props) {
     function separateCart() {
         const separatedCart = [];
 
-        props.cart.forEach((elem) => {
+        cart.forEach((elem) => {
             for (let i = 0; i < elem.quantity; i++) {
                 separatedCart.push(elem);
             }
@@ -64,16 +68,16 @@ function BurgerConstructor(props) {
                 </div>
                 <div className={`${style.list} custom-scroll`}>
                     {       
-                        props.data.map((ingredient, index) => {                             
+                        /*props.data.map((ingredient, index) => {                             
                             if(ingredient.type !== 'bun') {
                                 return AddIngredient(ingredient, handleClickClose, index);                                    
-                            }})
+                            }})*/
 
-                        /*separateCart().map((ingredient, index) => {                             
+                        separateCart().map((ingredient, index) => {                             
                         if(ingredient.product.type !== 'bun') {                                
-                            const ingredientAllData = props.data.find((elem) => elem._id === ingredient.product.id);                                 
+                            const ingredientAllData = data.find((elem) => elem._id === ingredient.product.id);                                 
                                 return AddIngredient(ingredientAllData, handleClickClose, index);                                    
-                        }})*/
+                        }})
                     }
                 </div>
                 <div>
@@ -110,9 +114,7 @@ function AddIngredient(data, handleClickClose, ingrId) {
         </ul>
 }
 
-BurgerConstructor.propTypes = {    
-    data: PropTypes.arrayOf(ingredientPropType).isRequired,
-    cart: PropTypes.arrayOf(ingredientCartType).isRequired,
+BurgerConstructor.propTypes = {
     handleClose: PropTypes.func.isRequired,
 }
 

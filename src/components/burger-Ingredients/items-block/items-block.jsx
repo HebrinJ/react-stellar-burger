@@ -4,11 +4,9 @@ import Label from './label/label.jsx';
 import style from './items-block.module.css';
 import CatalogItem from '../catalog-item/catalog-item.jsx';
 import { DataContext } from '../../app/data-context.js';
-import { OrderContext } from '../../app/order-context.js';
 
 function ItemsBlock({label, type, handleOpenModal}) {
     const data = React.useContext(DataContext);
-    const cart = React.useContext(OrderContext);
     
     return (
         <>        
