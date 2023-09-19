@@ -1,0 +1,14 @@
+.order {
+    display: flex;
+    justify-content: end;
+    align-items: center;
+    padding-right: 40px;
+    padding-bottom: 30px;
+}
+
+.priceBox {
+    display: flex;
+    margin: 40px;
+    align-items: center;
+    gap: 10px;
+}

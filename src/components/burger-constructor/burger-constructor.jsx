@@ -1,41 +1,17 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor.module.css';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { DataContext } from '../app/data-context.js';
 import { OrderContext } from '../app/order-context.js';
+import TotalPrice from './total-price/total-price';
 
 function BurgerConstructor(props) {
     const data = React.useContext(DataContext);
     const cart = React.useContext(OrderContext);
     
-    let selectedBun = cart.find((elem) => elem.product.type === 'bun');
-    
-    const [price, setPrice] = React.useState(0);
-
-    React.useEffect(() => {
-        countPrice();
-    }, [cart])
-
-    const countPrice = () => {        
-        const selectedProducts = separateCart();
-        let currentPrice = 0;
-
-        for (let i = 0; i < selectedProducts.length; i++) {            
-            currentPrice += selectedProducts[i].product.price;
-        } 
-        
-        let isBun = selectedProducts.find((item) => item.product.type === 'bun');
-
-        if(isBun) {
-            currentPrice += isBun.product.price;
-        }
-
-        setPrice(currentPrice);
-    }
+    let selectedBun = cart.find((elem) => elem.product.type === 'bun');    
 
     function separateCart() {
         const separatedCart = [];
@@ -92,13 +68,7 @@ function BurgerConstructor(props) {
                     }                    
                 </div>                
             </div>
-            <div className={style.order}>
-                <div className={style.priceBox}>
-                    <p className='text text_type_digits-medium'>{price}</p>
-                    <CurrencyIcon type='primary' />
-                </div>
-                <Button htmlType='button' type='primary' size='medium' onClick={handleClickOrder}>Оформить заказ</Button>
-            </div>
+            <TotalPrice separateCart={separateCart} handleClickOrder={handleClickOrder} />            
         </section>
     )
 }
