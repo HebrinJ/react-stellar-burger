@@ -1,9 +1,15 @@
+import React from 'react';
 import PropTypes from 'prop-types';
 import Label from './label/label.jsx';
 import style from './items-block.module.css';
 import CatalogItem from '../catalog-item/catalog-item.jsx';
+import { DataContext } from '../../app/data-context.js';
+import { OrderContext } from '../../app/order-context.js';
 
-function ItemsBlock({label, type, data, handleOpenModal, cart}) {
+function ItemsBlock({label, type, handleOpenModal}) {
+    const data = React.useContext(DataContext);
+    const cart = React.useContext(OrderContext);
+    
     return (
         <>        
             <Label text={label} />
@@ -17,10 +23,8 @@ function ItemsBlock({label, type, data, handleOpenModal, cart}) {
                         name={element.name} 
                         price={element.price} 
                         _id={element._id} 
-                        handleOpenModal={handleOpenModal} 
-                        cart={cart} 
-                        type={type}
-                        data={data}/>
+                        handleOpenModal={handleOpenModal}
+                        type={type}/>
                     })}
             </div>        
         </>
@@ -30,9 +34,7 @@ function ItemsBlock({label, type, data, handleOpenModal, cart}) {
 ItemsBlock.propTypes = {
     label: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired,
-    data: PropTypes.arrayOf(PropTypes.object).isRequired,
     handleOpenModal: PropTypes.func.isRequired,
-    cart: PropTypes.arrayOf(PropTypes.object).isRequired,
 }
 
 export default ItemsBlock

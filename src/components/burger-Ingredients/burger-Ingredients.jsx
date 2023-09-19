@@ -3,7 +3,6 @@ import ItemsBlock from './items-block/items-block';
 import React from 'react';
 import style from './burger-ingredients.module.css';
 import PropTypes from 'prop-types';
-import { ingredientCartType, ingredientPropType } from '../../utils/prop-types';
 
 function BurgerIngredients(props) {
     const bun = React.useRef(null);
@@ -34,13 +33,13 @@ function BurgerIngredients(props) {
             </nav>            
             <div className={`${style.mainBox} custom-scroll`}>
                 <div ref={bun}>
-                    <ItemsBlock label='Булки' type='bun' data={props.data} handleOpenModal={props.handleOpenModal} cart={props.cart}/>
+                    <ItemsBlock label='Булки' type='bun' handleOpenModal={props.handleOpenModal}/>
                 </div>
                 <div ref={sauce}>
-                    <ItemsBlock label='Соусы' type='sauce' data={props.data} handleOpenModal={props.handleOpenModal} cart={props.cart}/>
+                    <ItemsBlock label='Соусы' type='sauce' handleOpenModal={props.handleOpenModal}/>
                 </div>
                 <div ref={main}>
-                    <ItemsBlock label='Основное' type='main' data={props.data} handleOpenModal={props.handleOpenModal} cart={props.cart}/>
+                    <ItemsBlock label='Основное' type='main' handleOpenModal={props.handleOpenModal}/>
                 </div>
             </div>
         </section>
@@ -48,9 +47,7 @@ function BurgerIngredients(props) {
 }
 
 BurgerIngredients.propTypes = {
-    data: PropTypes.arrayOf(ingredientPropType).isRequired,
     handleOpenModal: PropTypes.func.isRequired,
-    cart: PropTypes.arrayOf(ingredientCartType).isRequired,
 }
 
 export default BurgerIngredients

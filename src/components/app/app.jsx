@@ -148,7 +148,7 @@ function App() {
           {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal(openModal.type)} />}
           <OrderContext.Provider value={cart}>
             <DataContext.Provider value={data}>
-              <BurgerIngredients data={data} cart={cart} handleOpenModal={handleOpenModal} />
+              <BurgerIngredients handleOpenModal={handleOpenModal} />
               <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOpenModal={handleOpenModal}/>
             </DataContext.Provider>
           </OrderContext.Provider>
