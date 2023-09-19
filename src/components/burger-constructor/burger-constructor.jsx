@@ -26,6 +26,12 @@ function BurgerConstructor(props) {
 
         for (let i = 0; i < selectedProducts.length; i++) {            
             currentPrice += selectedProducts[i].product.price;
+        } 
+        
+        let isBun = selectedProducts.find((item) => item.product.type === 'bun');
+
+        if(isBun) {
+            currentPrice += isBun.product.price;
         }
 
         setPrice(currentPrice);
