@@ -10,6 +10,9 @@ import IngredientDetails from '../modals/types/ingredient-details';
 import OrderDetails from '../modals/types/order-details';
 import LoadingError from '../modals/types/loading-error';
 
+import { OrderContext } from './order-context';
+import { DataContext } from './data-context';
+
 function App() {
   const [cart, setCart] = React.useState([]);
   const [data, setData] = React.useState([]);
@@ -143,8 +146,12 @@ function App() {
         <main className={styles.content}>
           {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal('loadingError')} />}
           {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal(openModal.type)} />}
-          <BurgerIngredients data={data} handleOpenModal={handleOpenModal} cart={cart}/>
-          <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOpenModal={handleOpenModal}/>
+          <OrderContext.Provider value={cart}>
+            <DataContext.Provider value={data}>
+              <BurgerIngredients data={data} cart={cart} handleOpenModal={handleOpenModal} />
+              <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOpenModal={handleOpenModal}/>
+            </DataContext.Provider>
+          </OrderContext.Provider>
         </main>
     </div>
   );
