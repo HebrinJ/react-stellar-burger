@@ -13,8 +13,13 @@ import LoadingError from '../modals/types/loading-error';
 import { OrderContext } from './order-context';
 import { DataContext } from './data-context';
 
+import cartReducer from './cart-reducer';
+
 function App() {
-  const [cart, setCart] = React.useState([]);
+  const initialState = {bun: null, ingredients: []}
+
+  const [cart, dispatch] = React.useReducer(cartReducer, initialState);
+  
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
   const [openModal, setModal] = React.useState({visible: false, type: {}, selectedProduct: {}});
@@ -32,73 +37,33 @@ function App() {
     });
   }, [])
 
-  // Заготовка метода для добавления ингредиентов в конструктор
+  
   function addToCart(event) {
     const id = event.currentTarget.getAttribute('name');
-    const selectedProduct = data.find(item => item._id === id);    
-    const inCartProduct = cart.find((cartProduct) => {
-      return cartProduct.product.id === selectedProduct._id;
-      })
+    const selectedProduct = data.find(item => item._id === id);
 
     if(selectedProduct.type === 'bun') {
-      addBun(selectedProduct);
-      return;
+        dispatch({
+          type: 'addBun',
+          payload: id,
+        })
+        return;
     }
     
-    if(inCartProduct) {      
-      updateQuantity(inCartProduct);
-      return;
-    }
-
-    addNewProduct(selectedProduct);
+    dispatch({
+      type: 'add',
+      payload: id,
+    })
   }
 
-  function addNewProduct(selectedProductData) {
-    const newProduct = getNewProduct(selectedProductData);
-    
-    setCart((prevState) => ([
-      ...prevState, newProduct      
-    ]));
-  }
+  function removeFromCart(ingredientName) {
+    const ingredient = data.find(elem => elem.name === ingredientName);    
+    const id = ingredient._id;
 
-  function updateQuantity(inCartProduct) {
-    setCart([
-      ...cart.filter(element => element.product.id !== inCartProduct.product.id),
-       {...inCartProduct, quantity: inCartProduct.quantity + 1}
-    ]);
-  }
-
-  function addBun(selectedProductData) {
-      const newProduct = getNewProduct(selectedProductData);
-      
-      setCart([...cart.filter(element => element.product.type !== 'bun'), newProduct]);
-  }
-
-  function getNewProduct(data) {
-    return {
-      product: {
-        id: data._id,
-        type: data.type,
-        price: data.price,
-      },
-      quantity: 1
-    }
-  }
-
-  function removeFromCart(productName) {
-    const product = data.find(elem => elem.name === productName);
-    const selectedProduct = cart.find(elem => elem.product.id === product._id);
-
-    if(selectedProduct.quantity > 1) {
-      setCart([
-        ...cart.filter(element => element.product.id !== selectedProduct.product.id),
-         {...selectedProduct, quantity: selectedProduct.quantity - 1}
-      ]);
-
-      return;
-    }
-    
-    setCart([...cart.filter(element => element.product.id !== product._id)]);
+    dispatch({
+      type: 'remove',
+      payload: id,
+    })
   }
 
   function handleOpenModal(type, selectedProduct) {

@@ -11,23 +11,40 @@ function BurgerConstructor(props) {
     const data = React.useContext(DataContext);
     const cart = React.useContext(OrderContext);
     
-    let selectedBun = cart.find((elem) => elem.product.type === 'bun');    
+    //let selectedBun = cart.ingredients.find((elem) => elem.product.type === 'bun'); 
+    let selectedBun = cart.bun;
 
-    function separateCart() {
-        const separatedCart = [];
+    // function separateCart() {
+    //     const separatedCart = [];
 
-        cart.forEach((elem) => {
-            for (let i = 0; i < elem.quantity; i++) {
-                separatedCart.push(elem);
-            }
-        })
+    //     cart.ingredients.forEach((elem) => {
+    //         for (let i = 0; i < elem.quantity; i++) {
+    //             separatedCart.push(elem);
+    //         }
+    //     })
         
-        return separatedCart.sort((a, b) => { 
-            if(a.product.id > b.product.id) return 1;
-            if(a.product.id === b.product.id) return 0;
-            if(a.product.id < b.product.id) return -1;
-        });        
-    }
+    //     return separatedCart.sort((a, b) => { 
+    //         if(a.product.id > b.product.id) return 1;
+    //         if(a.product.id === b.product.id) return 0;
+    //         if(a.product.id < b.product.id) return -1;
+    //     });        
+    // }
+
+    // function sortCart() {
+    //     const sortCart = [];
+
+    //     cart.ingredients.forEach((elem) => {
+    //         for (let i = 0; i < cart.ingredients.length; i++) {
+    //             sortCart.push(elem);
+    //         }
+    //     })
+        
+    //     return sortCart.sort((a, b) => { 
+    //         if(a > b) return 1;
+    //         if(a === b) return 0;
+    //         if(a < b) return -1;
+    //     });        
+    // }
 
     function handleClickClose(event) {
         const parentNode = event.currentTarget.parentNode.parentNode;
@@ -55,11 +72,15 @@ function BurgerConstructor(props) {
                                 return AddIngredient(ingredient, handleClickClose, index);                                    
                             }})*/
 
-                        separateCart().map((ingredient, index) => {                             
+                        /*separateCart().map((ingredient, index) => {                             
                         if(ingredient.product.type !== 'bun') {                                
                             const ingredientAllData = data.find((elem) => elem._id === ingredient.product.id);                                 
                                 return AddIngredient(ingredientAllData, handleClickClose, index);                                    
-                        }})
+                        }})*/                          
+                        cart.ingredients.map((id, index) => {
+                                const ingredientAllData = data.find((elem) => elem._id === id);                                 
+                                    return AddIngredient(ingredientAllData, handleClickClose, index);                                    
+                            })
                     }
                 </div>
                 <div>
@@ -68,13 +89,13 @@ function BurgerConstructor(props) {
                     }                    
                 </div>                
             </div>
-            <TotalPrice separateCart={separateCart} handleClickOrder={handleClickOrder} />            
+            <TotalPrice handleClickOrder={handleClickOrder} />            
         </section>
     )
 }
 
-function AddBun(type, ingredient, data) {
-    const ingredientAllData = data.find((elem) => elem._id === ingredient.product.id);
+function AddBun(type, bunId, data) {
+    const ingredientAllData = data.find((elem) => elem._id === bunId);
 
     if(type === 'top') {
         return <ConstructorElement type='top' text={ingredientAllData.name+' верх'} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>

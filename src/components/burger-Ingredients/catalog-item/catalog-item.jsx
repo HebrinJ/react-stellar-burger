@@ -7,7 +7,7 @@ import style from './catalog-item.module.css';
 import { DataContext } from '../../app/data-context.js';
 import { OrderContext } from '../../app/order-context.js';
 
-function CatalogItem({image, name, price, _id, handleOpenModal, handleAddToCart, type}) {
+function CatalogItem({image, name, price, currentItemId, handleOpenModal, handleAddToCart, type}) {
     const [count, setCount] = React.useState(0);
 
     const data = React.useContext(DataContext);
@@ -18,17 +18,14 @@ function CatalogItem({image, name, price, _id, handleOpenModal, handleAddToCart,
     }, [cart]);    
 
     const updateCount = () => {  
-        if (type === 'bun') {
-            setCount(0);
+        
+        if(cart.bun === currentItemId) {
+            setCount(1);
+            return;
         }
 
-        const product = cart.find((elem) => elem.product.id === _id)
-
-        if(product) {
-            setCount(product.quantity);
-        } else {
-            setCount(0);
-        }        
+        const products = cart.ingredients.filter((elem) => elem === currentItemId)        
+        setCount(products.length);      
     }  
 
     function handleClickOrder(event) {
@@ -42,12 +39,12 @@ function CatalogItem({image, name, price, _id, handleOpenModal, handleAddToCart,
         }
     }
 
-    function handleAdd(event) {        
+    function handleAdd(event) {            
         handleAddToCart(event);
     }
     
     return (
-        <div className={style.container} onClick={handleAdd} name={_id}>
+        <div className={style.container} onClick={handleAdd} name={currentItemId}>
             <Counter count={count}/>
             <img className={style.image} src={image} alt={name}/>
             <div className={style.textBox}>
@@ -65,7 +62,7 @@ CatalogItem.propTypes = {
     image: PropTypes.string,
     name: PropTypes.string,
     price: PropTypes.number,
-    _id: PropTypes.string,
+    currentItemId: PropTypes.string,
     handleClickOrder: PropTypes.func,
     type: PropTypes.oneOf(['bun', 'sauce', 'main']),
 }

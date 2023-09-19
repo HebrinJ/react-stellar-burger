@@ -15,15 +15,15 @@ function ItemsBlock({label, type, handleOpenModal, handleAddToCart}) {
                 {                    
                     data.map((element, index) => {                    
                         if(element.type === type)
-                    return <CatalogItem 
-                        key={index} 
-                        image={element.image} 
-                        name={element.name} 
-                        price={element.price} 
-                        _id={element._id} 
-                        handleOpenModal={handleOpenModal}
-                        handleAddToCart={handleAddToCart}
-                        type={type}/>
+                            return <CatalogItem 
+                                key={index} 
+                                image={element.image} 
+                                name={element.name} 
+                                price={element.price} 
+                                currentItemId={element._id} 
+                                handleOpenModal={handleOpenModal}
+                                handleAddToCart={handleAddToCart}
+                                type={type}/>
                     })}
             </div>        
         </>

@@ -1,30 +1,35 @@
 import React from 'react';
 import { OrderContext } from '../../app/order-context.js';
+import { DataContext } from '../../app/data-context.js'
 import style from './total-price.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function TotalPrice({separateCart, handleClickOrder}) {
+export default function TotalPrice({handleClickOrder}) {
 
     const cart = React.useContext(OrderContext);
+    const data = React.useContext(DataContext)
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {
         countPrice();
     }, [cart])
+    
+    const countPrice = () => {
+        let currentPrice = cart.ingredients.reduce((price, productId) => {
+            const foundProduct = data.find((item) => item._id === productId)
+            
+            if(foundProduct) {
+                price += foundProduct.price;
+            }
 
-    const countPrice = () => {        
-        const selectedProducts = separateCart();
-        let currentPrice = 0;
+            return price;
+        }, 0)
 
-        for (let i = 0; i < selectedProducts.length; i++) {            
-            currentPrice += selectedProducts[i].product.price;
-        } 
-        
-        let isBun = selectedProducts.find((item) => item.product.type === 'bun');
+        if(cart.bun) {
+            const price = data.find((product) => product._id === cart.bun).price;
 
-        if(isBun) {
-            currentPrice += isBun.product.price;
+            currentPrice += price*2;
         }
 
         setPrice(currentPrice);
