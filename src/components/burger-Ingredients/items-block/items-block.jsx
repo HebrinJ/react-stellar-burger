@@ -5,7 +5,7 @@ import style from './items-block.module.css';
 import CatalogItem from '../catalog-item/catalog-item.jsx';
 import { DataContext } from '../../app/data-context.js';
 
-function ItemsBlock({label, type, handleOpenModal}) {
+function ItemsBlock({label, type, handleOpenModal, handleAddToCart}) {
     const data = React.useContext(DataContext);
     
     return (
@@ -22,6 +22,7 @@ function ItemsBlock({label, type, handleOpenModal}) {
                         price={element.price} 
                         _id={element._id} 
                         handleOpenModal={handleOpenModal}
+                        handleAddToCart={handleAddToCart}
                         type={type}/>
                     })}
             </div>        

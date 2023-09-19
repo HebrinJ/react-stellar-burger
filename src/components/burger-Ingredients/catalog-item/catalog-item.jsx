@@ -1,4 +1,4 @@
-import PropTypes from 'prop-types';
+import PropTypes, { func } from 'prop-types';
 import React from 'react';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -7,7 +7,7 @@ import style from './catalog-item.module.css';
 import { DataContext } from '../../app/data-context.js';
 import { OrderContext } from '../../app/order-context.js';
 
-function CatalogItem({image, name, price, _id, handleOpenModal, type}) {
+function CatalogItem({image, name, price, _id, handleOpenModal, handleAddToCart, type}) {
     const [count, setCount] = React.useState(0);
 
     const data = React.useContext(DataContext);
@@ -41,9 +41,13 @@ function CatalogItem({image, name, price, _id, handleOpenModal, type}) {
             console.log(`Продукт с id ${id} не найден среди полученных данных`);
         }
     }
+
+    function handleAdd(event) {        
+        handleAddToCart(event);
+    }
     
     return (
-        <div className={style.container} onClick={handleClickOrder} name={_id}>
+        <div className={style.container} onClick={handleAdd} name={_id}>
             <Counter count={count}/>
             <img className={style.image} src={image} alt={name}/>
             <div className={style.textBox}>
