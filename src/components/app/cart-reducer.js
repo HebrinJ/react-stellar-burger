@@ -6,7 +6,9 @@ export default function cartReducer(state, action) {
         case 'add':
             return {...state, ingredients: [...state.ingredients, action.payload]} 
         case 'remove':
-            return {...state, ingredients: state.ingredients.filter(id => id !== action.payload)}
+            const elementIndex = state.ingredients.findIndex(id => id === action.payload);           
+            state.ingredients.splice(elementIndex, 1);            
+            return {...state, ingredients: [...state.ingredients]}
         default:
             return state;
     }
