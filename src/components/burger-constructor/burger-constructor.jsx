@@ -89,7 +89,7 @@ function BurgerConstructor(props) {
                     }                    
                 </div>                
             </div>
-            <TotalPrice handleClickOrder={handleClickOrder} />            
+            <TotalPrice handleOrder={props.handleOrder}/>            
         </section>
     )
 }

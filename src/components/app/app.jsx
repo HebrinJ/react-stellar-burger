@@ -3,7 +3,7 @@ import React from 'react';
 import AppHeader from '../app-header/appHeader.jsx';
 import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { getData } from '../api.js';
+import { getData, makeOrder } from '../api.js';
 import ModalWindow from '../modals/modal-window';
 
 import IngredientDetails from '../modals/types/ingredient-details';
@@ -22,7 +22,7 @@ function App() {
   
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
-  const [openModal, setModal] = React.useState({visible: false, type: {}, selectedProduct: {}});
+  const [openModal, setModal] = React.useState({visible: false, type: {}, selectedProduct: {}, orderNum: 0});
   const [loadingError, setError] = React.useState({isError: false, errorText: ''});
 
   React.useEffect(() => {
@@ -66,8 +66,8 @@ function App() {
     })
   }
 
-  function handleOpenModal(type, selectedProduct) {
-    setModal({visible: true, type: type, selectedProduct: selectedProduct});           
+  function handleOpenModal(type, selectedProduct, orderNum) {
+    setModal({visible: true, type: type, selectedProduct: selectedProduct, orderNum: orderNum});           
   }
 
   function handleCloseModal() {
@@ -79,7 +79,7 @@ function App() {
 
     switch (type) {
       case 'order':
-          modalTypeMarkup = <OrderDetails />
+          modalTypeMarkup = <OrderDetails orderNum={openModal.orderNum}/>
           break;
       case 'info':
           modalTypeMarkup = <IngredientDetails details={openModal.selectedProduct} label='Детали ингридиента'/>
@@ -92,6 +92,14 @@ function App() {
   }
 
     return modalTypeMarkup;
+  }
+
+  function handleOrder() {
+    makeOrder(cart.ingredients).then((order) => {      
+      handleOpenModal('order', {}, order.order.number);
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   if(isLoading) {
@@ -114,7 +122,7 @@ function App() {
           <OrderContext.Provider value={cart}>
             <DataContext.Provider value={data}>
               <BurgerIngredients handleOpenModal={handleOpenModal} handleAddToCart={addToCart} />
-              <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOpenModal={handleOpenModal}/>
+              <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOrder={handleOrder}/>
             </DataContext.Provider>
           </OrderContext.Provider>
         </main>

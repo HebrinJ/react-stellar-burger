@@ -5,7 +5,7 @@ import style from './total-price.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
-export default function TotalPrice({handleClickOrder}) {
+export default function TotalPrice({handleOrder}) {
 
     const cart = React.useContext(OrderContext);
     const data = React.useContext(DataContext)
@@ -41,7 +41,7 @@ export default function TotalPrice({handleClickOrder}) {
                     <p className='text text_type_digits-medium'>{price}</p>
                     <CurrencyIcon type='primary' />
                 </div>
-                <Button htmlType='button' type='primary' size='medium' onClick={handleClickOrder}>Оформить заказ</Button>
+                <Button htmlType='button' type='primary' size='medium' onClick={handleOrder}>Оформить заказ</Button>
         </div>
     )
 }
