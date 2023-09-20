@@ -28,6 +28,8 @@ function CatalogItem({image, name, price, currentItemId, handleOpenModal, handle
         setCount(products.length);      
     }  
 
+    // Будет удалено после реализации всего функционала
+
     // function handleClickOrder(event) {
     //     const id = event.currentTarget.getAttribute('name');
     //     const selectedProduct = data.find(item => item._id === id);

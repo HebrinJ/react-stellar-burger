@@ -6,6 +6,7 @@ import PropTypes from 'prop-types';
 import { DataContext } from '../app/data-context.js';
 import { OrderContext } from '../app/order-context.js';
 import TotalPrice from './total-price/total-price';
+import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor(props) {
     const data = React.useContext(DataContext);
@@ -47,9 +48,9 @@ function BurgerConstructor(props) {
                 </div>
                 <div className={`${style.list} custom-scroll`}>
                     {                             
-                        cart.ingredients.map((id, index) => {
+                        cart.ingredients.map((id) => {
                                 const ingredientAllData = data.find((elem) => elem._id === id);                                 
-                                    return AddIngredient(ingredientAllData, handleClickClose, index);                                    
+                                    return AddIngredient(ingredientAllData, handleClickClose, uuidv4());
                             })
                     }
                 </div>
