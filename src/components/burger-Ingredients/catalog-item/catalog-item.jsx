@@ -28,16 +28,16 @@ function CatalogItem({image, name, price, currentItemId, handleOpenModal, handle
         setCount(products.length);      
     }  
 
-    function handleClickOrder(event) {
-        const id = event.currentTarget.getAttribute('name');
-        const selectedProduct = data.find(item => item._id === id);
+    // function handleClickOrder(event) {
+    //     const id = event.currentTarget.getAttribute('name');
+    //     const selectedProduct = data.find(item => item._id === id);
 
-        if(selectedProduct) {
-            handleOpenModal('info', selectedProduct);
-        } else {
-            console.log(`Продукт с id ${id} не найден среди полученных данных`);
-        }
-    }
+    //     if(selectedProduct) {
+    //         handleOpenModal('info', selectedProduct);
+    //     } else {
+    //         console.log(`Продукт с id ${id} не найден среди полученных данных`);
+    //     }
+    // }
 
     function handleAdd(event) {            
         handleAddToCart(event);

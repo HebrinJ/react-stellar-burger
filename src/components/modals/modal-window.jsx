@@ -3,8 +3,10 @@ import React from 'react';
 import style from './modal-window.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import PropTypes from 'prop-types';
-import { ingredientPropType } from '../../utils/prop-types';
 import ModalOverlay from './modal-overlay';
+import IngredientDetails from '../modals/types/ingredient-details';
+import OrderDetails from '../modals/types/order-details';
+import LoadingError from '../modals/types/loading-error';
 
 function ModalWindow(props) {     
 
@@ -22,6 +24,21 @@ function ModalWindow(props) {
         }
     }
 
+    function getModal() {        
+        
+        switch (props.modal.type) {
+            case 'order':                
+                return <OrderDetails orderNum={props.modal.modalData.orderNum}/>
+             case 'info':
+                return <IngredientDetails details={props.modal.modalData.selectedProduct} label='Детали ингридиента'/>                
+             case 'loadingError':
+                 return <LoadingError errorText={props.modal.modalData.error} label='Ошибка загрузки'/>
+            default:
+              console.log('Модальное окно не найдено');
+              break;        
+        }
+    }
+
     return ReactDOM.createPortal((        
         <>
         <ModalOverlay handleCloseModal={props.handleCloseModal}/>
@@ -31,16 +48,15 @@ function ModalWindow(props) {
                         <CloseIcon type='primary' onClick={props.handleCloseModal}/>
                     </div>
                 </div> 
-                { props.markup }
+                { getModal() }
             </div>                    
         </>        
     ), document.body);    
 }
 
 ModalWindow.propTypes = {    
-    selectedProduct: ingredientPropType,
-    errorText: PropTypes.string,
-    handleCloseModal: PropTypes.func.isRequired
+    modal: PropTypes.shape({visible: PropTypes.bool, type: PropTypes.string, modalData: PropTypes.object}),
+    handleCloseModal: PropTypes.func.isRequired,
 }
 
 export default ModalWindow;

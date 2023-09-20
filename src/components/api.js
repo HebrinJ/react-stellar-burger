@@ -10,12 +10,12 @@ export function getData() {
     return request('ingredients');
 }
 
-export function makeOrder(products) {
+export function makeOrder(ingredients) {
     
     return request('orders', {
         method: 'POST',
         headers: config.headers,
-        body: JSON.stringify({"ingredients": products})
+        body: JSON.stringify({"ingredients": ingredients})
     });
 }
 

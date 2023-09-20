@@ -1,28 +1,26 @@
-import styles from './app.module.css';
 import React from 'react';
+import styles from './app.module.css';
 import AppHeader from '../app-header/appHeader.jsx';
 import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { getData, makeOrder } from '../api.js';
 import ModalWindow from '../modals/modal-window';
 
-import IngredientDetails from '../modals/types/ingredient-details';
-import OrderDetails from '../modals/types/order-details';
-import LoadingError from '../modals/types/loading-error';
-
 import { OrderContext } from './order-context';
 import { DataContext } from './data-context';
 
 import cartReducer from './cart-reducer';
+import modalReducer from './modal-reducer';
 
 function App() {
-  const initialState = {bun: null, ingredients: []}
+  const initialCartState = {bun: null, ingredients: []};
+  const initialModalState = {visible: false, type: '', modalData: {}};
 
-  const [cart, dispatch] = React.useReducer(cartReducer, initialState);
+  const [cart, cartDispatch] = React.useReducer(cartReducer, initialCartState);
+  const [modal, modalDispatch] = React.useReducer(modalReducer, initialModalState)
   
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
-  const [openModal, setModal] = React.useState({visible: false, type: {}, selectedProduct: {}, orderNum: 0});
   const [loadingError, setError] = React.useState({isError: false, errorText: ''});
 
   React.useEffect(() => {
@@ -34,6 +32,10 @@ function App() {
     }).catch((err) => {
       console.log(err);
       setError(true, err);
+      modalDispatch({
+        type: 'loadingError',
+        payload: {error: err},
+      })
     });
   }, [])
 
@@ -43,14 +45,14 @@ function App() {
     const selectedProduct = data.find(item => item._id === id);
 
     if(selectedProduct.type === 'bun') {
-        dispatch({
+        cartDispatch({
           type: 'addBun',
           payload: id,
         })
         return;
     }
     
-    dispatch({
+    cartDispatch({
       type: 'add',
       payload: id,
     })
@@ -60,43 +62,29 @@ function App() {
     const ingredient = data.find(elem => elem.name === ingredientName);    
     const id = ingredient._id;
 
-    dispatch({
+    cartDispatch({
       type: 'remove',
       payload: id,
     })
   }
 
-  function handleOpenModal(type, selectedProduct, orderNum) {
-    setModal({visible: true, type: type, selectedProduct: selectedProduct, orderNum: orderNum});           
+  function handleOpenModal(type, modalDataObject) {
+    modalDispatch({
+      type: type,
+      payload: modalDataObject,
+    })
   }
 
   function handleCloseModal() {
-    setModal(false);
-  }
-
-  function getModal(type) {
-    let modalTypeMarkup = null;
-
-    switch (type) {
-      case 'order':
-          modalTypeMarkup = <OrderDetails orderNum={openModal.orderNum}/>
-          break;
-      case 'info':
-          modalTypeMarkup = <IngredientDetails details={openModal.selectedProduct} label='Детали ингридиента'/>
-          break;
-      case 'loadingError':
-          modalTypeMarkup = <LoadingError errorText={loadingError.errorText} label='Ошибка загрузки'/>
-      default:
-        console.log('Модальное окно не найдено');
-        break;        
-  }
-
-    return modalTypeMarkup;
+    modalDispatch({
+      type: 'close',
+      payload: {},
+    })
   }
 
   function handleOrder() {
     makeOrder(cart.ingredients).then((order) => {      
-      handleOpenModal('order', {}, order.order.number);
+      handleOpenModal('order', {orderNum: order.order.number});
     }).catch((err) => {
       console.log(err);
     });
@@ -117,12 +105,12 @@ function App() {
     <div className={styles.app}>
         <AppHeader />
         <main className={styles.content}>
-          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal('loadingError')} />}
-          {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal(openModal.type)} />}
+          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} modal={modal}/>}
+          {modal.visible && <ModalWindow handleCloseModal={handleCloseModal} modal={modal} />}
           <OrderContext.Provider value={cart}>
             <DataContext.Provider value={data}>
               <BurgerIngredients handleOpenModal={handleOpenModal} handleAddToCart={addToCart} />
-              <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOrder={handleOrder}/>
+              <BurgerConstructor handleClose={removeFromCart} handleOrder={handleOrder}/>
             </DataContext.Provider>
           </OrderContext.Provider>
         </main>
