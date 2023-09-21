@@ -3,13 +3,13 @@ import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor.module.css';
 import React from 'react';
 import PropTypes from 'prop-types';
-import { DataContext } from '../app/data-context.js';
-import { OrderContext } from '../app/order-context.js';
+import { IngredientDataContext } from '../../contexts/ingredient-data-context.js';
+import { OrderContext } from '../../contexts/order-context.js';
 import TotalPrice from './total-price/total-price';
 import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor(props) {
-    const data = React.useContext(DataContext);
+    const data = React.useContext(IngredientDataContext);
     const cart = React.useContext(OrderContext);
     
     let selectedBun = cart.bun;

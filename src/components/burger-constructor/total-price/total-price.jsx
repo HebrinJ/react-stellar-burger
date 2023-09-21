@@ -1,6 +1,6 @@
 import React from 'react';
-import { OrderContext } from '../../app/order-context.js';
-import { DataContext } from '../../app/data-context.js'
+import { OrderContext } from '../../../contexts/order-context.js';
+import { IngredientDataContext } from '../../../contexts/ingredient-data-context.js'
 import style from './total-price.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
@@ -8,7 +8,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 export default function TotalPrice({handleOrder}) {
 
     const cart = React.useContext(OrderContext);
-    const data = React.useContext(DataContext)
+    const data = React.useContext(IngredientDataContext)
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {

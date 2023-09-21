@@ -3,17 +3,17 @@ import PropTypes from 'prop-types';
 import Label from './label/label.jsx';
 import style from './items-block.module.css';
 import CatalogItem from '../catalog-item/catalog-item.jsx';
-import { DataContext } from '../../app/data-context.js';
+import { IngredientDataContext } from '../../../contexts/ingredient-data-context.js';
 
 function ItemsBlock({label, type, handleOpenModal, handleAddToCart}) {
-    const data = React.useContext(DataContext);
+    const ingredientsData = React.useContext(IngredientDataContext);
     
     return (
         <>        
             <Label text={label} />
             <div className={style.typeBox}>
                 {                    
-                    data.map((element, index) => {                    
+                    ingredientsData.map((element, index) => {                    
                         if(element.type === type)
                             return <CatalogItem 
                                 key={index} 

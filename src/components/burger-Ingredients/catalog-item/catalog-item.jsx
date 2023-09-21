@@ -4,13 +4,13 @@ import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './catalog-item.module.css';
 
-import { DataContext } from '../../app/data-context.js';
-import { OrderContext } from '../../app/order-context.js';
+import { IngredientDataContext } from '../../../contexts/ingredient-data-context.js';
+import { OrderContext } from '../../../contexts/order-context.js';
 
 function CatalogItem({image, name, price, currentItemId, handleOpenModal, handleAddToCart, type}) {
     const [count, setCount] = React.useState(0);
 
-    const data = React.useContext(DataContext);
+    const data = React.useContext(IngredientDataContext);
     const cart = React.useContext(OrderContext);
 
     React.useEffect(() => {        

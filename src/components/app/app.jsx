@@ -6,15 +6,17 @@ import BurgerConstructor from '../burger-constructor/burger-constructor';
 import { getData, makeOrder } from '../api.js';
 import ModalWindow from '../modals/modal-window';
 
-import { OrderContext } from './order-context';
-import { DataContext } from './data-context';
+import { OrderContext } from '../../contexts/order-context';
+import { IngredientDataContext } from '../../contexts/ingredient-data-context';
 
-import cartReducer from './cart-reducer';
-import modalReducer from './modal-reducer';
+import cartReducer from '../../contexts/cart-reducer';
+import modalReducer from '../../contexts/modal-reducer';
+
+import ModalSetter from '../modals/modal-setter';
 
 function App() {
   const initialCartState = {bun: null, ingredients: []};
-  const initialModalState = {visible: false, type: '', modalData: {}};
+  const initialModalState = {visible: false, type: '', modalSettings: {}};
 
   const [cart, cartDispatch] = React.useReducer(cartReducer, initialCartState);
   const [modal, modalDispatch] = React.useReducer(modalReducer, initialModalState)
@@ -105,13 +107,13 @@ function App() {
     <div className={styles.app}>
         <AppHeader />
         <main className={styles.content}>
-          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} modal={modal}/>}
-          {modal.visible && <ModalWindow handleCloseModal={handleCloseModal} modal={modal} />}
+          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} modal={modal}><ModalSetter modal={modal} /></ModalWindow>}
+          {modal.visible && <ModalWindow handleCloseModal={handleCloseModal} modal={modal} ><ModalSetter modal={modal} /></ModalWindow>}
           <OrderContext.Provider value={cart}>
-            <DataContext.Provider value={data}>
+            <IngredientDataContext.Provider value={data}>
               <BurgerIngredients handleOpenModal={handleOpenModal} handleAddToCart={addToCart} />
               <BurgerConstructor handleClose={removeFromCart} handleOrder={handleOrder}/>
-            </DataContext.Provider>
+            </IngredientDataContext.Provider>
           </OrderContext.Provider>
         </main>
     </div>
