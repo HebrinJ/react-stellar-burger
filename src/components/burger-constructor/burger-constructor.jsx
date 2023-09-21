@@ -2,7 +2,6 @@ import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-comp
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor.module.css';
 import React from 'react';
-import PropTypes from 'prop-types';
 import { IngredientDataContext } from '../../contexts/ingredient-data-context.js';
 import { OrderContext } from '../../contexts/order-context.js';
 import TotalPrice from './total-price/total-price';
@@ -10,15 +9,15 @@ import { v4 as uuidv4 } from 'uuid';
 
 function BurgerConstructor(props) {
     const data = React.useContext(IngredientDataContext);
-    const cart = React.useContext(OrderContext);
+    const order = React.useContext(OrderContext);
     
-    let selectedBun = cart.bun;
+    let selectedBun = order.cart.bun;
 
-    function handleClickClose(event) {
+    function handleClickRemove(event) {
         const parentNode = event.currentTarget.parentNode.parentNode;
         const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
         
-        props.handleClose(ingredientName);
+        removeFromCart(ingredientName);
     }
 
     function AddBun(type, bunId, data) {
@@ -30,11 +29,21 @@ function BurgerConstructor(props) {
             return <ConstructorElement type='bottom' text={ingredientAllData.name+' низ'} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
         }
     }
+
+    function removeFromCart(ingredientName) {
+        const ingredient = data.find(elem => elem.name === ingredientName);    
+        const id = ingredient._id;
+        
+        order.cartDispatch({
+          type: 'remove',
+          payload: id,
+        })
+      }
     
-    function AddIngredient(data, handleClickClose, ingrId) {
+    function AddIngredient(data, ingrId) {
         return <ul className={style.ingredient} key={ingrId}>        
                 <DragIcon type='primary'/>
-                <ConstructorElement text={data.name} price={data.price} thumbnail={data.image} handleClose={handleClickClose}/>
+                <ConstructorElement text={data.name} price={data.price} thumbnail={data.image} handleClose={handleClickRemove}/>
             </ul>
     }
 
@@ -48,9 +57,9 @@ function BurgerConstructor(props) {
                 </div>
                 <div className={`${style.list} custom-scroll`}>
                     {                             
-                        cart.ingredients.map((id) => {
+                        order.cart.ingredients.map((id) => {
                                 const ingredientAllData = data.find((elem) => elem._id === id);                                 
-                                    return AddIngredient(ingredientAllData, handleClickClose, uuidv4());
+                                    return AddIngredient(ingredientAllData, uuidv4());
                             })
                     }
                 </div>
@@ -63,10 +72,6 @@ function BurgerConstructor(props) {
             <TotalPrice handleOrder={props.handleOrder}/>            
         </section>
     )
-}
-
-BurgerConstructor.propTypes = {
-    handleClose: PropTypes.func.isRequired,
 }
 
 export default BurgerConstructor;

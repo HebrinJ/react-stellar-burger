@@ -41,35 +41,6 @@ function App() {
     });
   }, [])
 
-  
-  function addToCart(event) {
-    const id = event.currentTarget.getAttribute('name');
-    const selectedProduct = data.find(item => item._id === id);
-
-    if(selectedProduct.type === 'bun') {
-        cartDispatch({
-          type: 'addBun',
-          payload: id,
-        })
-        return;
-    }
-    
-    cartDispatch({
-      type: 'add',
-      payload: id,
-    })
-  }
-
-  function removeFromCart(ingredientName) {
-    const ingredient = data.find(elem => elem.name === ingredientName);    
-    const id = ingredient._id;
-
-    cartDispatch({
-      type: 'remove',
-      payload: id,
-    })
-  }
-
   function handleOpenModal(type, modalDataObject) {
     modalDispatch({
       type: type,
@@ -107,12 +78,12 @@ function App() {
     <div className={styles.app}>
         <AppHeader />
         <main className={styles.content}>
-          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} modal={modal}><ModalSetter modal={modal} /></ModalWindow>}
-          {modal.visible && <ModalWindow handleCloseModal={handleCloseModal} modal={modal} ><ModalSetter modal={modal} /></ModalWindow>}
-          <OrderContext.Provider value={cart}>
+          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} ><ModalSetter modal={modal} /></ModalWindow>}
+          {modal.visible && <ModalWindow handleCloseModal={handleCloseModal} ><ModalSetter modal={modal} /></ModalWindow>}
+          <OrderContext.Provider value={{cart: cart, cartDispatch}}>
             <IngredientDataContext.Provider value={data}>
-              <BurgerIngredients handleOpenModal={handleOpenModal} handleAddToCart={addToCart} />
-              <BurgerConstructor handleClose={removeFromCart} handleOrder={handleOrder}/>
+              <BurgerIngredients handleOpenModal={handleOpenModal} />
+              <BurgerConstructor handleOrder={handleOrder}/>
             </IngredientDataContext.Provider>
           </OrderContext.Provider>
         </main>

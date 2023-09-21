@@ -33,13 +33,13 @@ function BurgerIngredients(props) {
             </nav>            
             <div className={`${style.mainBox} custom-scroll`}>
                 <div ref={bun}>
-                    <ItemsBlock label='Булки' type='bun' handleOpenModal={props.handleOpenModal} handleAddToCart={props.handleAddToCart}/>
+                    <ItemsBlock label='Булки' type='bun' handleOpenModal={props.handleOpenModal} />
                 </div>
                 <div ref={sauce}>
-                    <ItemsBlock label='Соусы' type='sauce' handleOpenModal={props.handleOpenModal} handleAddToCart={props.handleAddToCart}/>
+                    <ItemsBlock label='Соусы' type='sauce' handleOpenModal={props.handleOpenModal} />
                 </div>
                 <div ref={main}>
-                    <ItemsBlock label='Основное' type='main' handleOpenModal={props.handleOpenModal} handleAddToCart={props.handleAddToCart}/>
+                    <ItemsBlock label='Основное' type='main' handleOpenModal={props.handleOpenModal} />
                 </div>
             </div>
         </section>

@@ -7,16 +7,16 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 
 export default function TotalPrice({handleOrder}) {
 
-    const cart = React.useContext(OrderContext);
+    const order = React.useContext(OrderContext);
     const data = React.useContext(IngredientDataContext)
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {
         countPrice();
-    }, [cart])
+    }, [order])
     
     const countPrice = () => {
-        let currentPrice = cart.ingredients.reduce((price, productId) => {
+        let currentPrice = order.cart.ingredients.reduce((price, productId) => {
             const foundProduct = data.find((item) => item._id === productId)
             
             if(foundProduct) {
@@ -26,8 +26,8 @@ export default function TotalPrice({handleOrder}) {
             return price;
         }, 0)
 
-        if(cart.bun) {
-            const price = data.find((product) => product._id === cart.bun).price;
+        if(order.cart.bun) {
+            const price = data.find((product) => product._id === order.cart.bun).price;
 
             currentPrice += price*2;
         }

@@ -7,24 +7,24 @@ import style from './catalog-item.module.css';
 import { IngredientDataContext } from '../../../contexts/ingredient-data-context.js';
 import { OrderContext } from '../../../contexts/order-context.js';
 
-function CatalogItem({image, name, price, currentItemId, handleOpenModal, handleAddToCart, type}) {
+function CatalogItem({image, name, price, currentItemId, handleOpenModal, handleAddToCart}) {
     const [count, setCount] = React.useState(0);
 
     const data = React.useContext(IngredientDataContext);
-    const cart = React.useContext(OrderContext);
+    const order = React.useContext(OrderContext);
 
     React.useEffect(() => {        
         updateCount();
-    }, [cart]);    
+    }, [order.cart]);    
 
     const updateCount = () => {  
         
-        if(cart.bun === currentItemId) {
+        if(order.cart.bun === currentItemId) {
             setCount(1);
             return;
         }
 
-        const products = cart.ingredients.filter((elem) => elem === currentItemId)        
+        const products = order.cart.ingredients.filter((elem) => elem === currentItemId)        
         setCount(products.length);      
     }  
 
@@ -41,12 +41,27 @@ function CatalogItem({image, name, price, currentItemId, handleOpenModal, handle
     //     }
     // }
 
-    function handleAdd(event) {            
-        handleAddToCart(event);
+    function handleAddToCart(event) {        
+        const id = event.currentTarget.getAttribute('name');
+        const selectedProduct = data.find(item => item._id === id);
+    
+        if(selectedProduct.type === 'bun') {
+            order.cartDispatch({
+                type: 'addBun',
+                payload: id,
+            })
+            return;
+        }
+        
+        order.cartDispatch({
+            type: 'add',
+            payload: id,
+        })
+        
     }
     
     return (
-        <div className={style.container} onClick={handleAdd} name={currentItemId}>
+        <div className={style.container} onClick={handleAddToCart} name={currentItemId}>
             <Counter count={count}/>
             <img className={style.image} src={image} alt={name}/>
             <div className={style.textBox}>

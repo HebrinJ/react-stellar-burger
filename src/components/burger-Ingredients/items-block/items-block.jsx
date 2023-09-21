@@ -22,7 +22,6 @@ function ItemsBlock({label, type, handleOpenModal, handleAddToCart}) {
                                 price={element.price} 
                                 currentItemId={element._id} 
                                 handleOpenModal={handleOpenModal}
-                                handleAddToCart={handleAddToCart}
                                 type={type}/>
                     })}
             </div>        
