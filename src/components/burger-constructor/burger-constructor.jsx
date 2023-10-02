@@ -6,44 +6,46 @@ import { IngredientDataContext } from '../../contexts/ingredient-data-context.js
 import { OrderContext } from '../../contexts/order-context.js';
 import TotalPrice from './total-price/total-price';
 import { v4 as uuidv4 } from 'uuid';
+import { useSelector } from 'react-redux';
 
-function BurgerConstructor(props) {
-    const data = React.useContext(IngredientDataContext);
-    const order = React.useContext(OrderContext);
+function BurgerConstructor(props) {    
     
-    let selectedBun = order.cart.bun;
+    const ingredientsData = useSelector(store => store.allIngredients);
+    const cartIngredients = useSelector(store => store.cart);
+    const selectedBun = useSelector(state => state.cart.bun);
 
     function handleClickRemove(event) {
-        const parentNode = event.currentTarget.parentNode.parentNode;
-        const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
+        // const parentNode = event.currentTarget.parentNode.parentNode;
+        // const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
         
-        removeFromCart(ingredientName);
+        // removeFromCart(ingredientName);
     }
 
     function AddBun(type, bunId, data) {
-        const ingredientAllData = data.find((elem) => elem._id === bunId);
+        //const ingredientAllData = data.find((elem) => elem._id === bunId);
+        //const selectedBun = ingredientsData.find((elem) => elem._id === bunId);
     
         if(type === 'top') {
-            return <ConstructorElement type='top' text={ingredientAllData.name+' верх'} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
+            return <ConstructorElement type='top' text={selectedBun.name+' верх'} price={selectedBun.price} thumbnail={selectedBun.image} isLocked={true}/>
         } else if (type === 'bottom') {
-            return <ConstructorElement type='bottom' text={ingredientAllData.name+' низ'} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
+            return <ConstructorElement type='bottom' text={selectedBun.name+' низ'} price={selectedBun.price} thumbnail={selectedBun.image} isLocked={true}/>
         }
     }
 
     function removeFromCart(ingredientName) {
-        const ingredient = data.find(elem => elem.name === ingredientName);    
-        const id = ingredient._id;
+        // const ingredient = data.find(elem => elem.name === ingredientName);    
+        // const id = ingredient._id;
         
-        order.cartDispatch({
-          type: 'remove',
-          payload: id,
-        })
+        // order.cartDispatch({
+        //   type: 'remove',
+        //   payload: id,
+        // })
       }
     
     function AddIngredient(data, ingrId) {
         return <ul className={style.ingredient} key={ingrId}>        
                 <DragIcon type='primary'/>
-                <ConstructorElement text={data.name} price={data.price} thumbnail={data.image} handleClose={handleClickRemove}/>
+                <ConstructorElement text={ingredientsData.name} price={ingredientsData.price} thumbnail={ingredientsData.image} handleClose={handleClickRemove}/>
             </ul>
     }
 
@@ -52,20 +54,20 @@ function BurgerConstructor(props) {
             <div className={`${style.bunContainer}`}>
                 <div>
                     {                            
-                        selectedBun && AddBun('top', selectedBun, data) 
+                        selectedBun && AddBun('top', selectedBun) 
                     }                    
                 </div>
                 <div className={`${style.list} custom-scroll`}>
                     {                             
-                        order.cart.ingredients.map((id) => {
-                                const ingredientAllData = data.find((elem) => elem._id === id);                                 
+                        cartIngredients.ingredients.map((id) => {
+                                const ingredientAllData = ingredientsData.find((elem) => elem._id === id);                                 
                                     return AddIngredient(ingredientAllData, uuidv4());
                             })
                     }
                 </div>
                 <div>
                     {                       
-                        selectedBun && AddBun('bottom', selectedBun, data) 
+                        selectedBun && AddBun('bottom', selectedBun) 
                     }                    
                 </div>                
             </div>

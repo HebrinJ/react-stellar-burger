@@ -4,11 +4,16 @@ import { IngredientDataContext } from '../../../contexts/ingredient-data-context
 import style from './total-price.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useSelector } from 'react-redux';
 
 export default function TotalPrice({handleOrder}) {
 
-    const order = React.useContext(OrderContext);
-    const data = React.useContext(IngredientDataContext)
+    //const order = React.useContext(OrderContext);
+    //const data = React.useContext(IngredientDataContext)
+    const cart = useSelector(state => state.cart);
+
+    const order = {};
+    const data = {};
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {
@@ -16,7 +21,7 @@ export default function TotalPrice({handleOrder}) {
     }, [order])
     
     const countPrice = () => {
-        let currentPrice = order.cart.ingredients.reduce((price, productId) => {
+        let currentPrice = cart.ingredients.reduce((price, productId) => {
             const foundProduct = data.find((item) => item._id === productId)
             
             if(foundProduct) {
@@ -26,8 +31,8 @@ export default function TotalPrice({handleOrder}) {
             return price;
         }, 0)
 
-        if(order.cart.bun) {
-            const price = data.find((product) => product._id === order.cart.bun).price;
+        if(cart.bun) {
+            const price = data.find((product) => product._id === cart.bun).price;
 
             currentPrice += price*2;
         }

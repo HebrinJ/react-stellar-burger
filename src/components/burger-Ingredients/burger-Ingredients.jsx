@@ -2,9 +2,8 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ItemsBlock from './items-block/items-block';
 import React from 'react';
 import style from './burger-ingredients.module.css';
-import PropTypes from 'prop-types';
 
-function BurgerIngredients(props) {
+export default function BurgerIngredients() {
     const bun = React.useRef(null);
     const sauce = React.useRef(null);
     const main = React.useRef(null);
@@ -33,21 +32,15 @@ function BurgerIngredients(props) {
             </nav>            
             <div className={`${style.mainBox} custom-scroll`}>
                 <div ref={bun}>
-                    <ItemsBlock label='Булки' type='bun' handleOpenModal={props.handleOpenModal} />
+                    <ItemsBlock label='Булки' type='bun'/>
                 </div>
                 <div ref={sauce}>
-                    <ItemsBlock label='Соусы' type='sauce' handleOpenModal={props.handleOpenModal} />
+                    <ItemsBlock label='Соусы' type='sauce'/>
                 </div>
                 <div ref={main}>
-                    <ItemsBlock label='Основное' type='main' handleOpenModal={props.handleOpenModal} />
+                    <ItemsBlock label='Основное' type='main'/>
                 </div>
             </div>
         </section>
     )
 }
-
-BurgerIngredients.propTypes = {
-    handleOpenModal: PropTypes.func.isRequired,
-}
-
-export default BurgerIngredients

@@ -2,7 +2,7 @@ import style from './ingredient-details.module.css';
 import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../../utils/prop-types';
 
-function IngredientDetails({details, label}) {
+function IngredientDetails({details, label}) {    
 
     return (
         <div className={style.position}>

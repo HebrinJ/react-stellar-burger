@@ -4,25 +4,27 @@ import Label from './label/label.jsx';
 import style from './items-block.module.css';
 import CatalogItem from '../catalog-item/catalog-item.jsx';
 import { IngredientDataContext } from '../../../contexts/ingredient-data-context.js';
+import { useSelector } from 'react-redux';
+import { v4 as uuidv4 } from 'uuid';
+
 
 function ItemsBlock({label, type, handleOpenModal, handleAddToCart}) {
-    const ingredientsData = React.useContext(IngredientDataContext);
+    const ingredientsData = useSelector(state => state.loading.allIngredients);    
     
     return (
         <>        
             <Label text={label} />
             <div className={style.typeBox}>
                 {                    
-                    ingredientsData.map((element, index) => {                    
+                    ingredientsData.map((element) => {                    
                         if(element.type === type)
                             return <CatalogItem 
-                                key={index} 
+                                key={uuidv4()} 
                                 image={element.image} 
                                 name={element.name} 
                                 price={element.price} 
-                                currentItemId={element._id} 
-                                handleOpenModal={handleOpenModal}
-                                type={type}/>
+                                ingredientId={element._id}
+                                />
                     })}
             </div>        
         </>
@@ -32,7 +34,6 @@ function ItemsBlock({label, type, handleOpenModal, handleAddToCart}) {
 ItemsBlock.propTypes = {
     label: PropTypes.string.isRequired,
     type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired,
-    handleOpenModal: PropTypes.func.isRequired,
 }
 
 export default ItemsBlock
