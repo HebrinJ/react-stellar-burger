@@ -33,7 +33,7 @@ export default function TotalPrice() {
 
     React.useEffect(() => {
         countPrice();
-    }, [order])
+    }, [cart])
     
     const countPrice = () => {
         let currentPrice = cart.ingredients.reduce((price, product) => {

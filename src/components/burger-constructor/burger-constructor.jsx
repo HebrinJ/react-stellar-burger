@@ -1,16 +1,13 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor.module.css';
-import React from 'react';
-import { IngredientDataContext } from '../../contexts/ingredient-data-context.js';
-import { OrderContext } from '../../contexts/order-context.js';
 import TotalPrice from './total-price/total-price';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop  } from "react-dnd";
 import { ADD_BUN, ADD_INGR, REMOVE_INGR } from '../../services/actions/cart-actions';
 
-function BurgerConstructor(props) {    
+function BurgerConstructor() {    
     
     const ingredientsData = useSelector(state => state.loading.allIngredients);
     const cartIngredients = useSelector(state => state.cart);
@@ -18,11 +15,14 @@ function BurgerConstructor(props) {
 
     const dispatch = useDispatch();
 
-    const [, dropTarget] = useDrop({
+    const [{ isOver }, dropTarget] = useDrop({
         accept: "product",
         drop(productId) {
              onDropHandler(productId);
         },
+        collect: monitor => ({
+            isOver: !!monitor.isOver()
+        })
     });
 
     function onDropHandler(productId) {
@@ -82,13 +82,18 @@ function BurgerConstructor(props) {
 
     return (
         <section className={style.constructorSection}>
-            <div className={`${style.bunContainer}`}>
+            
+            <div className={`${style.bunContainer} ${isOver ? style.dropReady : ''}`} ref={dropTarget}>            
+            { 
+                cartIngredients.ingredients.length === 0 && cartIngredients.bun === null && 
+                <div className={`${style.blancCart} text text_type_main-small`}>Перенесите ингредиент</div> 
+            }
                 <div>
                     {                            
                         selectedBun && AddBun('top', selectedBun) 
                     }                    
                 </div>
-                <div className={`${style.list} custom-scroll`} ref={dropTarget}>
+                <div className={`${style.list} custom-scroll`} >
                     {                             
                         cartIngredients.ingredients.map((product) => {             
                                 const productData = ingredientsData.find((elem) => elem._id === product._id);                                                              
