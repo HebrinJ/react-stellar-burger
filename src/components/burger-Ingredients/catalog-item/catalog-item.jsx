@@ -14,9 +14,7 @@ import { useDrag } from "react-dnd";
 function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
     const [count, setCount] = React.useState(0);
 
-    //const data = React.useContext(IngredientDataContext);
-    //const order = React.useContext(OrderContext);
-    //const order = useSelector(state => state.order);
+    const cart = useSelector(state => state.cart);
     const data = useSelector(state => state.loading.allIngredients);
     const selectedProduct = useSelector(state => state.selected);
     const dispatch = useDispatch();
@@ -29,20 +27,20 @@ function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
         })
     });
 
-    // React.useEffect(() => {        
-    //     updateCount();
-    // }, [order.cartIngredients]);    
+    React.useEffect(() => {        
+        updateCount();
+    }, [cart]);    
 
-    // const updateCount = () => {  
+    const updateCount = () => {  
         
-    //     if(order.cartIngredients.bun === ingredientId) {
-    //         setCount(1);
-    //         return;
-    //     }
+        if(cart.bun && cart.bun._id === ingredientId) {
+            setCount(1);
+            return;
+        }
 
-    //     const products = order.cartIngredients.ingredients.filter((elem) => elem === ingredientId)        
-    //     setCount(products.length);      
-    // }  
+        const products = cart.ingredients.filter((elem) => elem._id === ingredientId)        
+        setCount(products.length);      
+    }  
 
     function showInrgedientData(event) {
         const clickedProductId = event.currentTarget.getAttribute('name');
