@@ -20,6 +20,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 function App() {
   //const initialCartState = {bun: null, ingredients: []};
   //const initialModalState = {visible: false, type: '', modalSettings: {}};
@@ -96,13 +99,15 @@ function App() {
 
   return (
     <div className={styles.app}>        
-        <AppHeader />        
+        <AppHeader />
+        <DndProvider backend={HTML5Backend}>        
         <main className={styles.content}>
           {loading.isError && <ModalWindow><ModalSetter /></ModalWindow>}
           {modal.visible && <ModalWindow><ModalSetter /></ModalWindow>}          
               <BurgerIngredients />
               <BurgerConstructor handleOrder={handleOrder}/>
-        </main>        
+        </main> 
+        </DndProvider>       
     </div>
   );
   

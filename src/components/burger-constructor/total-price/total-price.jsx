@@ -11,18 +11,18 @@ export default function TotalPrice({handleOrder}) {
     //const order = React.useContext(OrderContext);
     //const data = React.useContext(IngredientDataContext)
     const cart = useSelector(state => state.cart);
+    const data = useSelector(state => state.loading.allIngredients);
 
     const order = {};
-    const data = {};
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {
-        countPrice();
+        //countPrice();
     }, [order])
     
     const countPrice = () => {
         let currentPrice = cart.ingredients.reduce((price, productId) => {
-            const foundProduct = data.find((item) => item._id === productId)
+            const foundProduct = data.find((item) => item._id === productId.ingredientId)
             
             if(foundProduct) {
                 price += foundProduct.price;

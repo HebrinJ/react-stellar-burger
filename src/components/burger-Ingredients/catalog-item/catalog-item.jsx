@@ -9,6 +9,7 @@ import { IngredientDataContext } from '../../../contexts/ingredient-data-context
 import { OrderContext } from '../../../contexts/order-context.js';
 import { SELECT_ITEM } from '../../../services/actions/select-actions';
 import { MODAL_INGR_INFO } from '../../../services/actions/modal-actions';
+import { useDrag } from "react-dnd";
 
 function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
     const [count, setCount] = React.useState(0);
@@ -20,6 +21,13 @@ function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
     const selectedProduct = useSelector(state => state.selected);
     const dispatch = useDispatch();
     
+    const [{isDrag}, dragRef] = useDrag({
+        type: 'product',
+        item: {ingredientId},
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
 
     // React.useEffect(() => {        
     //     updateCount();
@@ -90,7 +98,7 @@ function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
     
     
     return (
-        <div className={style.container} onClick={showInrgedientData} name={ingredientId}>
+        <div className={style.container} onClick={showInrgedientData} name={ingredientId} draggable ref={dragRef}>
             <Counter count={count}/>
             <img className={style.image} src={image} alt={name}/>
             <div className={style.textBox}>

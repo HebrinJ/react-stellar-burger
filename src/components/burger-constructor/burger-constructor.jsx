@@ -6,19 +6,50 @@ import { IngredientDataContext } from '../../contexts/ingredient-data-context.js
 import { OrderContext } from '../../contexts/order-context.js';
 import TotalPrice from './total-price/total-price';
 import { v4 as uuidv4 } from 'uuid';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop  } from "react-dnd";
+import { ADD_BUN, ADD_INGR, REMOVE_INGR } from '../../services/actions/cart-actions';
 
 function BurgerConstructor(props) {    
     
-    const ingredientsData = useSelector(store => store.allIngredients);
-    const cartIngredients = useSelector(store => store.cart);
+    const ingredientsData = useSelector(state => state.loading.allIngredients);
+    const cartIngredients = useSelector(state => state.cart);
     const selectedBun = useSelector(state => state.cart.bun);
 
+    const dispatch = useDispatch();
+
+    const [, dropTarget] = useDrop({
+        accept: "product",
+        drop(productId) {
+             onDropHandler(productId);
+        },
+    });
+
+    function onDropHandler(productId) {
+        const productData = getDragingProductData(productId);        
+
+        if(productData.type === 'bun') {
+            dispatch({
+                type: ADD_BUN,
+                payload: productData
+            })
+        } else {
+            dispatch({
+                type: ADD_INGR,
+                payload: productData
+            })
+        }        
+    }
+
+    function getDragingProductData(productId) {
+        return ingredientsData.find(product => product._id === productId.ingredientId);
+    }
+
     function handleClickRemove(event) {
-        // const parentNode = event.currentTarget.parentNode.parentNode;
-        // const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
+        const parentNode = event.currentTarget.parentNode.parentNode;
+        const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
         
-        // removeFromCart(ingredientName);
+        removeFromCart(ingredientName);
     }
 
     function AddBun(type, bunId, data) {
@@ -33,19 +64,19 @@ function BurgerConstructor(props) {
     }
 
     function removeFromCart(ingredientName) {
-        // const ingredient = data.find(elem => elem.name === ingredientName);    
-        // const id = ingredient._id;
-        
-        // order.cartDispatch({
-        //   type: 'remove',
-        //   payload: id,
-        // })
+        const ingredient = ingredientsData.find(elem => elem.name === ingredientName);    
+        const id = ingredient._id;
+
+        dispatch({
+            type: REMOVE_INGR,
+            payload: id,
+        })
       }
     
-    function AddIngredient(data, ingrId) {
+    function AddIngredient(productData, ingrId) {
         return <ul className={style.ingredient} key={ingrId}>        
                 <DragIcon type='primary'/>
-                <ConstructorElement text={ingredientsData.name} price={ingredientsData.price} thumbnail={ingredientsData.image} handleClose={handleClickRemove}/>
+                <ConstructorElement text={productData.name} price={productData.price} thumbnail={productData.image} handleClose={handleClickRemove}/>
             </ul>
     }
 
@@ -57,11 +88,11 @@ function BurgerConstructor(props) {
                         selectedBun && AddBun('top', selectedBun) 
                     }                    
                 </div>
-                <div className={`${style.list} custom-scroll`}>
+                <div className={`${style.list} custom-scroll`} ref={dropTarget}>
                     {                             
-                        cartIngredients.ingredients.map((id) => {
-                                const ingredientAllData = ingredientsData.find((elem) => elem._id === id);                                 
-                                    return AddIngredient(ingredientAllData, uuidv4());
+                        cartIngredients.ingredients.map((product) => {             
+                                const productData = ingredientsData.find((elem) => elem._id === product._id);                                                              
+                                    return AddIngredient(productData, uuidv4());
                             })
                     }
                 </div>
