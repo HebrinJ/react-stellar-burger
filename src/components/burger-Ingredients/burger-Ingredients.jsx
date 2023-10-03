@@ -22,6 +22,20 @@ export default function BurgerIngredients() {
         setSelected({...selected, [currentSelectedType]: false, [type]: true})
     }
 
+    const handleScroll = () => {        
+        const bunCoords = bun.current?.getBoundingClientRect();
+        const sauceCoords = sauce.current?.getBoundingClientRect();
+        const mainCoords = main.current?.getBoundingClientRect();
+        
+        if(bunCoords.y > 0) {
+            setSelected({bun: true, sauce: false, main: false});
+        } else if(bunCoords.y < 0 && (sauceCoords.y) > 0) {
+            setSelected({bun: false, sauce: true, main: false});
+        } else if (sauceCoords.y < 0 && mainCoords.y > 0) {
+            setSelected({bun: false, sauce: false, main: true});
+        }
+    }
+
     return (
         <section>
             <p className='text text_type_main-large'>Соберите бургер</p>
@@ -30,7 +44,7 @@ export default function BurgerIngredients() {
                 <Tab onClick={() => handleClick(sauce, 'sauce')} active={selected.sauce}>Соусы</Tab>
                 <Tab onClick={() => handleClick(main, 'main')} active={selected.main}>Начинки</Tab>
             </nav>            
-            <div className={`${style.mainBox} custom-scroll`}>
+            <div className={`${style.mainBox} custom-scroll`} onScroll={handleScroll}>
                 <div ref={bun}>
                     <ItemsBlock label='Булки' type='bun'/>
                 </div>
