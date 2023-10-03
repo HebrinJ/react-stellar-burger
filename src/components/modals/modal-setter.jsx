@@ -8,12 +8,13 @@ export default function ModalSetter() {
 
     const modal = useSelector(state => state.modal);
     const selectedProduct = useSelector(state => state.selected);
+    const order = useSelector(state => state.order);
 
     function getModal() {       
-        
+        console.log(order)
         switch (modal.type) {
             case 'order':                
-                return <OrderDetails orderNum={modal.modalSettings.orderNum}/>
+                return <OrderDetails orderNum={order.orderData.order.number}/>
              case 'info':
                 return <IngredientDetails details={selectedProduct} label='Детали ингридиента'/>                
              case 'loadingError':

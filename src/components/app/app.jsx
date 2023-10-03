@@ -77,14 +77,7 @@ function App() {
   React.useEffect(() => {
     dispatch(getIngredientsData());    
   }, []) 
-
-  function handleOrder() {
-    // makeOrder(cart.ingredients).then((order) => {      
-    //   handleOpenModal('order', {orderNum: order.order.number});
-    // }).catch((err) => {
-    //   console.log(err);
-    // });
-  }
+ 
 
   if(loading.isLoading) {
     return (
@@ -105,7 +98,7 @@ function App() {
           {loading.isError && <ModalWindow><ModalSetter /></ModalWindow>}
           {modal.visible && <ModalWindow><ModalSetter /></ModalWindow>}          
               <BurgerIngredients />
-              <BurgerConstructor handleOrder={handleOrder}/>
+              <BurgerConstructor />
         </main> 
         </DndProvider>       
     </div>
