@@ -1,4 +1,8 @@
 import React from 'react';
+
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
+
 import styles from './app.module.css';
 import AppHeader from '../app-header/appHeader.jsx';
 import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
@@ -20,8 +24,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { createStore, applyMiddleware } from 'redux';
 import { Provider } from 'react-redux';
 
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
+
 
 function App() {
   //const initialCartState = {bun: null, ingredients: []};

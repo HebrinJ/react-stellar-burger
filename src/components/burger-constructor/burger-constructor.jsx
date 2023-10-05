@@ -5,7 +5,9 @@ import TotalPrice from './total-price/total-price';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from 'react-redux';
 import { useDrop  } from "react-dnd";
-import { ADD_BUN, ADD_INGR, REMOVE_INGR } from '../../services/actions/cart-actions';
+import { ADD_BUN, ADD_INGR, REMOVE_INGR, MOVE_INGR } from '../../services/actions/cart-actions';
+import DraggableIngredient from './draggable-ingredient/draggable-ingredient';
+import { useCallback, useState } from 'react';
 
 function BurgerConstructor() {    
     
@@ -22,11 +24,12 @@ function BurgerConstructor() {
         },
         collect: monitor => ({
             isOver: !!monitor.isOver()
-        })
+        }),        
     });
 
     function onDropHandler(productId) {
-        const productData = getDragingProductData(productId);        
+        
+        const productData = getDraggingProductData(productId);
 
         if(productData.type === 'bun') {
             dispatch({
@@ -41,7 +44,7 @@ function BurgerConstructor() {
         }        
     }
 
-    function getDragingProductData(productId) {
+    function getDraggingProductData(productId) {
         return ingredientsData.find(product => product._id === productId.ingredientId);
     }
 
@@ -53,8 +56,6 @@ function BurgerConstructor() {
     }
 
     function AddBun(type, bunId, data) {
-        //const ingredientAllData = data.find((elem) => elem._id === bunId);
-        //const selectedBun = ingredientsData.find((elem) => elem._id === bunId);
     
         if(type === 'top') {
             return <ConstructorElement type='top' text={selectedBun.name+' верх'} price={selectedBun.price} thumbnail={selectedBun.image} isLocked={true}/>
@@ -73,12 +74,23 @@ function BurgerConstructor() {
         })
       }
     
-    function AddIngredient(productData, ingrId) {
-        return <ul className={style.ingredient} key={ingrId}>        
-                <DragIcon type='primary'/>
-                <ConstructorElement text={productData.name} price={productData.price} thumbnail={productData.image} handleClose={handleClickRemove}/>
-            </ul>
-    }
+    // function AddIngredient(productData, ingrId) {
+    //     return <ul className={style.ingredient} key={ingrId}>        
+    //             <DragIcon type='primary'/>
+    //             <ConstructorElement text={productData.name} price={productData.price} thumbnail={productData.image} handleClose={handleClickRemove}/>
+    //         </ul>
+    // }
+    // function AddIngredient(productData, ingrId, index, moveProduct) {
+    //     return <DraggableIngredient productData={productData} id={ingrId} index={index} handleClose={handleClickRemove} moveProduct={moveProduct}/>
+    // }    
+
+    const moveProduct = useCallback((dragIndex, hoverIndex) => {
+        dispatch({
+            type: MOVE_INGR,
+            payload: {dragIndex, hoverIndex}
+        })
+      }, [])
+     
 
     return (
         <section className={style.constructorSection}>
@@ -94,10 +106,12 @@ function BurgerConstructor() {
                     }                    
                 </div>
                 <div className={`${style.list} custom-scroll`} >
-                    {                             
-                        cartIngredients.ingredients.map((product) => {             
-                                const productData = ingredientsData.find((elem) => elem._id === product._id);                                                              
-                                    return AddIngredient(productData, uuidv4());
+                    {
+                        cartIngredients.ingredients.map((product, index) => {
+                                const productData = ingredientsData.find((elem) => elem._id === product._id); 
+                                const uid = uuidv4();
+                                    return <DraggableIngredient productData={productData} ingredientId={uid} key={uid} 
+                                    index={index} handleClose={handleClickRemove} moveProduct={moveProduct}/>
                             })
                     }
                 </div>
