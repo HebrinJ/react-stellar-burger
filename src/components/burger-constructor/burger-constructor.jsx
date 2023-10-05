@@ -55,7 +55,7 @@ function BurgerConstructor() {
         removeFromCart(ingredientName);
     }
 
-    function AddBun(type, bunId, data) {
+    function AddBun(type) {
     
         if(type === 'top') {
             return <ConstructorElement type='top' text={selectedBun.name+' верх'} price={selectedBun.price} thumbnail={selectedBun.image} isLocked={true}/>
@@ -72,25 +72,14 @@ function BurgerConstructor() {
             type: REMOVE_INGR,
             payload: id,
         })
-      }
-    
-    // function AddIngredient(productData, ingrId) {
-    //     return <ul className={style.ingredient} key={ingrId}>        
-    //             <DragIcon type='primary'/>
-    //             <ConstructorElement text={productData.name} price={productData.price} thumbnail={productData.image} handleClose={handleClickRemove}/>
-    //         </ul>
-    // }
-    // function AddIngredient(productData, ingrId, index, moveProduct) {
-    //     return <DraggableIngredient productData={productData} id={ingrId} index={index} handleClose={handleClickRemove} moveProduct={moveProduct}/>
-    // }    
+      }       
 
-    const moveProduct = useCallback((dragIndex, hoverIndex) => {
+    const moveProduct = useCallback((dragIndex, hoverIndex) => {        
         dispatch({
             type: MOVE_INGR,
             payload: {dragIndex, hoverIndex}
-        })
-      }, [])
-     
+        })        
+      }, [cartIngredients])
 
     return (
         <section className={style.constructorSection}>
@@ -102,22 +91,22 @@ function BurgerConstructor() {
             }
                 <div>
                     {                            
-                        selectedBun && AddBun('top', selectedBun) 
+                        selectedBun && AddBun('top') 
                     }                    
                 </div>
                 <div className={`${style.list} custom-scroll`} >
-                    {
-                        cartIngredients.ingredients.map((product, index) => {
+                    {                        
+                        cartIngredients.ingredients.map((product, index) => {                                                        
                                 const productData = ingredientsData.find((elem) => elem._id === product._id); 
                                 const uid = uuidv4();
                                     return <DraggableIngredient productData={productData} ingredientId={uid} key={uid} 
                                     index={index} handleClose={handleClickRemove} moveProduct={moveProduct}/>
-                            })
+                            })                          
                     }
                 </div>
                 <div>
                     {                       
-                        selectedBun && AddBun('bottom', selectedBun) 
+                        selectedBun && AddBun('bottom') 
                     }                    
                 </div>                
             </div>

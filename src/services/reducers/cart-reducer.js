@@ -20,7 +20,7 @@ export default function cartReducer(state = initialState, action) {
         case MOVE_INGR:
             const drag = action.payload.dragIndex;
             const hover = action.payload.hoverIndex;
-            [state.ingredients[drag], state.ingredients[hover]] = [state.ingredients[hover], state.ingredients[drag]]           
+            [state.ingredients[drag], state.ingredients[hover]] = [state.ingredients[hover], state.ingredients[drag]]
             
             return {
             ...state, ingredients: state.ingredients, isDragging: hover,

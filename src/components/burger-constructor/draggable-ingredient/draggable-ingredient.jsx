@@ -60,21 +60,24 @@ export default function DraggableIngredient({productData, ingredientId, index, h
         moveProduct(dragIndex, hoverIndex);
         
         item.index = hoverIndex
-        },10)
+        }, 1)
     },
   })
 
-  const [{ isDragging }, drag] = useDrag({
+  const [, drag] = useDrag({
     type: "element",
-    item: () => {
+    item: () => {      
       return { ingredientId, index }
     },
-    collect: (monitor) => ({
-      isDragging: monitor.isDragging(),
-    }),
+    end() {
+        dispatch({
+            type: STOP_MOVE
+        })
+    },    
   })
-
-  const opacity = index === tmpIndex ? 0 : 1
+  
+  const opacity = index === tmpIndex ? 0.2 : 1
+  
   
   drag(drop(productItem))
     
