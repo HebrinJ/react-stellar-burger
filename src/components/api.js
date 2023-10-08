@@ -1,5 +1,5 @@
 const config = {
-    baseUrl: `https://norma.nomoreparties.space/api/ingredients`,
+    baseUrl: `https://norma.nomoreparties.space/api/`,
     headers: {
         authorization: "020effc4-1211-4deb-93d9-11a33dcdf1a5",
         "Content-Type": "application/json",
@@ -7,7 +7,16 @@ const config = {
 };
 
 export function getData() {
-    return request();
+    return request('ingredients');
+}
+
+export function makeOrder(ingredients) {
+    
+    return request('orders', {
+        method: 'POST',
+        headers: config.headers,
+        body: JSON.stringify({"ingredients": ingredients})
+    });
 }
 
 function checkResponse(result) {
@@ -17,6 +26,6 @@ function checkResponse(result) {
     return Promise.reject(`Ошибка ${result.status}`);
 }
 
-function request() {
-    return fetch(config.baseUrl).then(result => checkResponse(result));
+function request(endPoint, settings) {
+    return fetch(config.baseUrl+endPoint, settings).then(result => checkResponse(result));
 }

@@ -1,23 +1,28 @@
-import styles from './app.module.css';
 import React from 'react';
+import styles from './app.module.css';
 import AppHeader from '../app-header/appHeader.jsx';
 import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { getData } from '../api.js';
+import { getData, makeOrder } from '../api.js';
 import ModalWindow from '../modals/modal-window';
 
-import IngredientDetails from '../modals/types/ingredient-details';
-import OrderDetails from '../modals/types/order-details';
-import LoadingError from '../modals/types/loading-error';
+import { OrderContext } from '../../contexts/order-context';
+import { IngredientDataContext } from '../../contexts/ingredient-data-context';
 
-import { OrderContext } from './order-context';
-import { DataContext } from './data-context';
+import cartReducer from '../../contexts/cart-reducer';
+import modalReducer from '../../contexts/modal-reducer';
+
+import ModalSetter from '../modals/modal-setter';
 
 function App() {
-  const [cart, setCart] = React.useState([]);
+  const initialCartState = {bun: null, ingredients: []};
+  const initialModalState = {visible: false, type: '', modalSettings: {}};
+
+  const [cart, cartDispatch] = React.useReducer(cartReducer, initialCartState);
+  const [modal, modalDispatch] = React.useReducer(modalReducer, initialModalState)
+  
   const [data, setData] = React.useState([]);
   const [isLoading, setLoading] = React.useState(true);
-  const [openModal, setModal] = React.useState({visible: false, type: {}, selectedProduct: {}});
   const [loadingError, setError] = React.useState({isError: false, errorText: ''});
 
   React.useEffect(() => {
@@ -29,104 +34,33 @@ function App() {
     }).catch((err) => {
       console.log(err);
       setError(true, err);
+      modalDispatch({
+        type: 'loadingError',
+        payload: {error: err},
+      })
     });
   }, [])
 
-  // Заготовка метода для добавления ингредиентов в конструктор
-  function addToCart(event) {
-    const id = event.currentTarget.getAttribute('name');
-    const selectedProduct = data.find(item => item._id === id);    
-    const inCartProduct = cart.find((cartProduct) => {
-      return cartProduct.product.id === selectedProduct._id;
-      })
-
-    if(selectedProduct.type === 'bun') {
-      addBun(selectedProduct);
-      return;
-    }
-    
-    if(inCartProduct) {      
-      updateQuantity(inCartProduct);
-      return;
-    }
-
-    addNewProduct(selectedProduct);
-  }
-
-  function addNewProduct(selectedProductData) {
-    const newProduct = getNewProduct(selectedProductData);
-    
-    setCart((prevState) => ([
-      ...prevState, newProduct      
-    ]));
-  }
-
-  function updateQuantity(inCartProduct) {
-    setCart([
-      ...cart.filter(element => element.product.id !== inCartProduct.product.id),
-       {...inCartProduct, quantity: inCartProduct.quantity + 1}
-    ]);
-  }
-
-  function addBun(selectedProductData) {
-      const newProduct = getNewProduct(selectedProductData);
-      
-      setCart([...cart.filter(element => element.product.type !== 'bun'), newProduct]);
-  }
-
-  function getNewProduct(data) {
-    return {
-      product: {
-        id: data._id,
-        type: data.type,
-        price: data.price,
-      },
-      quantity: 1
-    }
-  }
-
-  function removeFromCart(productName) {
-    const product = data.find(elem => elem.name === productName);
-    const selectedProduct = cart.find(elem => elem.product.id === product._id);
-
-    if(selectedProduct.quantity > 1) {
-      setCart([
-        ...cart.filter(element => element.product.id !== selectedProduct.product.id),
-         {...selectedProduct, quantity: selectedProduct.quantity - 1}
-      ]);
-
-      return;
-    }
-    
-    setCart([...cart.filter(element => element.product.id !== product._id)]);
-  }
-
-  function handleOpenModal(type, selectedProduct) {
-    setModal({visible: true, type: type, selectedProduct: selectedProduct});           
+  function handleOpenModal(type, modalDataObject) {
+    modalDispatch({
+      type: type,
+      payload: modalDataObject,
+    })
   }
 
   function handleCloseModal() {
-    setModal(false);
+    modalDispatch({
+      type: 'close',
+      payload: {},
+    })
   }
 
-  function getModal(type) {
-    let modalTypeMarkup = null;
-
-    switch (type) {
-      case 'order':
-          modalTypeMarkup = <OrderDetails />
-          break;
-      case 'info':
-          modalTypeMarkup = <IngredientDetails details={openModal.selectedProduct} label='Детали ингридиента'/>
-          break;
-      case 'loadingError':
-          modalTypeMarkup = <LoadingError errorText={loadingError.errorText} label='Ошибка загрузки'/>
-      default:
-        console.log('Модальное окно не найдено');
-        break;        
-  }
-
-    return modalTypeMarkup;
+  function handleOrder() {
+    makeOrder(cart.ingredients).then((order) => {      
+      handleOpenModal('order', {orderNum: order.order.number});
+    }).catch((err) => {
+      console.log(err);
+    });
   }
 
   if(isLoading) {
@@ -144,13 +78,13 @@ function App() {
     <div className={styles.app}>
         <AppHeader />
         <main className={styles.content}>
-          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal('loadingError')} />}
-          {openModal.visible && <ModalWindow handleCloseModal={handleCloseModal} markup={getModal(openModal.type)} />}
-          <OrderContext.Provider value={cart}>
-            <DataContext.Provider value={data}>
-              <BurgerIngredients data={data} cart={cart} handleOpenModal={handleOpenModal} />
-              <BurgerConstructor data={data} cart={cart} handleClose={removeFromCart} handleOpenModal={handleOpenModal}/>
-            </DataContext.Provider>
+          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} ><ModalSetter modal={modal} /></ModalWindow>}
+          {modal.visible && <ModalWindow handleCloseModal={handleCloseModal} ><ModalSetter modal={modal} /></ModalWindow>}
+          <OrderContext.Provider value={{cart: cart, cartDispatch}}>
+            <IngredientDataContext.Provider value={data}>
+              <BurgerIngredients handleOpenModal={handleOpenModal} />
+              <BurgerConstructor handleOrder={handleOrder}/>
+            </IngredientDataContext.Provider>
           </OrderContext.Provider>
         </main>
     </div>

@@ -23,25 +23,10 @@
     margin-bottom: 40px;
 }
 
-.order {
-    display: flex;
-    justify-content: end;
-    align-items: center;
-    padding-right: 40px;
-    padding-bottom: 30px;
-}
-
 .icon {
     width: 33px;
     height: 33px;
     object-fit: fill;
-}
-
-.priceBox {
-    display: flex;
-    margin: 40px;
-    align-items: center;
-    gap: 10px;
 }
 
 .ingredient {
