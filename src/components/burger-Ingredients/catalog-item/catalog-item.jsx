@@ -11,8 +11,9 @@ import { SELECT_ITEM } from '../../../services/actions/select-actions';
 import { MODAL_INGR_INFO } from '../../../services/actions/modal-actions';
 import { useDrag } from "react-dnd";
 
-function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
-    const [count, setCount] = React.useState(0);
+//function CatalogItem({ image, name, price, ingredientId, handleAddToCart}) {
+function CatalogItem({ingredientData}) {
+    const [count, setCount] = React.useState(0);    
 
     const cart = useSelector(state => state.cart);
     const data = useSelector(state => state.loading.allIngredients);
@@ -21,7 +22,7 @@ function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
     
     const [{isDrag}, dragRef] = useDrag({
         type: 'product',
-        item: {ingredientId},
+        item: {ingredientData},
         collect: monitor => ({
             isDrag: monitor.isDragging()
         })
@@ -33,12 +34,12 @@ function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
 
     const updateCount = () => {  
         
-        if(cart.bun && cart.bun._id === ingredientId) {
+        if(cart.bun && cart.bun._id === ingredientData._id) {
             setCount(1);
             return;
         }
 
-        const products = cart.ingredients.filter((elem) => elem._id === ingredientId)        
+        const products = cart.ingredients.filter((elem) => elem._id === ingredientData._id)        
         setCount(products.length);      
     }  
 
@@ -92,18 +93,18 @@ function CatalogItem({image, name, price, ingredientId, handleAddToCart}) {
         // order.cartDispatch({
         //     type: 'add',
         //     payload: id,
-        // })       
+        // })      
     
     
     return (
-        <div className={style.container} onClick={showInrgedientData} name={ingredientId} draggable ref={dragRef}>
+        <div className={style.container} onClick={showInrgedientData} name={ingredientData._id} draggable ref={dragRef}>
             <Counter count={count}/>
-            <img className={style.image} src={image} alt={name}/>
+            <img className={style.image} src={ingredientData.image} alt={ingredientData.name}/>
             <div className={style.textBox}>
                 <div className={style.price}>
-                    <p className='text text_type_digits-default'>{price}</p><CurrencyIcon type='primary' />
+                    <p className='text text_type_digits-default'>{ingredientData.price}</p><CurrencyIcon type='primary' />
                 </div>
-                <p className='text text_type_main-default'>{name}</p>
+                <p className='text text_type_main-default'>{ingredientData.name}</p>
             </div>
             
         </div>

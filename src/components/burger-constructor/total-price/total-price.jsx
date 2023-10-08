@@ -18,7 +18,7 @@ export default function TotalPrice() {
     //const orderProducts = cart.ingredients.map((item) => item._id).concat(bun._id);
 
     function getOrderIds() {
-        let ingredients = cart.ingredients.map((item) => item._id);
+        let ingredients = cart.ingredients.map((item) => item.ingredientData._id);
         
         if(bun) {
             ingredients = ingredients.concat(bun._id);
@@ -47,7 +47,7 @@ export default function TotalPrice() {
         }, 0)
 
         if(cart.bun) {
-            const price = data.find((product) => product._id === cart.bun._id).price;
+            const price = data.find((product) => product._id === cart.bun.ingredientData._id).price;
 
             currentPrice += price*2;
         }

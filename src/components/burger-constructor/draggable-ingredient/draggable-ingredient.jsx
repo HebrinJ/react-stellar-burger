@@ -18,11 +18,11 @@ export default function DraggableIngredient({productData, ingredientId, index, h
 
   const [{ handlerId }, drop] = useDrop({
     accept: "element",
-    drop() {
-        dispatch({
-            type: STOP_MOVE
-        })
-    },
+    // drop() {
+    //     dispatch({
+    //         type: STOP_MOVE
+    //     })
+    // },
     collect(monitor) {        
       return {
         handlerId: monitor.getHandlerId(),
@@ -30,37 +30,67 @@ export default function DraggableIngredient({productData, ingredientId, index, h
     },
     hover(item, monitor) {
       
-      setTimeout(() => {
-        if (!productItem.current) {
-            return
-        }
-        const dragIndex = item.index
-        const hoverIndex = index        
+      // setTimeout(() => {
+      //   if (!productItem.current) {
+      //       return
+      //   }
+      //   const dragIndex = item.index
+      //   const hoverIndex = index        
         
-        if (dragIndex === hoverIndex) {
-            return
-        }
+      //   if (dragIndex === hoverIndex) {
+      //       return
+      //   }
         
-        const hoverBoundingRect = productItem.current?.getBoundingClientRect()
+      //   const hoverBoundingRect = productItem.current?.getBoundingClientRect()
         
-        const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+      //   const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
         
-        const clientOffset = monitor.getClientOffset()
+      //   const clientOffset = monitor.getClientOffset()
         
-        const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      //   const hoverClientY = clientOffset.y - hoverBoundingRect.top
         
-        if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-            return
-        }
+      //   if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+      //       return
+      //   }
         
-        if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-            return
-        }
+      //   if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+      //       return
+      //   }
         
-        moveProduct(dragIndex, hoverIndex);
+      //   moveProduct(dragIndex, hoverIndex);
         
-        item.index = hoverIndex
-        }, 1)
+      //   item.index = hoverIndex
+      //   }, 1)
+    if (!productItem.current) {
+        return
+    }
+    const dragIndex = item.index
+    const hoverIndex = index        
+    
+    if (dragIndex === hoverIndex) {
+        return
+    }
+    
+    const hoverBoundingRect = productItem.current?.getBoundingClientRect()
+    
+    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+    
+    const clientOffset = monitor.getClientOffset()
+    
+    const hoverClientY = clientOffset.y - hoverBoundingRect.top
+    
+    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+        return
+    }
+    
+    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+        return
+    }
+    
+    moveProduct(dragIndex, hoverIndex);
+    
+    item.index = hoverIndex
+    
     },
   })
 

@@ -19,53 +19,59 @@ function BurgerConstructor() {
 
     const [{ isOver }, dropTarget] = useDrop({
         accept: "product",
-        drop(productId) {
-             onDropHandler(productId);
+        drop(droppedItem) {
+             onDropHandler(droppedItem);
         },
         collect: monitor => ({
             isOver: !!monitor.isOver()
         }),        
     });
 
-    function onDropHandler(productId) {
-        
-        const productData = getDraggingProductData(productId);
+    function onDropHandler(droppedItem) {        
+        const ingredientData = droppedItem.ingredientData;
+        //const productData = getDraggingProductData(productId);
 
-        if(productData.type === 'bun') {
+        if(ingredientData.type === 'bun') {
             dispatch({
                 type: ADD_BUN,
-                payload: productData
+                payload: {ingredientData, key: uuidv4()}
             })
         } else {
             dispatch({
                 type: ADD_INGR,
-                payload: productData
+                payload: {ingredientData, key: uuidv4()}
             })
         }        
     }
 
-    function getDraggingProductData(productId) {
-        return ingredientsData.find(product => product._id === productId.ingredientId);
-    }
+    // function getDraggingProductData(productId) {
+    //     return ingredientsData.find(product => product._id === productId.ingredientId);
+    // }
 
-    function handleClickRemove(event) {
-        const parentNode = event.currentTarget.parentNode.parentNode;
-        const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
+    function handleClickRemove(product) {
+        dispatch({
+            type: REMOVE_INGR,
+            payload:  product.key,
+        })
+
+        // const parentNode = event.currentTarget.parentNode.parentNode;
+        // const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
         
-        removeFromCart(ingredientName);
+        // removeFromCart(ingredientName);
     }
 
     function AddBun(type) {
-    
+        const bunData = selectedBun.ingredientData;
+        
         if(type === 'top') {
-            return <ConstructorElement type='top' text={selectedBun.name+' верх'} price={selectedBun.price} thumbnail={selectedBun.image} isLocked={true}/>
+            return <ConstructorElement type='top' text={bunData.name+' верх'} price={bunData.price} thumbnail={bunData.image} isLocked={true}/>
         } else if (type === 'bottom') {
-            return <ConstructorElement type='bottom' text={selectedBun.name+' низ'} price={selectedBun.price} thumbnail={selectedBun.image} isLocked={true}/>
+            return <ConstructorElement type='bottom' text={bunData.name+' низ'} price={bunData.price} thumbnail={bunData.image} isLocked={true}/>
         }
     }
 
     function removeFromCart(ingredientName) {
-        const ingredient = ingredientsData.find(elem => elem.name === ingredientName);    
+        const ingredient = ingredientsData.find(elem => elem.name === ingredientName); 
         const id = ingredient._id;
 
         dispatch({
@@ -74,7 +80,7 @@ function BurgerConstructor() {
         })
       }       
 
-    const moveProduct = useCallback((dragIndex, hoverIndex) => {        
+    const moveProduct = useCallback((dragIndex, hoverIndex) => {  
         dispatch({
             type: MOVE_INGR,
             payload: {dragIndex, hoverIndex}
@@ -97,9 +103,9 @@ function BurgerConstructor() {
                 <div className={`${style.list} custom-scroll`} >
                     {                        
                         cartIngredients.ingredients.map((product, index) => {                                                        
-                                const productData = ingredientsData.find((elem) => elem._id === product._id); 
-                                const uid = uuidv4();
-                                    return <DraggableIngredient productData={productData} ingredientId={uid} key={uid} 
+                                //const productData = ingredientsData.find((elem) => elem._id === product._id); 
+                                //const uid = uuidv4();
+                                    return <DraggableIngredient productData={product.ingredientData} key={product.key} 
                                     index={index} handleClose={handleClickRemove} moveProduct={moveProduct}/>
                             })                          
                     }

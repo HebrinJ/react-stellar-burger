@@ -20,10 +20,11 @@ function ItemsBlock({label, type, handleOpenModal, handleAddToCart}) {
                         if(element.type === type)
                             return <CatalogItem 
                                 key={uuidv4()} 
-                                image={element.image} 
-                                name={element.name} 
-                                price={element.price} 
-                                ingredientId={element._id}
+                                ingredientData={element}
+                                // image={element.image} 
+                                // name={element.name} 
+                                // price={element.price} 
+                                // ingredientId={element._id}
                                 />
                     })}
             </div>        
