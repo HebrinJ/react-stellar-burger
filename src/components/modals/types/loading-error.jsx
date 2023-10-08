@@ -1,5 +1,5 @@
 
-function LoadingError({errorText, label}) {
+export default function LoadingError({errorText, label}) {
 
     return (
         <>
@@ -8,5 +8,3 @@ function LoadingError({errorText, label}) {
         </>
     )
 }
-
-export default LoadingError

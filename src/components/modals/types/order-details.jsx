@@ -1,7 +1,7 @@
 import style from './order-details.module.css'
 import done from '../../../images/done.png'
 
-function OrderDetails({orderNum}) {
+export default function OrderDetails({orderNum}) {
 
     return (
         <div className={style.position}>
@@ -13,5 +13,3 @@ function OrderDetails({orderNum}) {
         </div>
     )
 }
-
-export default OrderDetails;

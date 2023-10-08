@@ -2,13 +2,10 @@ import { useRef } from 'react'
 import { useDrag, useDrop } from 'react-dnd'
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
 import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import style from '../burger-constructor.module.css';
-import { v4 as uuidv4 } from 'uuid';
+import style from '../draggable-ingredient/draggable-ingredient.module.css'
 import { useDispatch, useSelector } from 'react-redux';
 import { STOP_MOVE } from '../../../services/actions/cart-actions';
 
-
-// Исправить подключение стилей на отдельный модуль
 export default function DraggableIngredient({productData, ingredientId, index, handleClose, moveProduct}) {
 
   const productItem = useRef(null)
@@ -18,80 +15,43 @@ export default function DraggableIngredient({productData, ingredientId, index, h
 
   const [{ handlerId }, drop] = useDrop({
     accept: "element",
-    // drop() {
-    //     dispatch({
-    //         type: STOP_MOVE
-    //     })
-    // },
     collect(monitor) {        
       return {
         handlerId: monitor.getHandlerId(),
       }
     },
-    hover(item, monitor) {
+    hover(item, monitor) {     
+      if (!productItem.current) {
+          return
+      }
+      const dragIndex = item.index
+      const hoverIndex = index        
       
-      // setTimeout(() => {
-      //   if (!productItem.current) {
-      //       return
-      //   }
-      //   const dragIndex = item.index
-      //   const hoverIndex = index        
-        
-      //   if (dragIndex === hoverIndex) {
-      //       return
-      //   }
-        
-      //   const hoverBoundingRect = productItem.current?.getBoundingClientRect()
-        
-      //   const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-        
-      //   const clientOffset = monitor.getClientOffset()
-        
-      //   const hoverClientY = clientOffset.y - hoverBoundingRect.top
-        
-      //   if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-      //       return
-      //   }
-        
-      //   if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-      //       return
-      //   }
-        
-      //   moveProduct(dragIndex, hoverIndex);
-        
-      //   item.index = hoverIndex
-      //   }, 1)
-    if (!productItem.current) {
-        return
-    }
-    const dragIndex = item.index
-    const hoverIndex = index        
-    
-    if (dragIndex === hoverIndex) {
-        return
-    }
-    
-    const hoverBoundingRect = productItem.current?.getBoundingClientRect()
-    
-    const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
-    
-    const clientOffset = monitor.getClientOffset()
-    
-    const hoverClientY = clientOffset.y - hoverBoundingRect.top
-    
-    if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
-        return
-    }
-    
-    if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
-        return
-    }
-    
-    moveProduct(dragIndex, hoverIndex);
-    
-    item.index = hoverIndex
-    
-    },
+      if (dragIndex === hoverIndex) {
+          return
+      }
+      
+      const hoverBoundingRect = productItem.current?.getBoundingClientRect()
+      
+      const hoverMiddleY = (hoverBoundingRect.bottom - hoverBoundingRect.top) / 2
+      
+      const clientOffset = monitor.getClientOffset()
+      
+      const hoverClientY = clientOffset.y - hoverBoundingRect.top
+      
+      if (dragIndex < hoverIndex && hoverClientY < hoverMiddleY) {
+          return
+      }
+      
+      if (dragIndex > hoverIndex && hoverClientY > hoverMiddleY) {
+          return
+      }
+      
+      moveProduct(dragIndex, hoverIndex);
+      
+      item.index = hoverIndex
+      
+      },
   })
 
   const [, drag] = useDrag({

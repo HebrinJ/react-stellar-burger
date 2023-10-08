@@ -1,5 +1,4 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor.module.css';
 import TotalPrice from './total-price/total-price';
 import { v4 as uuidv4 } from 'uuid';
@@ -7,11 +6,10 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useDrop  } from "react-dnd";
 import { ADD_BUN, ADD_INGR, REMOVE_INGR, MOVE_INGR } from '../../services/actions/cart-actions';
 import DraggableIngredient from './draggable-ingredient/draggable-ingredient';
-import { useCallback, useState } from 'react';
+import { useCallback } from 'react';
 
-function BurgerConstructor() {    
+export default function BurgerConstructor() {    
     
-    const ingredientsData = useSelector(state => state.loading.allIngredients);
     const cartIngredients = useSelector(state => state.cart);
     const selectedBun = useSelector(state => state.cart.bun);
 
@@ -29,7 +27,6 @@ function BurgerConstructor() {
 
     function onDropHandler(droppedItem) {        
         const ingredientData = droppedItem.ingredientData;
-        //const productData = getDraggingProductData(productId);
 
         if(ingredientData.type === 'bun') {
             dispatch({
@@ -44,20 +41,11 @@ function BurgerConstructor() {
         }        
     }
 
-    // function getDraggingProductData(productId) {
-    //     return ingredientsData.find(product => product._id === productId.ingredientId);
-    // }
-
     function handleClickRemove(product) {
         dispatch({
             type: REMOVE_INGR,
             payload:  product.key,
         })
-
-        // const parentNode = event.currentTarget.parentNode.parentNode;
-        // const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
-        
-        // removeFromCart(ingredientName);
     }
 
     function AddBun(type) {
@@ -68,17 +56,7 @@ function BurgerConstructor() {
         } else if (type === 'bottom') {
             return <ConstructorElement type='bottom' text={bunData.name+' низ'} price={bunData.price} thumbnail={bunData.image} isLocked={true}/>
         }
-    }
-
-    function removeFromCart(ingredientName) {
-        const ingredient = ingredientsData.find(elem => elem.name === ingredientName); 
-        const id = ingredient._id;
-
-        dispatch({
-            type: REMOVE_INGR,
-            payload: id,
-        })
-      }       
+    }        
 
     const moveProduct = useCallback((dragIndex, hoverIndex) => {  
         dispatch({
@@ -102,11 +80,9 @@ function BurgerConstructor() {
                 </div>
                 <div className={`${style.list} custom-scroll`} >
                     {                        
-                        cartIngredients.ingredients.map((product, index) => {                                                        
-                                //const productData = ingredientsData.find((elem) => elem._id === product._id); 
-                                //const uid = uuidv4();
-                                    return <DraggableIngredient productData={product.ingredientData} key={product.key} 
-                                    index={index} handleClose={handleClickRemove} moveProduct={moveProduct}/>
+                        cartIngredients.ingredients.map((product, index) => {                                
+                                return <DraggableIngredient productData={product.ingredientData} key={product.key} 
+                                index={index} handleClose={handleClickRemove} moveProduct={moveProduct}/>
                             })                          
                     }
                 </div>
@@ -120,5 +96,3 @@ function BurgerConstructor() {
         </section>
     )
 }
-
-export default BurgerConstructor;

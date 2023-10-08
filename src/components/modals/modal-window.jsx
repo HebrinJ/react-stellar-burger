@@ -2,7 +2,6 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import style from './modal-window.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
 import ModalOverlay from './modal-overlay';
 import { useDispatch } from 'react-redux';
 import { MODAL_CLOSE } from '../../services/actions/modal-actions';
@@ -44,10 +43,6 @@ function ModalWindow(props) {
             </div>                    
         </>        
     ), document.body);    
-}
-
-ModalWindow.propTypes = {
-    handleCloseModal: PropTypes.func.isRequired,
 }
 
 export default ModalWindow;

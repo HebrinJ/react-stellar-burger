@@ -11,7 +11,7 @@ export default function ModalSetter() {
     const order = useSelector(state => state.order);
 
     function getModal() {       
-        console.log(order)
+        
         switch (modal.type) {
             case 'order':                
                 return <OrderDetails orderNum={order.orderData.order.number}/>

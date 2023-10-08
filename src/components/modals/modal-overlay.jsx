@@ -1,6 +1,6 @@
 import style from './modal-overlay.module.css';
 
-function ModalOverlay(props) {
+export default function ModalOverlay(props) {
 
     return (
         <div className={style.overlay} onClick={props.handleCloseModal}>
@@ -8,5 +8,3 @@ function ModalOverlay(props) {
         </div>
     )
 }
-
-export default ModalOverlay;

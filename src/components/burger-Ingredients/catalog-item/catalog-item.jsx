@@ -1,18 +1,14 @@
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './catalog-item.module.css';
 import { useDispatch, useSelector } from 'react-redux';
-
-import { IngredientDataContext } from '../../../contexts/ingredient-data-context.js';
-import { OrderContext } from '../../../contexts/order-context.js';
 import { SELECT_ITEM } from '../../../services/actions/select-actions';
 import { MODAL_INGR_INFO } from '../../../services/actions/modal-actions';
 import { useDrag } from "react-dnd";
 
-//function CatalogItem({ image, name, price, ingredientId, handleAddToCart}) {
-function CatalogItem({ingredientData}) {
+export default function CatalogItem({ingredientData}) {
     const [count, setCount] = React.useState(0);    
 
     const cart = useSelector(state => state.cart);
@@ -76,25 +72,7 @@ function CatalogItem({ingredientData}) {
             type: MODAL_INGR_INFO,
             payload: selectedProduct,
         })
-    }
-
-    //function handleAddToCart(event) {        
-        //const id = event.currentTarget.getAttribute('name');
-        //const selectedProduct = data.find(item => item._id === id);
-    
-        // if(selectedProduct.type === 'bun') {
-        //     order.cartDispatch({
-        //         type: 'addBun',
-        //         payload: id,
-        //     })
-        //     return;
-        // }
-        
-        // order.cartDispatch({
-        //     type: 'add',
-        //     payload: id,
-        // })      
-    
+    }       
     
     return (
         <div className={style.container} onClick={showInrgedientData} name={ingredientData._id} draggable ref={dragRef}>
@@ -119,5 +97,3 @@ CatalogItem.propTypes = {
     handleClickOrder: PropTypes.func,
     type: PropTypes.oneOf(['bun', 'sauce', 'main']),
 }
-
-export default CatalogItem;

@@ -12,11 +12,3 @@ export const rootReducer = combineReducers({
     selected: selectReducer,
     order: orderReducer,
 })
-
-// export function rootReducer(state, action) {
-//     return {
-//         cart: cartReducer,
-//         modal: modalReducer,
-//         loading: loadingReducer,
-//     }
-// }

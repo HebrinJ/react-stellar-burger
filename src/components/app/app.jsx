@@ -1,5 +1,4 @@
 import React from 'react';
-
 import { DndProvider } from "react-dnd";
 import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from './app.module.css';
@@ -7,14 +6,11 @@ import AppHeader from '../app-header/appHeader.jsx';
 import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
 import ModalWindow from '../modals/modal-window';
-
 import ModalSetter from '../modals/modal-setter';
 import { getIngredientsData } from '../../services/actions/loading-actions';
 import { useSelector, useDispatch } from 'react-redux';
 
-
-
-function App() {
+export default function App() {
 
   const dispatch = useDispatch();
   const modal = useSelector(state => state.modal);
@@ -48,8 +44,5 @@ function App() {
         </main> 
         </DndProvider>       
     </div>
-  );
-  
+  );  
 }
-
-export default App;

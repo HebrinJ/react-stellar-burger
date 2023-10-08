@@ -31,14 +31,6 @@
     object-fit: fill;
 }
 
-.ingredient {
-    display: flex;
-    align-items: center;
-    margin: 0 0 0 -14px;
-    gap: 14px;
-    min-width: 568px;
-}
-
 .constructorSection {
     display: flex;
     flex-direction: column;

@@ -13,11 +13,10 @@ export default function cartReducer(state = initialState, action) {
             return {...state, bun: action.payload};
         case ADD_INGR:
             return {...state, ingredients: [...state.ingredients, action.payload]};
-        case REMOVE_INGR:            
-            // const elementIndex = state.ingredients.findIndex(product => product._id === action.payload);           
-            // state.ingredients.splice(elementIndex, 1);      
+        case REMOVE_INGR:                 
             const elementIndex = state.ingredients.findIndex(product => product.key === action.payload);           
             state.ingredients.splice(elementIndex, 1);
+            
             return {...state, ingredients: [...state.ingredients]};
         case MOVE_INGR:
             const drag = action.payload.dragIndex;
