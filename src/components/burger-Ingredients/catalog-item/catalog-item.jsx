@@ -34,12 +34,12 @@ function CatalogItem({ingredientData}) {
 
     const updateCount = () => {  
         
-        if(cart.bun && cart.bun._id === ingredientData._id) {
+        if(cart.bun && cart.bun.ingredientData._id === ingredientData._id) {
             setCount(1);
             return;
         }
 
-        const products = cart.ingredients.filter((elem) => elem._id === ingredientData._id)        
+        const products = cart.ingredients.filter((elem) => elem.ingredientData._id === ingredientData._id)        
         setCount(products.length);      
     }  
 

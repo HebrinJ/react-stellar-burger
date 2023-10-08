@@ -35,23 +35,17 @@ export default function TotalPrice() {
         countPrice();
     }, [cart])
     
-    const countPrice = () => {
-        let currentPrice = cart.ingredients.reduce((price, product) => {
-            const foundProduct = data.find((item) => item._id === product._id)
-            
-            if(foundProduct) {
-                price += foundProduct.price;
-            }
+    const countPrice = () => {        
 
+        let currentPrice = cart.ingredients.reduce((price, ingredient) => {            
+            price += ingredient.ingredientData.price;
             return price;
         }, 0)
-
-        if(cart.bun) {
-            const price = data.find((product) => product._id === cart.bun.ingredientData._id).price;
-
-            currentPrice += price*2;
+        
+        if(cart.bun) {            
+            currentPrice += cart.bun.ingredientData.price*2
         }
-
+        
         setPrice(currentPrice);
     }
 

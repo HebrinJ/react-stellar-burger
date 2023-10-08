@@ -8,7 +8,9 @@ export default function BurgerIngredients() {
     const sauce = React.useRef(null);
     const main = React.useRef(null);
 
-    const [selected, setSelected] = React.useState({bun: true, sauce: false, main: false});
+    const navPanel = React.useRef(null);
+
+    const [selected, setSelected] = React.useState({bun: true, sauce: false, main: false});    
 
     const handleClick = (elementRef, type) => {        
         elementRef.current?.scrollIntoView({behavior: 'smooth'});
@@ -27,11 +29,13 @@ export default function BurgerIngredients() {
         const sauceCoords = sauce.current?.getBoundingClientRect();
         const mainCoords = main.current?.getBoundingClientRect();
         
-        if(bunCoords.y > 0) {
+        const navPanelCoords = navPanel.current?.getBoundingClientRect();
+        
+        if((navPanelCoords.y + navPanelCoords.height) - (bunCoords.y + bunCoords.height) < -40) {
             setSelected({bun: true, sauce: false, main: false});
-        } else if(bunCoords.y < 0 && (sauceCoords.y) > 0) {
+        } else if ((navPanelCoords.y + navPanelCoords.height) - sauceCoords.y > -100 && (navPanelCoords.y + navPanelCoords.height) - sauceCoords.y < 400) {
             setSelected({bun: false, sauce: true, main: false});
-        } else if (sauceCoords.y < 0 && mainCoords.y > 0) {
+        } else if ((navPanelCoords.y + navPanelCoords.height) - mainCoords.y > -100) {
             setSelected({bun: false, sauce: false, main: true});
         }
     }
@@ -39,7 +43,7 @@ export default function BurgerIngredients() {
     return (
         <section>
             <p className='text text_type_main-large'>Соберите бургер</p>
-            <nav className={style.navBar}>
+            <nav className={style.navBar} ref={navPanel}>
                 <Tab onClick={() => handleClick(bun, 'bun')} active={selected.bun}>Булки</Tab>
                 <Tab onClick={() => handleClick(sauce, 'sauce')} active={selected.sauce}>Соусы</Tab>
                 <Tab onClick={() => handleClick(main, 'main')} active={selected.main}>Начинки</Tab>
