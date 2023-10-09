@@ -1,5 +1,7 @@
 .appHeader {
     box-sizing: border-box;
+    background-color: #1C1C21;
+    color: white;
     width: 1920px;
     margin: 40px 40px;   
 }

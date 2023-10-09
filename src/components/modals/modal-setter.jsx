@@ -14,11 +14,11 @@ export default function ModalSetter() {
         
         switch (modal.type) {
             case 'order':                
-                return <OrderDetails orderNum={order.orderData.order.number}/>
+                return (<OrderDetails orderNum={order.orderData.order.number}/>);
              case 'info':
-                return <IngredientDetails details={selectedProduct} label='Детали ингридиента'/>                
+                return (<IngredientDetails details={selectedProduct} label='Детали ингридиента'/>);
              case 'loadingError':
-                return <LoadingError errorText={modal.modalSettings.error} label='Ошибка загрузки'/>
+                return (<LoadingError errorText={modal.modalSettings.error} label='Ошибка загрузки'/>);
             default:
               console.log('Модальное окно не найдено');
               break;        

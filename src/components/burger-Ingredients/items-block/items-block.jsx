@@ -3,7 +3,6 @@ import Label from './label/label.jsx';
 import style from './items-block.module.css';
 import CatalogItem from '../catalog-item/catalog-item.jsx';
 import { useSelector } from 'react-redux';
-import { v4 as uuidv4 } from 'uuid';
 
 export default function ItemsBlock({label, type}) {
     const ingredientsData = useSelector(state => state.loading.allIngredients);    
@@ -13,9 +12,10 @@ export default function ItemsBlock({label, type}) {
             <Label text={label} />
             <div className={style.typeBox}>
                 {                    
-                    ingredientsData.map((element) => {                    
+                    ingredientsData.map((element, index) => {
+                        const id = String(index)+element._id;
                         if(element.type === type)
-                            return <CatalogItem key={uuidv4()} ingredientData={element} />
+                            return (<CatalogItem key={id} ingredientData={element} />);
                     })}
             </div>        
         </>

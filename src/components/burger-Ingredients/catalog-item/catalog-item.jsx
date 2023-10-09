@@ -90,10 +90,17 @@ export default function CatalogItem({ingredientData}) {
 }
 
 CatalogItem.propTypes = {
-    image: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    ingredientId: PropTypes.string,
-    handleClickOrder: PropTypes.func,
-    type: PropTypes.oneOf(['bun', 'sauce', 'main']),
+    ingredientData: PropTypes.shape({
+        _id: PropTypes.string,
+        type: PropTypes.oneOf(['bun', 'sauce', 'main']),
+        name: PropTypes.string,
+        proteins: PropTypes.number,
+        price: PropTypes.number,
+        fat: PropTypes.number,
+        carbohydrates: PropTypes.number,
+        calories: PropTypes.number,
+        image: PropTypes.string,
+        image_large: PropTypes.string,
+        image_mobile: PropTypes.string,
+    }),
 }

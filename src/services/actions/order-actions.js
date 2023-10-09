@@ -1,5 +1,5 @@
 import { useSelector } from "react-redux";
-import { makeOrder } from "../../components/api";
+import { makeOrder } from "../../utils/api";
 
 import { MODAL_ORDER } from "./modal-actions";
 

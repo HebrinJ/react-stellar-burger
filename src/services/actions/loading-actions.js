@@ -1,4 +1,4 @@
-import { getData } from "../../components/api";
+import { getData } from "../../utils/api";
 
 export const LOAD_INGR_DATA = 'LOAD_INGR_DATA';
 export const LOAD_INGR_SUCCESS = 'LOAD_INGR_SUCCESS';

@@ -1,5 +1,6 @@
 import style from './order-details.module.css'
 import done from '../../../images/done.png'
+import PropTypes from 'prop-types';
 
 export default function OrderDetails({orderNum}) {
 
@@ -12,4 +13,8 @@ export default function OrderDetails({orderNum}) {
             <p className={style.waitText+ ' text text_type_main-default text_color_inactive'}>Дождитесь готовности на орбитальной станции</p>
         </div>
     )
+}
+
+OrderDetails.propTypes = {
+    orderNum: PropTypes.number.isRequired,
 }

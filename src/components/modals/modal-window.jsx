@@ -11,24 +11,27 @@ function ModalWindow(props) {
     const dispatch = useDispatch();
 
     React.useEffect(() => {
+        const handleKey = (e) => {
+            if(e.key === 'Escape') {
+                handleCloseModal();
+            }
+        }
+
         document.addEventListener('keydown', handleKey);
         
         return () => {
             document.removeEventListener('keydown', handleKey);
         }        
     }, [])
-
-    const handleKey = (e) => {
-        if(e.key === 'Escape') {
-            handleCloseModal();
-        }
-    }
+    
 
     function handleCloseModal() {
         dispatch({
             type: MODAL_CLOSE
         })
     }
+
+    const modalContainer = document.querySelector('#modals');
 
     return ReactDOM.createPortal((        
         <>
@@ -42,7 +45,7 @@ function ModalWindow(props) {
                 {props.children}
             </div>                    
         </>        
-    ), document.body);    
+    ), modalContainer);    
 }
 
 export default ModalWindow;

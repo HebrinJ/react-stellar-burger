@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 
 export default function LoadingError({errorText, label}) {
 
@@ -7,4 +8,9 @@ export default function LoadingError({errorText, label}) {
             <p className='text text_type_main-medium'>{errorText}</p>
         </>
     )
+}
+
+LoadingError.propTypes = {
+    label: PropTypes.string.isRequired,
+    errorText: PropTypes.string,
 }
