@@ -41,7 +41,11 @@ export default function TotalPrice() {
         setPrice(currentPrice);
     }
 
-    function handleOrder() {           
+    function handleOrder() {
+        if(!cart.bun) {
+            return;
+        }
+        
            dispatch(getOrderData(getOrderIds()));
       }
 
