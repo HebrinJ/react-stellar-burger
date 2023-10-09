@@ -1,4 +1,4 @@
-import { ADD_BUN, ADD_INGR, REMOVE_INGR, MOVE_INGR, STOP_MOVE } from "../actions/cart-actions";
+import { ADD_BUN, ADD_INGR, REMOVE_INGR, MOVE_INGR, STOP_MOVE, CLEAR_CART } from "../actions/cart-actions";
 
 const initialState = {
     bun: null,
@@ -16,8 +16,10 @@ export default function cartReducer(state = initialState, action) {
         case REMOVE_INGR:                 
             const elementIndex = state.ingredients.findIndex(product => product.key === action.payload);           
             state.ingredients.splice(elementIndex, 1);
-            
+
             return {...state, ingredients: [...state.ingredients]};
+        case CLEAR_CART:
+            return initialState;    
         case MOVE_INGR:
             const drag = action.payload.dragIndex;
             const hover = action.payload.hoverIndex;
