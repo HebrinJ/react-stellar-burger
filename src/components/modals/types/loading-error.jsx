@@ -1,5 +1,6 @@
+import PropTypes from 'prop-types';
 
-function LoadingError({errorText, label}) {
+export default function LoadingError({errorText, label}) {
 
     return (
         <>
@@ -9,4 +10,7 @@ function LoadingError({errorText, label}) {
     )
 }
 
-export default LoadingError
+LoadingError.propTypes = {
+    label: PropTypes.string.isRequired,
+    errorText: PropTypes.string,
+}

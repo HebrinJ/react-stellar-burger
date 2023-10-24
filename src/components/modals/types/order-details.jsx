@@ -1,7 +1,8 @@
 import style from './order-details.module.css'
 import done from '../../../images/done.png'
+import PropTypes from 'prop-types';
 
-function OrderDetails({orderNum}) {
+export default function OrderDetails({orderNum}) {
 
     return (
         <div className={style.position}>
@@ -14,4 +15,6 @@ function OrderDetails({orderNum}) {
     )
 }
 
-export default OrderDetails;
+OrderDetails.propTypes = {
+    orderNum: PropTypes.number.isRequired,
+}

@@ -4,9 +4,9 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import header from './app-header.module.css'
 
-function AppHeader() {
+export default function AppHeader() {
     return (
-        <header style={{ backgroundColor: '#1C1C21', color: 'white' }} className={header.appHeader}>
+        <header className={header.appHeader}>
             <nav className={header.headerBox}>
                 <div className={header.constructor}>
                     <BurgerIcon type="primary" />
@@ -28,5 +28,3 @@ function AppHeader() {
 
     )
 }
-
-export default AppHeader

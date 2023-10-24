@@ -1,74 +1,88 @@
-import PropTypes, { func } from 'prop-types';
+import PropTypes from 'prop-types';
 import React from 'react';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './catalog-item.module.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { SELECT_ITEM } from '../../../services/actions/select-actions';
+import { MODAL_INGR_INFO } from '../../../services/actions/modal-actions';
+import { useDrag } from "react-dnd";
 
-import { IngredientDataContext } from '../../../contexts/ingredient-data-context.js';
-import { OrderContext } from '../../../contexts/order-context.js';
+export default function CatalogItem({ingredientData}) {
+    const [count, setCount] = React.useState(0);    
 
-function CatalogItem({image, name, price, currentItemId, handleOpenModal, handleAddToCart}) {
-    const [count, setCount] = React.useState(0);
-
-    const data = React.useContext(IngredientDataContext);
-    const order = React.useContext(OrderContext);
+    const cart = useSelector(state => state.cart);
+    const data = useSelector(state => state.loading.allIngredients);
+    const selectedProduct = useSelector(state => state.selected);
+    const dispatch = useDispatch();
+    
+    const [{isDrag}, dragRef] = useDrag({
+        type: 'product',
+        item: {ingredientData},
+        collect: monitor => ({
+            isDrag: monitor.isDragging()
+        })
+    });
 
     React.useEffect(() => {        
         updateCount();
-    }, [order.cart]);    
+    }, [cart]);    
 
     const updateCount = () => {  
         
-        if(order.cart.bun === currentItemId) {
+        if(cart.bun && cart.bun.ingredientData._id === ingredientData._id) {
             setCount(1);
             return;
         }
 
-        const products = order.cart.ingredients.filter((elem) => elem === currentItemId)        
+        const products = cart.ingredients.filter((elem) => elem.ingredientData._id === ingredientData._id)        
         setCount(products.length);      
     }  
 
-    // Будет удалено после реализации всего функционала
-
-    // function handleClickOrder(event) {
-    //     const id = event.currentTarget.getAttribute('name');
-    //     const selectedProduct = data.find(item => item._id === id);
-
-    //     if(selectedProduct) {
-    //         handleOpenModal('info', selectedProduct);
-    //     } else {
-    //         console.log(`Продукт с id ${id} не найден среди полученных данных`);
-    //     }
-    // }
-
-    function handleAddToCart(event) {        
-        const id = event.currentTarget.getAttribute('name');
-        const selectedProduct = data.find(item => item._id === id);
-    
-        if(selectedProduct.type === 'bun') {
-            order.cartDispatch({
-                type: 'addBun',
-                payload: id,
-            })
-            return;
-        }
+    function showInrgedientData(event) {
+        const clickedProductId = event.currentTarget.getAttribute('name');
         
-        order.cartDispatch({
-            type: 'add',
-            payload: id,
-        })
-        
+        setIngredientData(clickedProductId);
+        openModal();     
     }
+
+    function setIngredientData(clickedProductId) {
+        const foundedProduct = data.find(allItemsIds => allItemsIds._id === clickedProductId);
+
+        dispatch({
+            type: SELECT_ITEM,
+            payload: {
+                itemId: foundedProduct._id,
+                type: foundedProduct.type,
+                name: foundedProduct.name,
+                proteins: foundedProduct.proteins,
+                price: foundedProduct.price,
+                fat: foundedProduct.fat,
+                carbohydrates: foundedProduct.carbohydrates,
+                calories: foundedProduct.calories,
+                image: foundedProduct.image,
+                image_large: foundedProduct.image_large,
+                image_mobile: foundedProduct.image_mobile,
+            }
+        });
+    }    
+
+    function openModal() {        
+        dispatch({
+            type: MODAL_INGR_INFO,
+            payload: selectedProduct,
+        })
+    }       
     
     return (
-        <div className={style.container} onClick={handleAddToCart} name={currentItemId}>
+        <div className={style.container} onClick={showInrgedientData} name={ingredientData._id} draggable ref={dragRef}>
             <Counter count={count}/>
-            <img className={style.image} src={image} alt={name}/>
+            <img className={style.image} src={ingredientData.image} alt={ingredientData.name}/>
             <div className={style.textBox}>
                 <div className={style.price}>
-                    <p className='text text_type_digits-default'>{price}</p><CurrencyIcon type='primary' />
+                    <p className='text text_type_digits-default'>{ingredientData.price}</p><CurrencyIcon type='primary' />
                 </div>
-                <p className='text text_type_main-default'>{name}</p>
+                <p className='text text_type_main-default'>{ingredientData.name}</p>
             </div>
             
         </div>
@@ -76,12 +90,17 @@ function CatalogItem({image, name, price, currentItemId, handleOpenModal, handle
 }
 
 CatalogItem.propTypes = {
-    image: PropTypes.string,
-    name: PropTypes.string,
-    price: PropTypes.number,
-    currentItemId: PropTypes.string,
-    handleClickOrder: PropTypes.func,
-    type: PropTypes.oneOf(['bun', 'sauce', 'main']),
+    ingredientData: PropTypes.shape({
+        _id: PropTypes.string,
+        type: PropTypes.oneOf(['bun', 'sauce', 'main']),
+        name: PropTypes.string,
+        proteins: PropTypes.number,
+        price: PropTypes.number,
+        fat: PropTypes.number,
+        carbohydrates: PropTypes.number,
+        calories: PropTypes.number,
+        image: PropTypes.string,
+        image_large: PropTypes.string,
+        image_mobile: PropTypes.string,
+    }),
 }
-
-export default CatalogItem;

@@ -1,69 +1,27 @@
 import React from 'react';
+import { DndProvider } from "react-dnd";
+import { HTML5Backend } from "react-dnd-html5-backend";
 import styles from './app.module.css';
 import AppHeader from '../app-header/appHeader.jsx';
 import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
 import BurgerConstructor from '../burger-constructor/burger-constructor';
-import { getData, makeOrder } from '../api.js';
 import ModalWindow from '../modals/modal-window';
-
-import { OrderContext } from '../../contexts/order-context';
-import { IngredientDataContext } from '../../contexts/ingredient-data-context';
-
-import cartReducer from '../../contexts/cart-reducer';
-import modalReducer from '../../contexts/modal-reducer';
-
 import ModalSetter from '../modals/modal-setter';
+import { getIngredientsData } from '../../services/actions/loading-actions';
+import { useSelector, useDispatch } from 'react-redux';
 
-function App() {
-  const initialCartState = {bun: null, ingredients: []};
-  const initialModalState = {visible: false, type: '', modalSettings: {}};
+export default function App() {
 
-  const [cart, cartDispatch] = React.useReducer(cartReducer, initialCartState);
-  const [modal, modalDispatch] = React.useReducer(modalReducer, initialModalState)
-  
-  const [data, setData] = React.useState([]);
-  const [isLoading, setLoading] = React.useState(true);
-  const [loadingError, setError] = React.useState({isError: false, errorText: ''});
+  const dispatch = useDispatch();
+  const modal = useSelector(state => state.modal);
+  const loading = useSelector(state => state.loading);
 
-  React.useEffect(() => {
-    setLoading(true);
+    React.useEffect(() => {
+    dispatch(getIngredientsData());    
+  }, []) 
+ 
 
-    getData().then((newData) => {
-      setData(newData.data);
-      setLoading(false);
-    }).catch((err) => {
-      console.log(err);
-      setError(true, err);
-      modalDispatch({
-        type: 'loadingError',
-        payload: {error: err},
-      })
-    });
-  }, [])
-
-  function handleOpenModal(type, modalDataObject) {
-    modalDispatch({
-      type: type,
-      payload: modalDataObject,
-    })
-  }
-
-  function handleCloseModal() {
-    modalDispatch({
-      type: 'close',
-      payload: {},
-    })
-  }
-
-  function handleOrder() {
-    makeOrder(cart.ingredients).then((order) => {      
-      handleOpenModal('order', {orderNum: order.order.number});
-    }).catch((err) => {
-      console.log(err);
-    });
-  }
-
-  if(isLoading) {
+  if(loading.isLoading) {
     return (
       <div className={styles.app}>
           <AppHeader />
@@ -75,21 +33,16 @@ function App() {
   }
 
   return (
-    <div className={styles.app}>
+    <div className={styles.app}>        
         <AppHeader />
+        <DndProvider backend={HTML5Backend}>        
         <main className={styles.content}>
-          {loadingError.isError && <ModalWindow handleCloseModal={handleCloseModal} ><ModalSetter modal={modal} /></ModalWindow>}
-          {modal.visible && <ModalWindow handleCloseModal={handleCloseModal} ><ModalSetter modal={modal} /></ModalWindow>}
-          <OrderContext.Provider value={{cart: cart, cartDispatch}}>
-            <IngredientDataContext.Provider value={data}>
-              <BurgerIngredients handleOpenModal={handleOpenModal} />
-              <BurgerConstructor handleOrder={handleOrder}/>
-            </IngredientDataContext.Provider>
-          </OrderContext.Provider>
-        </main>
+          {loading.isError && <ModalWindow><ModalSetter /></ModalWindow>}
+          {modal.visible && <ModalWindow><ModalSetter /></ModalWindow>}          
+              <BurgerIngredients />
+              <BurgerConstructor />
+        </main> 
+        </DndProvider>       
     </div>
-  );
-  
+  );  
 }
-
-export default App;

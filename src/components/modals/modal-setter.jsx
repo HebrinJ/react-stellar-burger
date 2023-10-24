@@ -2,18 +2,23 @@ import IngredientDetails from '../modals/types/ingredient-details';
 import OrderDetails from '../modals/types/order-details';
 import LoadingError from '../modals/types/loading-error';
 import PropTypes from 'prop-types';
+import { useSelector } from 'react-redux';
 
-export default function ModalSetter({modal: modalState}) {
+export default function ModalSetter() {
+
+    const modal = useSelector(state => state.modal);
+    const selectedProduct = useSelector(state => state.selected);
+    const order = useSelector(state => state.order);
 
     function getModal() {       
         
-        switch (modalState.type) {
+        switch (modal.type) {
             case 'order':                
-                return <OrderDetails orderNum={modalState.modalSettings.orderNum}/>
+                return (<OrderDetails orderNum={order.orderData.order.number}/>);
              case 'info':
-                return <IngredientDetails details={modalState.modalSettings.selectedProduct} label='Детали ингридиента'/>                
+                return (<IngredientDetails details={selectedProduct} label='Детали ингридиента'/>);
              case 'loadingError':
-                return <LoadingError errorText={modalState.modalSettings.error} label='Ошибка загрузки'/>
+                return (<LoadingError errorText={modal.modalSettings.error} label='Ошибка загрузки'/>);
             default:
               console.log('Модальное окно не найдено');
               break;        

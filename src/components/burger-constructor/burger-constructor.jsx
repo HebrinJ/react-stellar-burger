@@ -1,77 +1,106 @@
 import { ConstructorElement } from '@ya.praktikum/react-developer-burger-ui-components';
-import { DragIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import style from './burger-constructor.module.css';
-import React from 'react';
-import { IngredientDataContext } from '../../contexts/ingredient-data-context.js';
-import { OrderContext } from '../../contexts/order-context.js';
 import TotalPrice from './total-price/total-price';
 import { v4 as uuidv4 } from 'uuid';
+import { useDispatch, useSelector } from 'react-redux';
+import { useDrop } from "react-dnd";
+import { ADD_BUN, ADD_INGR, REMOVE_INGR, MOVE_INGR } from '../../services/actions/cart-actions';
+import DraggableIngredient from './draggable-ingredient/draggable-ingredient';
+import { useCallback } from 'react';
 
-function BurgerConstructor(props) {
-    const data = React.useContext(IngredientDataContext);
-    const order = React.useContext(OrderContext);
-    
-    let selectedBun = order.cart.bun;
+export default function BurgerConstructor() {
 
-    function handleClickRemove(event) {
-        const parentNode = event.currentTarget.parentNode.parentNode;
-        const ingredientName = parentNode.querySelector('.constructor-element__text').textContent;        
-        
-        removeFromCart(ingredientName);
-    }
+    const cartIngredients = useSelector(state => state.cart);
+    const selectedBun = useSelector(state => state.cart.bun);
 
-    function AddBun(type, bunId, data) {
-        const ingredientAllData = data.find((elem) => elem._id === bunId);
-    
-        if(type === 'top') {
-            return <ConstructorElement type='top' text={ingredientAllData.name+' верх'} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
-        } else if (type === 'bottom') {
-            return <ConstructorElement type='bottom' text={ingredientAllData.name+' низ'} price={ingredientAllData.price} thumbnail={ingredientAllData.image} isLocked={true}/>
+    const dispatch = useDispatch();
+
+    const [{ isOver }, dropTarget] = useDrop({
+        accept: "product",
+        drop(droppedItem) {
+            onDropHandler(droppedItem);
+        },
+        collect: monitor => ({
+            isOver: !!monitor.isOver()
+        }),
+    });
+
+    function onDropHandler(droppedItem) {
+        const ingredientData = droppedItem.ingredientData;
+
+        if (ingredientData.type === 'bun') {
+            dispatch({
+                type: ADD_BUN,
+                payload: { ingredientData, key: uuidv4() }
+            })
+        } else {
+            dispatch({
+                type: ADD_INGR,
+                payload: { ingredientData, key: uuidv4() }
+            })
         }
     }
 
-    function removeFromCart(ingredientName) {
-        const ingredient = data.find(elem => elem.name === ingredientName);    
-        const id = ingredient._id;
-        
-        order.cartDispatch({
-          type: 'remove',
-          payload: id,
+    function handleClickRemove(product) {
+        dispatch({
+            type: REMOVE_INGR,
+            payload: product.key,
         })
-      }
-    
-    function AddIngredient(data, ingrId) {
-        return <ul className={style.ingredient} key={ingrId}>        
-                <DragIcon type='primary'/>
-                <ConstructorElement text={data.name} price={data.price} thumbnail={data.image} handleClose={handleClickRemove}/>
-            </ul>
     }
+
+    function AddBun(type) {
+        const bunData = selectedBun.ingredientData;
+
+        if (type === 'top') {
+            return (
+                <ConstructorElement type='top' text={bunData.name + ' верх'} price={bunData.price}
+                    thumbnail={bunData.image} isLocked={true} />
+            );
+        } else if (type === 'bottom') {
+            return (
+                <ConstructorElement type='bottom' text={bunData.name + ' низ'} price={bunData.price}
+                    thumbnail={bunData.image} isLocked={true} />
+            );
+        }
+    }
+
+    const moveProduct = useCallback((dragIndex, hoverIndex) => {
+        dispatch({
+            type: MOVE_INGR,
+            payload: { dragIndex, hoverIndex }
+        })
+    }, [cartIngredients])
 
     return (
         <section className={style.constructorSection}>
-            <div className={`${style.bunContainer}`}>
+
+            <div className={`${style.bunContainer} ${isOver ? style.dropReady : ''}`} ref={dropTarget}>
+                {
+                    cartIngredients.ingredients.length === 0 && cartIngredients.bun === null &&
+                    <div className={`${style.blancCart} text text_type_main-small`}>Перенесите ингредиент</div>
+                }
                 <div>
-                    {                            
-                        selectedBun && AddBun('top', selectedBun, data) 
-                    }                    
+                    {
+                        selectedBun && AddBun('top')
+                    }
                 </div>
-                <div className={`${style.list} custom-scroll`}>
-                    {                             
-                        order.cart.ingredients.map((id) => {
-                                const ingredientAllData = data.find((elem) => elem._id === id);                                 
-                                    return AddIngredient(ingredientAllData, uuidv4());
-                            })
+                <div className={`${style.list} custom-scroll`} >
+                    {
+                        cartIngredients.ingredients.map((product, index) => {
+                            return (
+                                <DraggableIngredient productData={product.ingredientData} key={product.key}
+                                    index={index} handleClose={handleClickRemove} moveProduct={moveProduct} />
+                            );
+                        })
                     }
                 </div>
                 <div>
-                    {                       
-                        selectedBun && AddBun('bottom', selectedBun, data) 
-                    }                    
-                </div>                
+                    {
+                        selectedBun && AddBun('bottom')
+                    }
+                </div>
             </div>
-            <TotalPrice handleOrder={props.handleOrder}/>            
+            <TotalPrice />
         </section>
     )
 }
-
-export default BurgerConstructor;

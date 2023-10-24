@@ -1,14 +1,22 @@
+import { MODAL_ORDER, MODAL_INGR_INFO, MODAL_LOADING_ERROR, MODAL_CLOSE } from "../actions/modal-actions"
 
-export default function modalReducer(state, action) {
+const initialState = {
+    visible: false, 
+    type: '',
+    modalSettings: {}
+}
+
+
+export default function modalReducer(state = initialState, action) {
 
     switch (action.type) {
-        case 'order':
+        case MODAL_ORDER:
             return {visible: true, type: 'order', modalSettings: action.payload}
-        case 'info':
+        case MODAL_INGR_INFO:
             return {visible: true, type: 'info', modalSettings: action.payload} 
-        case 'loadingError':
+        case MODAL_LOADING_ERROR:
             return {visible: true, type: 'loadingError', modalSettings: action.payload}
-        case 'close':
+        case MODAL_CLOSE:
             return {visible: false, type: '', modalSettings: {}}
         default:
             return state;

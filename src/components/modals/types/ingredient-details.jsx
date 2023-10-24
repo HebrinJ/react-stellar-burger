@@ -1,8 +1,8 @@
 import style from './ingredient-details.module.css';
-import PropTypes from 'prop-types';
 import { ingredientPropType } from '../../../utils/prop-types';
+import PropTypes from 'prop-types';
 
-function IngredientDetails({details, label}) {
+export default function IngredientDetails({details, label}) {    
 
     return (
         <div className={style.position}>
@@ -32,7 +32,6 @@ function IngredientDetails({details, label}) {
 }
 
 IngredientDetails.propTypes = {
-    details: ingredientPropType
+    details: ingredientPropType.isRequired,
+    label: PropTypes.string.isRequired,
 }
-
-export default IngredientDetails;

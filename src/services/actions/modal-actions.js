@@ -1,0 +1,4 @@
+export const MODAL_ORDER = 'MODAL_ORDER'
+export const MODAL_INGR_INFO = 'MODAL_INGR_INFO'
+export const MODAL_LOADING_ERROR = 'MODAL_LOADING_ERROR'
+export const MODAL_CLOSE = 'MODAL_CLOSE'

@@ -9,7 +9,7 @@
     gap: 10px;
     width: 600px;
     overflow: hidden;
-    overflow-y: scroll;
+    overflow-y: scroll;    
 }
 
 .bunContainer {    
@@ -21,6 +21,8 @@
     height: 696px;
     margin-top: 40px;
     margin-bottom: 40px;
+    box-sizing: border-box;
+    border: 6px solid #131316;
 }
 
 .icon {
@@ -29,15 +31,21 @@
     object-fit: fill;
 }
 
-.ingredient {
-    display: flex;
-    align-items: center;
-    margin: 0 0 0 -14px;
-    gap: 14px;
-    min-width: 568px;
-}
-
 .constructorSection {
     display: flex;
     flex-direction: column;
+}
+
+.blancCart {
+    display: flex;
+    background-color: #1c1c21;
+    width: 568px;
+    height: 80px;
+    border-radius: 50px;
+    justify-content: center;
+    align-items: center;
+}
+
+.dropReady {
+    border: 6px solid #1c1c21;
 }

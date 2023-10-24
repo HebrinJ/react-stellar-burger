@@ -1,39 +1,53 @@
 import React from 'react';
-import { OrderContext } from '../../../contexts/order-context.js';
-import { IngredientDataContext } from '../../../contexts/ingredient-data-context.js'
 import style from './total-price.module.css';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { getOrderData } from '../../../services/actions/order-actions';
 
-export default function TotalPrice({handleOrder}) {
+export default function TotalPrice() {
+    const cart = useSelector(state => state.cart);
+    const bun = useSelector(state => state.cart.bun);
 
-    const order = React.useContext(OrderContext);
-    const data = React.useContext(IngredientDataContext)
+    function getOrderIds() {
+        let ingredients = cart.ingredients.map((item) => item.ingredientData._id);
+        
+        if(bun) {
+            ingredients = ingredients.concat(bun._id);
+        }
+
+        return ingredients;
+    }
+
+    const dispatch = useDispatch();
+
     const [price, setPrice] = React.useState(0);
 
     React.useEffect(() => {
         countPrice();
-    }, [order])
+    }, [cart])
     
-    const countPrice = () => {
-        let currentPrice = order.cart.ingredients.reduce((price, productId) => {
-            const foundProduct = data.find((item) => item._id === productId)
-            
-            if(foundProduct) {
-                price += foundProduct.price;
-            }
+    const countPrice = () => {        
 
+        let currentPrice = cart.ingredients.reduce((price, ingredient) => {            
+            price += ingredient.ingredientData.price;
             return price;
         }, 0)
-
-        if(order.cart.bun) {
-            const price = data.find((product) => product._id === order.cart.bun).price;
-
-            currentPrice += price*2;
+        
+        if(cart.bun) {            
+            currentPrice += cart.bun.ingredientData.price*2
         }
-
+        
         setPrice(currentPrice);
     }
+
+    function handleOrder() {
+        if(!cart.bun) {
+            return;
+        }
+        
+           dispatch(getOrderData(getOrderIds()));
+      }
 
     return (
         <div className={style.order}>
