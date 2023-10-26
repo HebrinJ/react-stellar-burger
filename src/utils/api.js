@@ -29,3 +29,27 @@ function checkResponse(result) {
 function request(endPoint, settings) {
     return fetch(config.baseUrl+endPoint, settings).then(result => checkResponse(result));
 }
+
+export function forgotReset(email) {
+    return request('password-reset', {
+        method: 'POST',
+        headers: config.headers,
+        body: JSON.stringify({'email': email})
+    })
+}
+
+export function passwordReset(password, code) {
+    return request('password-reset/reset', {
+        method: 'POST',
+        headers: config.headers,
+        body: JSON.stringify({'password': password, 'token': code})
+    })
+}
+
+export function registration(email, password, name) {
+    return request('auth/register', {
+        method: 'POST',
+        headers: config.headers,
+        body: JSON.stringify({'email': email, 'password': password, 'name': name})
+    })
+}
