@@ -1,7 +1,8 @@
-import style from './login.module.css'
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
+import style from '../registration.module.css'
+import { Link } from 'react-router-dom'
 
 export default function Login() {    
 
@@ -50,8 +51,12 @@ export default function Login() {
             <div className={style.button}>
                 <Button htmlType="button" type="primary" size="medium">Войти</Button>
             </div>
-            <p className={`text text_type_main-default text_color_inactive ${style.text}`}>Вы - новый пользователь? <span className={style.link}>Зарегистрироваться</span></p>
-            <p className='text text_type_main-default text_color_inactive'>Забыли пароль? <span className={style.link}>Восстановить пароль</span></p>
+            <p className={`text text_type_main-default text_color_inactive ${style.subtext}`}>Вы - новый пользователь? 
+                <Link to='/registration' className={style.link}> Зарегистрироваться</Link>
+            </p>
+            <p className='text text_type_main-default text_color_inactive'>Забыли пароль? 
+                <Link to='/forgot-password' className={style.link}> Восстановить пароль</Link>
+            </p>
         </div>
     )
 }

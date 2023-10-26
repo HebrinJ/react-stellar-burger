@@ -16,10 +16,11 @@
     margin-bottom: 80px;
 }
 
-.text {
+.subtext {
     margin-bottom: 16px;
 }
 
 .link {
+    text-decoration: none;
     color: #4c4cff;
 }

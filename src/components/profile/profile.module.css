@@ -1,0 +1,34 @@
+.container {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    width: 1280px;
+    height: 900px;
+    margin-top: 80px;
+}
+
+.navBox {
+    grid-column: 1;
+}
+
+.infoBox {
+    grid-column: 2;
+}
+
+.input {
+    margin-bottom: 24px;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+}
+
+.navLink {
+    list-style-type: none;
+    height: 64px;
+    line-height: 64px;
+}
+
+.navLink:last-child {
+    margin-bottom: 80px;
+}

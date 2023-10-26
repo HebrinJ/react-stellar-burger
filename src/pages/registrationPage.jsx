@@ -1,13 +1,11 @@
-import AppHeader from "../components/app-header/appHeader";
-import style from './registrationPage.module.css';
-import Registration from "../components/registration/registration";
+import PageBox from "../components/pageBox/pageBox";
+import Registration from "../components/registration/registration/registration";
 
 export default function RegistrationPage() {
 
-    return (
-        <div className={style.main}>
-            <AppHeader />
+    return (        
+        <PageBox>
             <Registration />
-        </div>
+        </PageBox>        
     )
 }

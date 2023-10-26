@@ -1,13 +1,11 @@
-import AppHeader from "../components/app-header/appHeader";
-import style from './loginPage.module.css'
-import Login from "../components/login/login";
+import Login from "../components/registration/login/login";
+import PageBox from "../components/pageBox/pageBox";
 
 export default function LoginPage() {
 
     return (
-        <div className={style.main}>
-            <AppHeader />
+        <PageBox>
             <Login />
-        </div>
+        </PageBox>
     )
 }

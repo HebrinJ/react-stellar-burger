@@ -1,7 +1,8 @@
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
 import React from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import style from './registration.module.css'
+import { Link } from 'react-router-dom'
+import style from '../registration.module.css'
 
 export default function Registration() {
 
@@ -73,7 +74,9 @@ export default function Registration() {
             <div className={style.button}>
                 <Button htmlType="button" type="primary" size="medium">Зарегистрироваться</Button>
             </div>
-            <p className={`text text_type_main-default text_color_inactive ${style.text}`}>Уже зарегистрированы? <span className={style.link}>Войти</span></p>            
+            <p className={`text text_type_main-default text_color_inactive ${style.text}`}>Уже зарегистрированы? 
+                <Link to='/login' className={style.link}> Войти</Link>
+            </p>            
         </div>
     )
 }
