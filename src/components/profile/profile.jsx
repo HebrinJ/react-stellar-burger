@@ -1,6 +1,8 @@
 import React from 'react'
 import { EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './profile.module.css'
+import { useDispatch } from 'react-redux'
+import { userLogout } from '../../services/actions/auth-actions'
 
 export default function Profile() {
 
@@ -71,13 +73,25 @@ export default function Profile() {
         )
     }
 
+    const dispatch = useDispatch();
+
+    function handleLogout() {
+        dispatch(userLogout());
+    }
+
     return (
         <div className={style.container}>
             <nav className={style.navBox}>
                 <ul className={style.list}>
-                    <li className={`text text_type_main-medium ${style.navLink}`}>Профиль</li>
-                    <li className={`text text_type_main-medium text_color_inactive ${style.navLink}`}>История заказов</li>
-                    <li className={`text text_type_main-medium text_color_inactive ${style.navLink}`}>Выход</li>
+                    <li className={`text text_type_main-medium ${style.navLink}`}>
+                        <span className={style.pointer}>Профиль</span>
+                    </li>
+                    <li className={`text text_type_main-medium text_color_inactive ${style.navLink}`}>
+                        <span className={style.pointer}>История заказов</span>
+                    </li>
+                    <li className={`text text_type_main-medium text_color_inactive ${style.navLink}`} onClick={handleLogout}>
+                        <span className={style.pointer}>Выход</span>
+                    </li>
                 </ul>
                 <p className={`text text_type_main-small text_color_inactive`}>В этом разделе вы можете изменить свои персонажльные данные</p>
             </nav>

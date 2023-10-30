@@ -26,9 +26,13 @@
 .navLink {
     list-style-type: none;
     height: 64px;
-    line-height: 64px;
+    line-height: 64px;    
 }
 
 .navLink:last-child {
     margin-bottom: 80px;
+}
+
+.pointer {
+    cursor: pointer;
 }
