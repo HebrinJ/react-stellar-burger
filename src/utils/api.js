@@ -89,8 +89,26 @@ export function refreshToken() {
     })
 }
 
-export function fetchWithRefresh() {
+export function getUserData() {
+    return request('auth/user', {
+        method: 'GET',
+        headers: config.headers,
+        authorization: localStorage.getItem('accessToken'),
+    });
+}
 
+export function updateUserData(email, userName) {
+    return request('auth/user', {
+        method: 'PATCH',
+        headers: config.headers,
+        authorization: localStorage.getItem('accessToken'),
+        body: JSON.stringify({
+            user: {
+                name: userName,
+                email: email,
+            }
+        })
+    });
 }
 
 // export const refreshToken = () => { 

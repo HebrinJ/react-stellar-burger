@@ -14,9 +14,10 @@ export default function Login() {
 
     const navigate = useNavigate();
     const auth = useSelector(state => state.auth.success)
+    const isLogin = localStorage.getItem('accessToken');
 
     React.useEffect(() => {
-        if(auth) {
+        if(isLogin) {
             navigate('/');
         }
     }, [auth])

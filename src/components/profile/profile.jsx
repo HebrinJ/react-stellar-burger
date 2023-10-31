@@ -1,10 +1,22 @@
 import React from 'react'
 import { EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
-import style from './profile.module.css'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { userLogout } from '../../services/actions/auth-actions'
+import { Link, useNavigate } from 'react-router-dom'
+import style from './profile.module.css'
 
 export default function Profile() {
+
+    const navigate = useNavigate();
+    const auth = useSelector(state => state.auth.success);        
+
+    React.useEffect(() => {
+        const isLogin = localStorage.getItem('accessToken');
+
+        if(!isLogin) {
+            navigate('/login');
+        }
+    }, [auth])
 
     function GetInput() {
         const [value, setValue] = React.useState('')
