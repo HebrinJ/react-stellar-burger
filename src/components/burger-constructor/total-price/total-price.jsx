@@ -4,10 +4,12 @@ import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderData } from '../../../services/actions/order-actions';
+import { useNavigate } from 'react-router-dom';
 
 export default function TotalPrice() {
     const cart = useSelector(state => state.cart);
     const bun = useSelector(state => state.cart.bun);
+    const navigate = useNavigate();
 
     function getOrderIds() {
         let ingredients = cart.ingredients.map((item) => item.ingredientData._id);
@@ -42,11 +44,16 @@ export default function TotalPrice() {
     }
 
     function handleOrder() {
-        if(!cart.bun) {
-            return;
-        }
-        
-           dispatch(getOrderData(getOrderIds()));
+        const isLogin = localStorage.getItem('accessToken');
+        if(isLogin) {
+            if(!cart.bun) {
+                return;
+            }            
+            
+            dispatch(getOrderData(getOrderIds()));
+        } else {
+            navigate('/login');
+        }        
       }
 
     return (

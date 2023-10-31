@@ -15,8 +15,8 @@ export default function ProtectedRouteElement({ element }) {
     const isLogin = localStorage.getItem('accessToken');
 
     switch (element.type) {
-        case MainPage:            
-            return isLogin ? element : <Navigate to="/login" replace />;
+        case MainPage:
+            return element;
         case LoginPage:
         case RegistrationPage:
         case ForgotPasswordPage:

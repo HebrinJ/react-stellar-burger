@@ -8,15 +8,15 @@ import style from './profile.module.css'
 export default function Profile() {
 
     const navigate = useNavigate();
-    const auth = useSelector(state => state.auth.success);        
+    // const auth = useSelector(state => state.auth)
 
-    React.useEffect(() => {
-        const isLogin = localStorage.getItem('accessToken');
+    // React.useEffect(() => {
+    //     const isLogin = localStorage.getItem('accessToken');
 
-        if(!isLogin) {
-            navigate('/login');
-        }
-    }, [auth])
+    //     if(!isLogin) {
+    //         navigate('/login');
+    //     }
+    // }, [])
 
     function GetInput() {
         const [value, setValue] = React.useState('')
@@ -88,7 +88,10 @@ export default function Profile() {
     const dispatch = useDispatch();
 
     function handleLogout() {
+        if(!localStorage.getItem('accessToken')) return;
+
         dispatch(userLogout());
+        navigate('/login')
     }
 
     return (
