@@ -16,48 +16,11 @@ export default function Login() {
     const auth = useSelector(state => state.auth.success)
     const isLogin = localStorage.getItem('accessToken');
 
-    React.useEffect(() => {
-        if(isLogin) {
-            navigate('/');
-        }
-    }, [auth])
-
-    // function GetEmailInput() {
-        
-    //     const [value, setValue] = React.useState('')
-    //     const onChange = e => {
-    //         setValue(e.target.value)
+    // React.useEffect(() => {
+    //     if(isLogin) {
+    //         navigate('/');
     //     }
-
-    //     return (
-    //         <div className={style.input}>            
-    //             <EmailInput
-    //                 onChange={onChange}
-    //                 value={value}
-    //                 name={'email'}
-    //                 isIcon={false}
-    //             />
-    //         </div>
-    //     )          
-    // }
-
-    // function GetPasswordInput() {
-        
-    //     const [value, setValue] = React.useState('')
-    //     const onChange = e => {
-    //         setValue(e.target.value)
-    //     }
-    //     return (
-    //         <div className={style.input}>
-    //             <PasswordInput
-    //                 onChange={onChange}
-    //                 value={value}
-    //                 name={'password'}
-    //                 extraClass="mb-2"
-    //             />
-    //         </div>
-    //     )
-    // }
+    // }, [auth])
 
     const dispatch = useDispatch();
 

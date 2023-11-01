@@ -1,9 +1,11 @@
 import { func } from "prop-types";
-import { authorization, logout, registration } from "../../utils/api";
+import { authorization, getUserData, logout, registration, updateUserData } from "../../utils/api";
 
 export const SIGNIN = 'SIGNIN';
 export const LOGOUT = 'LOGOUT';
 export const REGISTER = 'REGISTER';
+export const GETUSER = 'GETUSER';
+export const UPDATE_USER = 'UPDATE_USER';
 
 export function userRegistration(email, password, userName) {
     return function(dispatch) {
@@ -43,5 +45,33 @@ export function userLogout() {
                 })
             }
         });
+    }
+}
+
+export function getUser() {
+    return function(dispatch) {
+
+        getUserData().then(res => {
+            if(res) {
+                dispatch({
+                    type: GETUSER,
+                    payload: res,
+                })
+            }
+        })
+    }
+}
+
+export function updateUser(email, userName) {
+    return function(dispatch) {
+
+        updateUserData(email, userName).then(res => {
+            if(res) {
+                dispatch({
+                    type: UPDATE_USER,
+                    payload: res,
+                })
+            }
+        })
     }
 }

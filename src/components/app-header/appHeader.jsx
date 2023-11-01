@@ -11,7 +11,7 @@ export default function AppHeader() {
             <nav className={header.headerBox}>
                 <div className={header.constructor}>
                     <BurgerIcon type="primary" />
-                    <p className="text text_type_main-default">Конструктор</p>
+                    <Link to='/' className={`text text_type_main-default ${header.link}`}>Конструктор</Link>
                 </div>
                 <div className={header.orderList}>
                     <ListIcon type="secondary" />

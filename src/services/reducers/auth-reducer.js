@@ -1,13 +1,11 @@
-import { REGISTER, SIGNIN, LOGOUT } from "../actions/auth-actions";
+import { REGISTER, SIGNIN, LOGOUT, GETUSER, UPDATE_USER } from "../actions/auth-actions";
 
 const initialState = {
   success: false,
   user: {
       email: '',
       name: '',
-  },
-  accessToken: '',
-  refreshToken: ''
+  }
 }
 
 export default function authReducer(state = initialState, action) {    
@@ -25,14 +23,16 @@ export default function authReducer(state = initialState, action) {
                     user: {
                         email: data.user.email,
                         name: data.user.name,
-                    },
-                    accessToken: data.accessToken,
-                    refreshToken: data.refreshToken
+                    }
                 }
         case LOGOUT:
             localStorage.setItem('accessToken', '');
             localStorage.setItem('refreshToken', '');
             return state = initialState;
+        case GETUSER:
+            return {...state, user: {email: action.payload.user.email, name: action.payload.user.name} }        
+        case UPDATE_USER:
+            return {...state, user: {email: action.payload.user.email, name: action.payload.user.name} }
         default:
             return state;
     }

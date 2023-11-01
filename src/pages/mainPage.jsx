@@ -9,6 +9,7 @@ import ModalWindow from '../components/modals/modal-window';
 import ModalSetter from '../components/modals/modal-setter';
 import { getIngredientsData } from '../services/actions/loading-actions';
 import { useSelector, useDispatch } from 'react-redux';
+import { getUser, refreshAccess } from '../services/actions/auth-actions';
 
 export default function MainPage() {
 
@@ -17,7 +18,11 @@ export default function MainPage() {
   const loading = useSelector(state => state.loading);
 
     React.useEffect(() => {
-    dispatch(getIngredientsData());    
+      dispatch(getIngredientsData());
+
+      // if(localStorage.getItem('accessToken')) {
+      //   dispatch(refreshAccess());
+      // }
   }, []) 
  
 

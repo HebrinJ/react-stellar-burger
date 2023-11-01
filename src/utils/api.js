@@ -1,7 +1,19 @@
+// const config = {
+//     baseUrl: `https://norma.nomoreparties.space/api/`,
+//     headers: {
+//         authorization: "020effc4-1211-4deb-93d9-11a33dcdf1a5",
+//         "Content-Type": "application/json",
+//     },
+// };
+
 const config = {
     baseUrl: `https://norma.nomoreparties.space/api/`,
-    headers: {
+    main: {
         authorization: "020effc4-1211-4deb-93d9-11a33dcdf1a5",
+        "Content-Type": "application/json",
+    },
+    authorized: {
+        authorization: localStorage.getItem('accessToken'),
         "Content-Type": "application/json",
     },
 };
@@ -16,28 +28,6 @@ export function makeOrder(ingredients) {
         method: 'POST',
         headers: config.headers,
         body: JSON.stringify({ "ingredients": ingredients })
-    });
-}
-
-function checkResponse(result) {
-    if (result.ok) {
-        return result.json();
-    }
-    return Promise.reject(`Ошибка ${result.status}`);
-}
-
-function request(endPoint, settings) {
-    return fetch(config.baseUrl + endPoint, settings).then(result => checkResponse(result)).catch((err) => {
-        if(err.message === 'jwt expired') {
-            refreshToken(localStorage.getItem('refreshToken')).then(result => {
-                const data = result.json();
-                localStorage.setItem('accessToken', data.accessToken);
-                localStorage.setItem('refreshToken', data.refreshToken);
-                request(endPoint, settings);
-            })
-        } else { 
-            return Promise.reject(err); 
-        }
     });
 }
 
@@ -77,64 +67,114 @@ export function logout() {
     return request('auth/logout', {
         method: 'POST',
         headers: config.headers,
-        body: JSON.stringify({ 'token': localStorage.getItem('refreshToken') })
-    })
-}
-
-export function refreshToken() {
-    return request('auth/token', {
-        method: 'POST',
-        headers: config.headers,
-        body: JSON.stringify({ 'token': localStorage.getItem('refreshToken') })
+        body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
     })
 }
 
 export function getUserData() {
     return request('auth/user', {
         method: 'GET',
-        headers: config.headers,
-        authorization: localStorage.getItem('accessToken'),
+        headers: {
+            authorization: localStorage.getItem('accessToken'),
+            "Content-Type": "application/json",
+        }
     });
 }
 
 export function updateUserData(email, userName) {
     return request('auth/user', {
         method: 'PATCH',
-        headers: config.headers,
-        authorization: localStorage.getItem('accessToken'),
+        headers: {
+            authorization: localStorage.getItem('accessToken'),
+            "Content-Type": "application/json",
+        },
         body: JSON.stringify({
-            user: {
-                name: userName,
-                email: email,
-            }
+            name: userName,
+            email: email,
         })
     });
 }
 
-// export const refreshToken = () => { 
-//     return fetch(`${BURGER_API_URL}/auth/token`, 
-//     { method: "POST",
-//      headers: { "Content-Type": "application/json;charset=utf-8", },
-//       body: JSON.stringify({ token: localStorage.getItem("refreshToken"),
-//      }),
-//      }).then(checkReponse); };
+function checkResponse(res) {
+    return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
+}
 
-// export const fetchWithRefresh = async (url, options) => {
-//     try { 
-//         const res = await fetch(url, options);
-//         return await checkReponse(res);
-//      } catch (err) {
-//         if (err.message === "jwt expired") {
-//             const refreshData = await refreshToken(); //обновляем токен
-//             if (!refreshData.success) { 
-//                 return Promise.reject(refreshData);
-//              } 
-             
-//              localStorage.setItem("refreshToken", refreshData.refreshToken);
-//               localStorage.setItem("accessToken", refreshData.accessToken);
-//                options.headers.authorization = refreshData.accessToken;
-//                 const res = await fetch(url, options); //повторяем запрос 
-//             return await checkReponse(res);
-//         } else { return Promise.reject(err); }
-//     }
-// }; 
+export const refreshToken = () => { 
+    return fetch(`https://norma.nomoreparties.space/api/auth/token`, 
+        { method: "POST",
+        headers: { "Content-Type": "application/json;charset=utf-8", },
+        body: JSON.stringify({ token: localStorage.getItem("refreshToken"),
+     }),
+     }).then(res => checkResponse(res)); 
+}
+
+async function request(endPoint, settings) {
+    console.log('Start request')
+    try {
+        const result = await fetch(config.baseUrl + endPoint, settings);
+        return await checkResponse(result);
+    }
+    catch(error) {   
+        console.log('Found error')     
+        if(error.message === 'jwt expired') {            
+            const newTokens = await refreshToken();
+            
+            if(!newTokens.success) return Promise.reject(newTokens);
+
+            localStorage.setItem('accessToken', newTokens.accessToken);
+            localStorage.setItem('refreshToken', newTokens.refreshToken);
+            settings.headers.authorization = newTokens.accessToken;
+
+            const result = await fetch(config.baseUrl + endPoint, settings);
+            return await checkResponse(result);
+        } else {
+            return Promise.reject(error);
+        }
+    }
+}
+
+// export function refreshToken() {
+//     return request('auth/token', {
+//         method: 'POST',
+//         headers: config.headers,
+//         body: JSON.stringify({ token: localStorage.getItem('refreshToken') })
+//     })
+// }
+
+// export function refreshToken() {
+//     return fetch('https://norma.nomoreparties.space/api/auth/token', {
+//         method: 'POST',
+//         headers: config.main,
+//         body: JSON.stringify({ token: localStorage.getItem('refreshToken')}),
+//     }).then(res => {
+//         console.log('Finishing refresh');
+//         console.log(res);
+//         checkResponse(res)
+//     });    
+// }
+
+//export const refreshToken = () => { 
+    //     return request(`auth/token`, 
+    //         { 
+    //             method: "POST",
+    //             headers: { "Content-Type": "application/json;charset=utf-8", },
+    //             body: JSON.stringify({ token: localStorage.getItem("refreshToken")})
+    //         }
+    //     )
+    // }
+
+// function request(endPoint, settings) {
+//     return fetch(config.baseUrl + endPoint, settings).then(result => checkResponse(result)).catch((err) => {        
+//         if (err.message === 'jwt expired') {
+//             console.log('REQUEST LOG: TOKEN EXPIRED');
+//             refreshToken().then(result => {
+//                 const data = result.json();                
+//                 localStorage.setItem('accessToken', data.accessToken);
+//                 localStorage.setItem('refreshToken', data.refreshToken);
+//                 request(endPoint, settings);
+//             })
+//         } else {
+//             return Promise.reject(err);
+//         }
+//     });
+// }
