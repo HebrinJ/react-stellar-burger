@@ -10,14 +10,17 @@ import ProtectedRouteElement from '../protected-route/protectedRoute';
 
 export default function App() {
 
+  // const location = useLocation();
+  // const navigate = useNavigate();
+  // const background = location.state && location.state.background;
+
+  // const handleModalClose = () => { navigate(-1); };
+
   return (
     <BrowserRouter>
       <Routes>
         <Route path='/' element={<ProtectedRouteElement element={<MainPage />} />} />
         <Route path='/login' element={<ProtectedRouteElement element={<LoginPage />} />} />
-
-        <Route path='/backup' element={<LoginPage />} />
-
         <Route path='/registration' element={<ProtectedRouteElement element={<RegistrationPage />} />} />
         <Route path='/forgot-password' element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
         <Route path='/reset-password' element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />

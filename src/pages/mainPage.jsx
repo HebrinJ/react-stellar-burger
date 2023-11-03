@@ -19,10 +19,6 @@ export default function MainPage() {
 
     React.useEffect(() => {
       dispatch(getIngredientsData());
-
-      // if(localStorage.getItem('accessToken')) {
-      //   dispatch(refreshAccess());
-      // }
   }, []) 
  
 

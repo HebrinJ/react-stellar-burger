@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { EmailInput, PasswordInput, Input } from '@ya.praktikum/react-developer-burger-ui-components'
+import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, updateUser, userLogout } from '../../services/actions/auth-actions'
 import { Link, useNavigate } from 'react-router-dom'
@@ -41,6 +41,15 @@ export default function Profile() {
 
         dispatch(userLogout());
         navigate('/login')
+    }
+
+    function handleSave() {
+        dispatch(updateUser(email, name));
+    }
+
+    function handleCancel() {
+        setName(user.name);
+        setEmail(user.email);
     }
 
     return (
@@ -93,6 +102,10 @@ export default function Profile() {
                         name={'password'}
                         icon="EditIcon"
                     />
+                </div>
+                <div className={style.buttonBox}>
+                    <Button htmlType="button" type="primary" size="medium" onClick={handleCancel}>Отмена</Button>
+                    <Button htmlType="button" type="primary" size="medium" onClick={handleSave}>Сохранить</Button>
                 </div>
             </section>
         </div>

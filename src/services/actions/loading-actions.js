@@ -10,10 +10,10 @@ export function getIngredientsData() {
         dispatch({
             type: LOAD_INGR_DATA
         });
-
+        
         getData().then(res  => {
           
-            if (res) {                                    
+            if (res) {                                        
               dispatch({
                 type: LOAD_INGR_SUCCESS,
                 payload: res.data
