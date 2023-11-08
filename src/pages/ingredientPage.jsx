@@ -1,4 +1,4 @@
-import IngredientDetails from "../components/modals/types/ingredient-details";
+import IngredientDetails from "../components/ingredient-details/ingredient-details";
 import PageBox from "../components/pageBox/pageBox";
 
 export default function IngredientPage() {

@@ -29,7 +29,7 @@ export function userSignin(email, password) {
                 dispatch({
                     type: SIGNIN,
                     payload: res,
-                })                
+                })
             }
         })
     }

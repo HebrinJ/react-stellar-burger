@@ -10,36 +10,25 @@ import ModalSetter from '../components/modals/modal-setter';
 import { getIngredientsData } from '../services/actions/loading-actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { getUser, refreshAccess } from '../services/actions/auth-actions';
+import { BrowserRouter, Routes, Route, useLocation, Outlet } from 'react-router-dom';
+import IngredientPage from './ingredientPage';
+import ProtectedRouteElement from '../components/protected-route/protectedRoute';
 
-export default function MainPage() {
+export default function MainPage(props) {
 
   const dispatch = useDispatch();
-  const modal = useSelector(state => state.modal);
-  const loading = useSelector(state => state.loading);
 
     React.useEffect(() => {
       dispatch(getIngredientsData());
-  }, []) 
- 
-
-  if(loading.isLoading) {
-    return (
-      <div className={styles.main}>
-          <AppHeader />
-          <main className={styles.content}>
-            
-          </main>
-      </div>
-    );
-  }
+  }, [])    
 
   return (
-      <div className={styles.main}>        
-          <AppHeader />
+      <div className={styles.main}>
+          
           <DndProvider backend={HTML5Backend}>        
-          <main className={styles.content}>
-            {loading.isError && <ModalWindow><ModalSetter /></ModalWindow>}
-            {modal.visible && <ModalWindow><ModalSetter /></ModalWindow>}          
+          <main className={styles.content}>            
+            <Outlet />
+            {props.children}
                 <BurgerIngredients />
                 <BurgerConstructor />
           </main> 

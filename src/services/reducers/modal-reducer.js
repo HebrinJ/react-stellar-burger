@@ -13,10 +13,12 @@ export default function modalReducer(state = initialState, action) {
         case MODAL_ORDER:
             return {visible: true, type: 'order', modalSettings: action.payload}
         case MODAL_INGR_INFO:
+            localStorage.setItem('ingrOpen', true);
             return {visible: true, type: 'info', modalSettings: action.payload} 
         case MODAL_LOADING_ERROR:
             return {visible: true, type: 'loadingError', modalSettings: action.payload}
         case MODAL_CLOSE:
+            localStorage.setItem('ingrOpen', false);
             return {visible: false, type: '', modalSettings: {}}
         default:
             return state;

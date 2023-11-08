@@ -3,7 +3,6 @@ import React from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from '../registration.module.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { func } from 'prop-types'
 import { useDispatch, useSelector } from 'react-redux'
 import { userSignin } from '../../../services/actions/auth-actions'
 
@@ -16,11 +15,11 @@ export default function Login() {
     const auth = useSelector(state => state.auth.success)
     const isLogin = localStorage.getItem('accessToken');
 
-    // React.useEffect(() => {
-    //     if(isLogin) {
-    //         navigate('/');
-    //     }
-    // }, [auth])
+    React.useEffect(() => {
+        if(isLogin) {
+            navigate('/');
+        }
+    }, [auth])
 
     const dispatch = useDispatch();
 

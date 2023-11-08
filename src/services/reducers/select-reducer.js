@@ -1,4 +1,4 @@
-import { SELECT_ITEM } from "../actions/select-actions";
+import { SELECT_ITEM, UNSELECT } from "../actions/select-actions";
 
 const initialState = {
     itemId: '',
@@ -14,10 +14,14 @@ const initialState = {
     image_mobile: '',
 }
 
-export function selectReducer(state = initialState, action) {    
+export function selectReducer(state = initialState, action) {   
+    
     switch (action.type) {
         case SELECT_ITEM:
+            localStorage.setItem('selected', JSON.stringify(action.payload))
             return action.payload;
+        case UNSELECT:
+            localStorage.setItem('selected', null)
         default:
             return state;
     }

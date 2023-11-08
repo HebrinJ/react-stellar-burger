@@ -2,11 +2,12 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { Link } from 'react-router-dom'
+import { Link, Outlet } from 'react-router-dom'
 import header from './app-header.module.css'
 
 export default function AppHeader() {
     return (
+        <>
         <header className={header.appHeader}>
             <nav className={header.headerBox}>
                 <div className={header.constructor}>
@@ -26,6 +27,7 @@ export default function AppHeader() {
                 </div>
             </nav>
         </header>
-
+        <Outlet />
+        </>
     )
 }

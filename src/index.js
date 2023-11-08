@@ -7,6 +7,7 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { rootReducer } from "./services/reducers/root-reducer";
+import { BrowserRouter } from "react-router-dom";
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
@@ -17,9 +18,11 @@ const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thun
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

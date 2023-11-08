@@ -5,10 +5,14 @@ import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './modal-overlay';
 import { useDispatch } from 'react-redux';
 import { MODAL_CLOSE } from '../../services/actions/modal-actions';
+import { useNavigate } from 'react-router-dom';
+import { UNSELECT } from '../../services/actions/select-actions';
+import { REMOVE_ROOT } from '../../services/actions/route-actions';
 
-function ModalWindow(props) {     
+export default function ModalWindow(props) {     
 
     const dispatch = useDispatch();
+    const navigate = useNavigate();
 
     React.useEffect(() => {
         const handleKey = (e) => {
@@ -26,8 +30,16 @@ function ModalWindow(props) {
     
 
     function handleCloseModal() {
+        navigate(-1);
+
         dispatch({
             type: MODAL_CLOSE
+        })
+        dispatch({
+            type: UNSELECT
+        })
+        dispatch({
+            type: REMOVE_ROOT
         })
     }
 
@@ -47,5 +59,3 @@ function ModalWindow(props) {
         </>        
     ), modalContainer);    
 }
-
-export default ModalWindow;

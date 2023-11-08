@@ -7,6 +7,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SELECT_ITEM } from '../../../services/actions/select-actions';
 import { MODAL_INGR_INFO } from '../../../services/actions/modal-actions';
 import { useDrag } from "react-dnd";
+import { useNavigate } from 'react-router-dom';
+import { SET_ROOT } from '../../../services/actions/route-actions';
 
 export default function CatalogItem({ingredientData}) {
     const [count, setCount] = React.useState(0);    
@@ -15,6 +17,7 @@ export default function CatalogItem({ingredientData}) {
     const data = useSelector(state => state.loading.allIngredients);
     const selectedProduct = useSelector(state => state.selected);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     const [{isDrag}, dragRef] = useDrag({
         type: 'product',
@@ -41,14 +44,19 @@ export default function CatalogItem({ingredientData}) {
 
     function showInrgedientData(event) {
         const clickedProductId = event.currentTarget.getAttribute('name');
-        
+        dispatch({
+            type: SET_ROOT
+        })
+
+        navigate(`ingredients/${clickedProductId}`);
+
         setIngredientData(clickedProductId);
-        openModal();     
+        openModal();
     }
 
     function setIngredientData(clickedProductId) {
         const foundedProduct = data.find(allItemsIds => allItemsIds._id === clickedProductId);
-
+        
         dispatch({
             type: SELECT_ITEM,
             payload: {
@@ -64,10 +72,10 @@ export default function CatalogItem({ingredientData}) {
                 image_large: foundedProduct.image_large,
                 image_mobile: foundedProduct.image_mobile,
             }
-        });
+        });        
     }    
 
-    function openModal() {        
+    function openModal() { 
         dispatch({
             type: MODAL_INGR_INFO,
             payload: selectedProduct,

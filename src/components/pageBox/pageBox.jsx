@@ -5,7 +5,7 @@ export default function PageBox(props) {
 
     return (
         <div className={style.container}>
-            <AppHeader />
+            {/* <AppHeader /> */}
             {props.children}
         </div>
     )

@@ -2,31 +2,41 @@ import React, { useState, useEffect } from 'react'
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, updateUser, userLogout } from '../../services/actions/auth-actions'
-import { Link, useNavigate } from 'react-router-dom'
+import { useNavigate } from 'react-router-dom'
 import style from './profile.module.css'
-import { refreshToken } from '../../utils/api'
 
 export default function Profile() {
 
     const [name, setName] = useState('');
-    const inputRef = React.useRef(null)
+    const inputRef = React.useRef(null);
 
-    const [email, setEmail] = useState('')
-    const [password, setPassword] = React.useState('')
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = React.useState('');
+    const [userReady, setUserReady] = React.useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
-    // const auth = useSelector(state => state.auth)
+    const auth = useSelector(state => state.auth)
     const user = useSelector(state => state.auth.user);
 
     useEffect(() => {
         if(localStorage.getItem('accessToken')) {
             dispatch(getUser());
-          }
-
-        setName(user.name);
-        setEmail(user.email);
+          }        
     }, [])
+
+    useEffect(() => {
+        if(userReady) {
+            setName(user.name);
+            setEmail(user.email);
+        }
+    }, [userReady])
+
+    useEffect(() => {
+        if(auth.user.name) {
+            setUserReady(true);
+        }
+    }, [auth])
 
     // useEffect(() => {
     //     dispatch(updateUser(email, name))
