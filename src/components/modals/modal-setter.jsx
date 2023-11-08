@@ -1,15 +1,13 @@
 import IngredientDetailsModal from './types/ingredient-details-modal';
 import OrderDetails from '../modals/types/order-details';
 import LoadingError from '../modals/types/loading-error';
-import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 export default function ModalSetter() {
 
     const modal = useSelector(state => state.modal);
-    //const selectedProduct = useSelector(state => state.selected);
-    const selectedProduct = JSON.parse(localStorage.getItem('selected'));    
     const order = useSelector(state => state.order);
+    const selectedProduct = JSON.parse(localStorage.getItem('selected'));    
 
     function getModal() {  
         
@@ -31,8 +29,4 @@ export default function ModalSetter() {
     }
 
     return getModal();        
-}
-
-ModalSetter.propTypes = {    
-    modal: PropTypes.shape({visible: PropTypes.bool, type: PropTypes.string, modalSettings: PropTypes.object}),
 }

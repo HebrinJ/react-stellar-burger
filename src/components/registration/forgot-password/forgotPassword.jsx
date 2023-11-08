@@ -11,25 +11,6 @@ export default function ForgotPassword() {
             setValue(e.target.value)
         }
 
-    // function GetEmailInput() {
-        
-    //     const [value, setValue] = React.useState('')
-    //     const onChange = e => {
-    //         setValue(e.target.value)
-    //     }
-
-    //     return (
-    //         <div className={style.input}>            
-    //             <EmailInput
-    //                 onChange={onChange}
-    //                 value={value}
-    //                 name={'email'}
-    //                 isIcon={false}
-    //             />
-    //         </div>
-    //     )          
-    // }
-
     function handleClick() {
         forgotReset(value)
     }
@@ -37,7 +18,6 @@ export default function ForgotPassword() {
     return (
         <div className={style.container}>
             <h1 className={`text text_type_main-medium ${style.header}`}>Восстановление пароля</h1>
-            {/*GetEmailInput()*/}
             <div className={style.input}>            
                 <EmailInput onChange={onChange} value={value} name={'email'} isIcon={false} />
             </div>

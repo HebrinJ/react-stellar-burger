@@ -1,11 +1,8 @@
 import style from './ingredient-details-modal.module.css';
 import { ingredientPropType } from '../../../utils/prop-types';
-import React from 'react'
 import PropTypes from 'prop-types';
 
 export default function IngredientDetailsModal({details, label}) { 
-
-    React.useEffect(() => {console.log('ModalPage')})
     
     return (
         <div className={style.position}>

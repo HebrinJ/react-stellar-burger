@@ -13,6 +13,7 @@ export default function Profile() {
     const [email, setEmail] = useState('');
     const [password, setPassword] = React.useState('');
     const [userReady, setUserReady] = React.useState(false);
+    const [isVisible, setVisible] = React.useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -38,10 +39,6 @@ export default function Profile() {
         }
     }, [auth])
 
-    // useEffect(() => {
-    //     dispatch(updateUser(email, name))
-    // }, [name, email])
-
     const onIconClick = () => {
         setTimeout(() => inputRef.current.focus(), 0)
     }
@@ -55,11 +52,13 @@ export default function Profile() {
 
     function handleSave() {
         dispatch(updateUser(email, name));
+        setVisible(false);
     }
 
     function handleCancel() {
         setName(user.name);
         setEmail(user.email);
+        setVisible(false);
     }
 
     return (
@@ -83,7 +82,7 @@ export default function Profile() {
                     <Input
                         type={'text'}
                         placeholder={'Имя'}
-                        onChange={e => setName(e.target.value)}
+                        onChange={e => {setName(e.target.value); setVisible(true)}}
                         value={name}
                         name={'name'}
                         error={false}
@@ -97,7 +96,7 @@ export default function Profile() {
                 </div>
                 <div className={style.input}>
                     <EmailInput
-                        onChange={e => setEmail(e.target.value)}
+                        onChange={e => {setEmail(e.target.value); setVisible(true)}}
                         value={email}
                         name={'email'}
                         placeholder="Логин"
@@ -107,14 +106,14 @@ export default function Profile() {
                 </div>
                 <div className={style.input}>
                     <PasswordInput
-                        onChange={e => setPassword(e.target.value)}
+                        onChange={e => {setPassword(e.target.value); setVisible(true)}}
                         value={password}
                         name={'password'}
                         icon="EditIcon"
                     />
                 </div>
-                <div className={style.buttonBox}>
-                    <Button htmlType="button" type="primary" size="medium" onClick={handleCancel}>Отмена</Button>
+                <div className={ isVisible ? style.buttonBox : style.invisible}>
+                    <Button htmlType="button" type="secondary" size="medium" onClick={handleCancel}>Отмена</Button>
                     <Button htmlType="button" type="primary" size="medium" onClick={handleSave}>Сохранить</Button>
                 </div>
             </section>

@@ -43,3 +43,7 @@
     justify-content: flex-end;
     gap: 20px;
 }
+
+.invisible {
+    display: none;
+}

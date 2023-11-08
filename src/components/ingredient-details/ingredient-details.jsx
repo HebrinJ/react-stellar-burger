@@ -7,7 +7,7 @@ import { getIngredientsData } from '../../services/actions/loading-actions';
 export default function IngredientDetails() { 
 
     const dispatch = useDispatch();
-    const idObject = useParams();   
+    const product = useParams();   
     const ingredients = useSelector(state => state.loading.allIngredients);
     
     const [dataReady, setDataReady] = useState(false)
@@ -23,10 +23,10 @@ export default function IngredientDetails() {
         if(details) {
             setDataReady(true);
         }        
-    })
+    }, [details])
 
     function getIngredientData() {
-        return ingredients.find(item => item._id === idObject.id);
+        return ingredients.find(item => item._id === product.id);
     }
     
     return (
