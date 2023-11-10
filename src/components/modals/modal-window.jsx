@@ -3,7 +3,7 @@ import React from 'react';
 import style from './modal-window.module.css';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './modal-overlay';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { MODAL_CLOSE } from '../../services/actions/modal-actions';
 import { useNavigate } from 'react-router-dom';
 import { UNSELECT } from '../../services/actions/select-actions';
@@ -13,6 +13,7 @@ export default function ModalWindow(props) {
 
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const modalType = useSelector(state => state.modal.type);
 
     React.useEffect(() => {
         const handleKey = (e) => {
@@ -30,7 +31,9 @@ export default function ModalWindow(props) {
     
 
     function handleCloseModal() {
-        navigate(-1);
+        if(modalType === 'info') {
+            navigate(-1);
+        }
 
         dispatch({
             type: MODAL_CLOSE

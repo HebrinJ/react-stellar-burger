@@ -11,13 +11,28 @@ import { useSelector } from 'react-redux';
 import ModalWindow from '../modals/modal-window';
 import ModalSetter from '../modals/modal-setter';
 import AppHeader from '../app-header/appHeader';
+import { useEffect, useState } from 'react';
+import { getLocalModalState } from '../../utils/find-details-origin';
 
 export default function App() {  
   
   const isRoot = useSelector(state => state.route.route);
-  const isModalOpen = localStorage.getItem('ingrOpen');
 
-  let isOpenFromRoot = isRoot === 'root' ? false : true
+  const [condition, setCondition] = useState({ isOpenFromRoot: false, isModalOpen: false });
+
+  useEffect(() => {
+    setCondition({ isOpenFromRoot: isRoot === 'root' ? true : false, isModalOpen: getLocalModalState()})
+  }, [isRoot])
+
+  let showModal;
+  
+  if (condition.isOpenFromRoot && condition.isModalOpen) {
+    showModal = true;
+  } else if (condition.isOpenFromRoot === false && condition.isModalOpen === true) {
+    showModal = true;
+  } else if (condition.isOpenFromRoot === false && condition.isModalOpen === false) {
+    showModal = false;
+  }
 
   return (
     
@@ -25,10 +40,9 @@ export default function App() {
         <Route path='/' element={<AppHeader />}>
           <Route path='/' element={<ProtectedRouteElement element={<MainPage />} />} />
           <Route path='ingredients/:id' element={ 
-            isOpenFromRoot && !isModalOpen ? 
-            ( <IngredientPage />) : 
-            (<MainPage ><ModalWindow ><ModalSetter /></ModalWindow></MainPage>) 
-          } />          
+            showModal ? (<MainPage ><ModalWindow ><ModalSetter /></ModalWindow></MainPage>) :
+            ( <IngredientPage />) 
+          } />  
           <Route path='login' element={<ProtectedRouteElement element={<LoginPage />} />} />
           <Route path='registration' element={<ProtectedRouteElement element={<RegistrationPage />} />} />
           <Route path='forgot-password' element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />

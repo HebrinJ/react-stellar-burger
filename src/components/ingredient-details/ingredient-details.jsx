@@ -23,7 +23,7 @@ export default function IngredientDetails() {
         if(details) {
             setDataReady(true);
         }        
-    }, [details])
+    })
 
     function getIngredientData() {
         return ingredients.find(item => item._id === product.id);

@@ -1,4 +1,3 @@
-import { func } from "prop-types";
 import { authorization, getUserData, logout, registration, updateUserData } from "../../utils/api";
 
 export const SIGNIN = 'SIGNIN';

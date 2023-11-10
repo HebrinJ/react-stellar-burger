@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import style from '../registration.module.css'
 import { userRegistration } from '../../../services/actions/auth-actions'
+import { useNavigate } from 'react-router-dom'
 
 export default function Registration() {
 
@@ -14,10 +15,13 @@ export default function Registration() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
 
+    const navigate = useNavigate();
+
     const dispatch = useDispatch();
 
     function handleRegister() {
         dispatch(userRegistration(email, password, userName));
+        //navigate('/', {replace: true})
     }
 
     return (
