@@ -11,7 +11,7 @@ export default function ModalSetter() {
 
     function getModal() {  
         
-        if(selectedProduct && localStorage.getItem('ingrOpen')) {
+        if(selectedProduct && modal.visible) {
             return (<IngredientDetailsModal details={selectedProduct} label='Детали ингридиента'/>);
         }
         

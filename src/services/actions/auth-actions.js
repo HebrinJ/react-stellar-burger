@@ -13,7 +13,7 @@ export function userRegistration(email, password, userName) {
             if(res) {
                 dispatch({
                     type: REGISTER,
-                    payload: res.data,
+                    payload: res,
                 })
             }
         })

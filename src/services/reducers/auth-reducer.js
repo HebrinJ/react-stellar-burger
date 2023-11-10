@@ -11,10 +11,9 @@ const initialState = {
 export default function authReducer(state = initialState, action) {    
 
     switch (action.type) {
-        case REGISTER:
-            return state;
+        case REGISTER:            
         case SIGNIN:            
-            const data = action.payload;
+            const data = action.payload;            
             localStorage.setItem('accessToken', data.accessToken);
             localStorage.setItem('refreshToken', data.refreshToken);
 

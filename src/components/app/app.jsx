@@ -17,11 +17,12 @@ import { getLocalModalState } from '../../utils/find-details-origin';
 export default function App() {  
   
   const isRoot = useSelector(state => state.route.route);
+  const isModalOpen = useSelector(state => state.modal.visible)  
 
   const [condition, setCondition] = useState({ isOpenFromRoot: false, isModalOpen: false });
 
   useEffect(() => {
-    setCondition({ isOpenFromRoot: isRoot === 'root' ? true : false, isModalOpen: getLocalModalState()})
+    setCondition({ isOpenFromRoot: isRoot === 'root' ? true : false, isModalOpen: isModalOpen})
   }, [isRoot])
 
   let showModal;

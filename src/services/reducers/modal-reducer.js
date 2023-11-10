@@ -1,10 +1,9 @@
 import { MODAL_ORDER, MODAL_INGR_INFO, MODAL_LOADING_ERROR, MODAL_CLOSE } from "../actions/modal-actions"
-import { setLocalModalState } from "../../utils/find-details-origin";
 
 const initialState = {
     visible: false, 
     type: '',
-    modalSettings: {}
+    modalSettings: {},
 }
 
 
@@ -14,12 +13,14 @@ export default function modalReducer(state = initialState, action) {
         case MODAL_ORDER:
             return {visible: true, type: 'order', modalSettings: action.payload}
         case MODAL_INGR_INFO:
-            setLocalModalState('modalIsOpen')
+            //setLocalModalState('modalIsOpen')            
+            //return {visible: true, type: 'info', modalSettings: action.payload} 
             return {visible: true, type: 'info', modalSettings: action.payload} 
         case MODAL_LOADING_ERROR:
             return {visible: true, type: 'loadingError', modalSettings: action.payload}
         case MODAL_CLOSE:
-            setLocalModalState('modalIsClose')
+            //setLocalModalState('modalIsClose')
+            //return {visible: false, type: '', modalSettings: {}}
             return {visible: false, type: '', modalSettings: {}}
         default:
             return state;

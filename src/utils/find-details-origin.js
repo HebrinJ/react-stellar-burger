@@ -1,3 +1,8 @@
+
+/*
+Утилита будет удалена после завершения тестирования
+*/
+
 export function getLocalModalState() {
     let state = localStorage.getItem('ingrOpen');
 
