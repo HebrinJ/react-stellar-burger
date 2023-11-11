@@ -10,6 +10,7 @@ import ProtectedRouteElement from '../protected-route/protectedRoute';
 import ModalWindow from '../modals/modal-window';
 import ModalSetter from '../modals/modal-setter';
 import AppHeader from '../app-header/appHeader';
+import { ROOT, INGREDIENT, LOGIN, REGISTRATION, FORGOT_PAS, RESET_PAS, PROFILE } from '../../utils/routes';
 
 export default function App() {
 
@@ -18,17 +19,17 @@ export default function App() {
 
   return ( 
     <Routes>
-      <Route path='/' element={<AppHeader />}>
-        <Route path='/' element={<ProtectedRouteElement element={<MainPage />} />} />
-        <Route path='ingredients/:id' element={ 
+      <Route path={ROOT} element={<AppHeader />}>
+        <Route path={ROOT} element={<ProtectedRouteElement element={<MainPage />} />} />
+        <Route path={INGREDIENT} element={ 
             background ? (<MainPage ><ModalWindow ><ModalSetter /></ModalWindow></MainPage>) :
             ( <IngredientPage />) 
           } />
-        <Route path='login' element={<ProtectedRouteElement element={<LoginPage />} />} />
-        <Route path='registration' element={<ProtectedRouteElement element={<RegistrationPage />} />} />
-        <Route path='forgot-password' element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
-        <Route path='reset-password' element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
-        <Route path='profile' element={<ProtectedRouteElement element={<ProfilePage />} />} />
+        <Route path={LOGIN} element={<ProtectedRouteElement element={<LoginPage />} />} />
+        <Route path={REGISTRATION} element={<ProtectedRouteElement element={<RegistrationPage />} />} />
+        <Route path={FORGOT_PAS} element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
+        <Route path={RESET_PAS} element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
+        <Route path={PROFILE} element={<ProtectedRouteElement element={<ProfilePage />} />} />
       </Route>
     </Routes>    
   );

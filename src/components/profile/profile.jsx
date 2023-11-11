@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import { getUser, updateUser, userLogout } from '../../services/actions/auth-actions'
 import { useNavigate } from 'react-router-dom'
 import style from './profile.module.css'
+import { LOGIN } from '../../utils/routes'
 
 export default function Profile() {
 
@@ -47,7 +48,7 @@ export default function Profile() {
         if (!localStorage.getItem('accessToken')) return;
 
         dispatch(userLogout());
-        navigate('/login')
+        navigate(LOGIN)
     }
 
     function handleSave() {

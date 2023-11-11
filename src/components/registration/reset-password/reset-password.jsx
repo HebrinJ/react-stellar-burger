@@ -4,6 +4,7 @@ import { passwordReset } from '../../../utils/api'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from '../registration.module.css'
 import { Link } from 'react-router-dom'
+import { LOGIN } from '../../../utils/routes'
 
 export default function ResetPassword() {
 
@@ -44,7 +45,7 @@ export default function ResetPassword() {
                 <Button htmlType="button" type="primary" size="medium" onSubmit={handleClick}>Сохранить</Button>
             </div>
             <p className={`text text_type_main-default text_color_inactive ${style.subtext}`}>Вспомнили пароль?
-              <Link to='/login' className={style.link}>Войти</Link>
+              <Link to={LOGIN} className={style.link}>Войти</Link>
             </p>
         </form>
     )

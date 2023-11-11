@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import style from '../registration.module.css'
 import { userRegistration } from '../../../services/actions/auth-actions'
+import { LOGIN } from '../../../utils/routes'
 
 export default function Registration() {
 
@@ -57,7 +58,7 @@ export default function Registration() {
                 <Button htmlType="button" type="primary" size="medium" onSubmit={handleRegister}>Зарегистрироваться</Button>
             </div>
             <p className={`text text_type_main-default text_color_inactive ${style.text}`}>Уже зарегистрированы? 
-                <Link to='/login' className={style.link}> Войти</Link>
+                <Link to={LOGIN} className={style.link}> Войти</Link>
             </p>            
         </form>
     )

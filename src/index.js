@@ -15,11 +15,11 @@ const composeEnhancers =
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const store = createStore(rootReducer, getSessionStore(), composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thunk)));
 
-store.subscribe(() => {
-  updateSessionStore(store.getState());
-})
+// store.subscribe(() => {
+//   updateSessionStore(store.getState());
+// })
 
 ReactDOM.render(
   <React.StrictMode>
