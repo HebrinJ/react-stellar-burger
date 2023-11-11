@@ -61,10 +61,10 @@ export function getUser() {
     }
 }
 
-export function updateUser(email, userName) {
+export function updateUser(email, userName, password) {
     return function(dispatch) {
 
-        updateUserData(email, userName).then(res => {
+        updateUserData(email, userName, password).then(res => {
             if(res) {
                 dispatch({
                     type: UPDATE_USER,

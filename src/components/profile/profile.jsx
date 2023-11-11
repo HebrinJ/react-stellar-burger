@@ -51,7 +51,7 @@ export default function Profile() {
     }
 
     function handleSave() {
-        dispatch(updateUser(email, name));
+        dispatch(updateUser(email, name, password));
         setVisible(false);
     }
 

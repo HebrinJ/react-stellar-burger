@@ -47,3 +47,8 @@
     text-decoration: none;
     color: #8585AD;
 }
+
+.activelink {
+    text-decoration: none;
+    color: #ffffff;
+}

@@ -73,7 +73,7 @@ export function getUserData() {
     });
 }
 
-export function updateUserData(email, userName) {
+export function updateUserData(email, userName, password) {
     return request('auth/user', {
         method: 'PATCH',
         headers: {
@@ -83,6 +83,7 @@ export function updateUserData(email, userName) {
         body: JSON.stringify({
             name: userName,
             email: email,
+            password: password,
         })
     });
 }
