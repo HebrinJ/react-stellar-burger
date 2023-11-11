@@ -2,17 +2,22 @@ import React from 'react'
 import { forgotReset } from '../../../utils/api'
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import style from '../registration.module.css'
+import { useNavigate } from 'react-router-dom'
 
 export default function ForgotPassword() {
 
     const [value, setValue] = React.useState('')
+    const navigate = useNavigate();
     
     const onChange = e => {
             setValue(e.target.value)
         }
 
     function handleClick() {
-        forgotReset(value)
+        forgotReset(value).then(res => {
+            if(res.success) {
+                navigate('/reset-password')}
+    })
     }
 
     return (
