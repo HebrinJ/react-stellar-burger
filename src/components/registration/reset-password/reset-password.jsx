@@ -16,7 +16,7 @@ export default function ResetPassword() {
     }
 
     return (
-        <div className={style.container}>
+        <form className={style.container}>
             <h1 className={`text text_type_main-medium ${style.header}`}>Восстановление пароля</h1>  
             <div className={style.input}>
                 <PasswordInput
@@ -41,11 +41,11 @@ export default function ResetPassword() {
                 />
             </div>
             <div className={style.button}>
-                <Button htmlType="button" type="primary" size="medium" onClick={handleClick}>Сохранить</Button>
+                <Button htmlType="button" type="primary" size="medium" onSubmit={handleClick}>Сохранить</Button>
             </div>
             <p className={`text text_type_main-default text_color_inactive ${style.subtext}`}>Вспомнили пароль?
               <Link to='/login' className={style.link}>Войти</Link>
             </p>
-        </div>
+        </form>
     )
 }

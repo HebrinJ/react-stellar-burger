@@ -77,7 +77,7 @@ export default function Profile() {
                 </ul>
                 <p className={`text text_type_main-small text_color_inactive`}>В этом разделе вы можете изменить свои персональные данные</p>
             </nav>
-            <section className={style.infoBox}>
+            <form className={style.infoBox}>
                 <div className={style.input}>
                     <Input
                         type={'text'}
@@ -114,9 +114,9 @@ export default function Profile() {
                 </div>
                 <div className={ isVisible ? style.buttonBox : style.invisible}>
                     <Button htmlType="button" type="secondary" size="medium" onClick={handleCancel}>Отмена</Button>
-                    <Button htmlType="button" type="primary" size="medium" onClick={handleSave}>Сохранить</Button>
+                    <Button htmlType="button" type="primary" size="medium" onSubmit={handleSave}>Сохранить</Button>
                 </div>
-            </section>
+            </form>
         </div>
     )
 }

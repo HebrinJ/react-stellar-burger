@@ -74,7 +74,7 @@ export function getUserData() {
 }
 
 export function updateUserData(email, userName, password) {
-    return request('auth/user', {
+    return requestWithRefresh('auth/user', {
         method: 'PATCH',
         headers: {
             authorization: localStorage.getItem('accessToken'),
