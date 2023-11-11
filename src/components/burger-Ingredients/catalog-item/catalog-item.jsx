@@ -7,8 +7,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SELECT_ITEM } from '../../../services/actions/select-actions';
 import { MODAL_INGR_INFO } from '../../../services/actions/modal-actions';
 import { useDrag } from "react-dnd";
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { SET_ROOT } from '../../../services/actions/route-actions';
+import { Link } from 'react-router-dom';
 
 export default function CatalogItem({ingredientData}) {
     const [count, setCount] = React.useState(0);    
@@ -18,6 +19,7 @@ export default function CatalogItem({ingredientData}) {
     const selectedProduct = useSelector(state => state.selected);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const location = useLocation();
     
     const [{isDrag}, dragRef] = useDrag({
         type: 'product',
@@ -48,7 +50,7 @@ export default function CatalogItem({ingredientData}) {
             type: SET_ROOT
         })
 
-        navigate(`ingredients/${clickedProductId}`);
+        //navigate(`ingredients/${clickedProductId}`);
 
         setIngredientData(clickedProductId);
         openModal();
@@ -83,17 +85,19 @@ export default function CatalogItem({ingredientData}) {
     }       
     
     return (
-        <div className={style.container} onClick={showInrgedientData} name={ingredientData._id} draggable ref={dragRef}>
-            <Counter count={count}/>
-            <img className={style.image} src={ingredientData.image} alt={ingredientData.name}/>
-            <div className={style.textBox}>
-                <div className={style.price}>
-                    <p className='text text_type_digits-default'>{ingredientData.price}</p><CurrencyIcon type='primary' />
+        <Link to={`/ingredients/${ingredientData._id}`} state={{background: location}} className={style.link}>
+            <div className={style.container} onClick={showInrgedientData} name={ingredientData._id} draggable ref={dragRef}>
+                <Counter count={count}/>
+                <img className={style.image} src={ingredientData.image} alt={ingredientData.name}/>
+                <div className={style.textBox}>
+                    <div className={style.price}>
+                        <p className='text text_type_digits-default'>{ingredientData.price}</p><CurrencyIcon type='primary' />
+                    </div>
+                    <p className='text text_type_main-default'>{ingredientData.name}</p>
                 </div>
-                <p className='text text_type_main-default'>{ingredientData.name}</p>
+                
             </div>
-            
-        </div>
+        </Link>
     )
 }
 
