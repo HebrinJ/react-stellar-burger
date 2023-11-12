@@ -15,13 +15,13 @@ export default function AppHeader() {
     function setSelected() {
         
         switch (location.pathname) {
-            case '/':                
+            case ROOT:                
                 type = ['primary', 'secondary', 'secondary']
                 break;
-            case '/profile':
+            case PROFILE:
                 type = ['secondary', 'secondary', 'primary']
                 break;
-            case '/orders':
+            case ORDERS:
                 type = ['secondary', 'primary', 'secondary']
                 break;
         }

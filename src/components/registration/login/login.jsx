@@ -23,12 +23,14 @@ export default function Login() {
 
     const dispatch = useDispatch();
 
-    function handleSignin() {
+    function handleSignin(event) {
+        event.preventDefault();
+
         dispatch(userSignin(email, password))
     }
 
     return (
-        <div className={style.container}>
+        <form className={style.container} onSubmit={handleSignin}>
             <h1 className={`text text_type_main-medium ${style.header}`}>Вход</h1>
             <div className={style.input}>            
                 <EmailInput
@@ -47,7 +49,7 @@ export default function Login() {
                 />
             </div>
             <div className={style.button}>
-                <Button htmlType="button" type="primary" size="medium" onClick={handleSignin}>Войти</Button>
+                <Button htmlType="submit" type="primary" size="medium" >Войти</Button>
             </div>
             <p className={`text text_type_main-default text_color_inactive ${style.subtext}`}>Вы - новый пользователь? 
                 <Link to='/registration' className={style.link}> Зарегистрироваться</Link>
@@ -55,6 +57,6 @@ export default function Login() {
             <p className='text text_type_main-default text_color_inactive'>Забыли пароль? 
                 <Link to='/forgot-password' className={style.link}> Восстановить пароль</Link>
             </p>
-        </div>
+        </form>
     )
 }

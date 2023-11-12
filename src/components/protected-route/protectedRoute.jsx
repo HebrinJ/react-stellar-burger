@@ -8,6 +8,7 @@ import IngredientPage from '../../pages/ingredientPage';
 import ResetPasswordPage from '../../pages/resetPasswordPage';
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { ROOT, LOGIN } from '../../utils/routes';
 
 export default function ProtectedRouteElement({ element }) {
 
@@ -25,11 +26,11 @@ export default function ProtectedRouteElement({ element }) {
         case RegistrationPage:
         case ForgotPasswordPage:
         case ResetPasswordPage:
-            return isLogin ? <Navigate to="/" replace /> : element;
+            return isLogin ? <Navigate to={ROOT} replace /> : element;
         case ProfilePage:
         case IngredientPage:
-            return isLogin ? element : <Navigate to="/login" replace />;
+            return isLogin ? element : <Navigate to={LOGIN} replace />;
         default:
-            return isLogin ? element : <Navigate to="/login" replace />;;
+            return isLogin ? element : <Navigate to={LOGIN} replace />;;
     }
 }

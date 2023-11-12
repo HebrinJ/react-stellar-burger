@@ -5,6 +5,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { getOrderData } from '../../../services/actions/order-actions';
 import { useNavigate } from 'react-router-dom';
+import { LOGIN } from '../../../utils/routes';
 
 export default function TotalPrice() {
     const cart = useSelector(state => state.cart);
@@ -45,6 +46,7 @@ export default function TotalPrice() {
 
     function handleOrder() {
         const isLogin = localStorage.getItem('accessToken');
+
         if(isLogin) {
             if(!cart.bun) {
                 return;
@@ -52,7 +54,7 @@ export default function TotalPrice() {
             
             dispatch(getOrderData(getOrderIds()));
         } else {
-            navigate('/login');
+            navigate(LOGIN);
         }        
       }
 

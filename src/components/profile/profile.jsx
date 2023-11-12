@@ -12,9 +12,9 @@ export default function Profile() {
     const inputRef = React.useRef(null);
 
     const [email, setEmail] = useState('');
-    const [password, setPassword] = React.useState('');
-    const [userReady, setUserReady] = React.useState(false);
-    const [isVisible, setVisible] = React.useState(false);
+    const [password, setPassword] = useState('');
+    const [userReady, setUserReady] = useState(false);
+    const [isVisible, setVisible] = useState(false);
 
     const navigate = useNavigate();
     const dispatch = useDispatch();
@@ -51,7 +51,9 @@ export default function Profile() {
         navigate(LOGIN)
     }
 
-    function handleSave() {
+    function handleSave(event) {
+        event.preventDefault();
+
         dispatch(updateUser(email, name, password));
         setVisible(false);
     }
@@ -78,7 +80,7 @@ export default function Profile() {
                 </ul>
                 <p className={`text text_type_main-small text_color_inactive`}>В этом разделе вы можете изменить свои персональные данные</p>
             </nav>
-            <form className={style.infoBox}>
+            <form className={style.infoBox} onSubmit={handleSave}>
                 <div className={style.input}>
                     <Input
                         type={'text'}
@@ -115,7 +117,7 @@ export default function Profile() {
                 </div>
                 <div className={ isVisible ? style.buttonBox : style.invisible}>
                     <Button htmlType="button" type="secondary" size="medium" onClick={handleCancel}>Отмена</Button>
-                    <Button htmlType="button" type="primary" size="medium" onSubmit={handleSave}>Сохранить</Button>
+                    <Button htmlType="submit" type="primary" size="medium" >Сохранить</Button>
                 </div>
             </form>
         </div>

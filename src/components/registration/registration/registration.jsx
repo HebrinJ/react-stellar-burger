@@ -17,12 +17,14 @@ export default function Registration() {
 
     const dispatch = useDispatch();
 
-    function handleRegister() {
+    function handleRegister(event) {
+        event.preventDefault();
+        
         dispatch(userRegistration(email, password, userName));
     }
 
     return (
-        <form className={style.container}>
+        <form className={style.container} onSubmit={handleRegister}>
             <h1 className={`text text_type_main-medium ${style.header}`}>Регистрация</h1>
             <div className={style.input}>
                 <Input
@@ -55,7 +57,7 @@ export default function Registration() {
                 />
             </div>
             <div className={style.button}>
-                <Button htmlType="button" type="primary" size="medium" onSubmit={handleRegister}>Зарегистрироваться</Button>
+                <Button htmlType="submit" type="primary" size="medium">Зарегистрироваться</Button>
             </div>
             <p className={`text text_type_main-default text_color_inactive ${style.text}`}>Уже зарегистрированы? 
                 <Link to={LOGIN} className={style.link}> Войти</Link>
