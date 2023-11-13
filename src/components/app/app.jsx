@@ -1,48 +1,36 @@
-import React from 'react';
-import { DndProvider } from "react-dnd";
-import { HTML5Backend } from "react-dnd-html5-backend";
-import styles from './app.module.css';
-import AppHeader from '../app-header/appHeader.jsx';
-import BurgerIngredients from '../burger-Ingredients/burger-Ingredients';
-import BurgerConstructor from '../burger-constructor/burger-constructor';
+import { Routes, Route, useLocation } from 'react-router-dom';
+import LoginPage from '../../pages/loginPage';
+import MainPage from '../../pages/mainPage';
+import RegistrationPage from '../../pages/registrationPage';
+import ForgotPasswordPage from '../../pages/forgotPasswordPage';
+import ResetPasswordPage from '../../pages/resetPasswordPage';
+import ProfilePage from '../../pages/profilePage';
+import IngredientPage from '../../pages/ingredientPage';
+import ProtectedRouteElement from '../protected-route/protectedRoute';
 import ModalWindow from '../modals/modal-window';
 import ModalSetter from '../modals/modal-setter';
-import { getIngredientsData } from '../../services/actions/loading-actions';
-import { useSelector, useDispatch } from 'react-redux';
+import AppHeader from '../app-header/appHeader';
+import { ROOT, INGREDIENT, LOGIN, REGISTRATION, FORGOT_PAS, RESET_PAS, PROFILE } from '../../utils/routes';
 
 export default function App() {
 
-  const dispatch = useDispatch();
-  const modal = useSelector(state => state.modal);
-  const loading = useSelector(state => state.loading);
+  const location = useLocation();
+  const background = location.state?.background;
 
-    React.useEffect(() => {
-    dispatch(getIngredientsData());    
-  }, []) 
- 
-
-  if(loading.isLoading) {
-    return (
-      <div className={styles.app}>
-          <AppHeader />
-          <main className={styles.content}>
-            
-          </main>
-      </div>
-    );
-  }
-
-  return (
-    <div className={styles.app}>        
-        <AppHeader />
-        <DndProvider backend={HTML5Backend}>        
-        <main className={styles.content}>
-          {loading.isError && <ModalWindow><ModalSetter /></ModalWindow>}
-          {modal.visible && <ModalWindow><ModalSetter /></ModalWindow>}          
-              <BurgerIngredients />
-              <BurgerConstructor />
-        </main> 
-        </DndProvider>       
-    </div>
-  );  
+  return ( 
+    <Routes>
+      <Route path={ROOT} element={<AppHeader />}>
+        <Route path={ROOT} element={<ProtectedRouteElement element={<MainPage />} />} />
+        <Route path={INGREDIENT} element={ 
+            background ? (<MainPage ><ModalWindow ><ModalSetter /></ModalWindow></MainPage>) :
+            ( <IngredientPage />) 
+          } />
+        <Route path={LOGIN} element={<ProtectedRouteElement element={<LoginPage />} />} />
+        <Route path={REGISTRATION} element={<ProtectedRouteElement element={<RegistrationPage />} />} />
+        <Route path={FORGOT_PAS} element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
+        <Route path={RESET_PAS} element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
+        <Route path={PROFILE} element={<ProtectedRouteElement element={<ProfilePage />} />} />
+      </Route>
+    </Routes>    
+  );
 }

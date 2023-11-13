@@ -4,6 +4,8 @@ import loadingReducer from "./loading-reducer";
 import orderReducer from "./order-reducer";
 import { selectReducer } from "./select-reducer";
 import { combineReducers } from 'redux';
+import authReducer from "./auth-reducer";
+import { routeReducer } from "./route-reducer";
 
 export const rootReducer = combineReducers({
     cart: cartReducer,
@@ -11,4 +13,6 @@ export const rootReducer = combineReducers({
     loading: loadingReducer,
     selected: selectReducer,
     order: orderReducer,
+    auth: authReducer,
+    route: routeReducer,
 })

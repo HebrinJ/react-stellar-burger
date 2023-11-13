@@ -3,7 +3,7 @@ import { MODAL_ORDER, MODAL_INGR_INFO, MODAL_LOADING_ERROR, MODAL_CLOSE } from "
 const initialState = {
     visible: false, 
     type: '',
-    modalSettings: {}
+    modalSettings: {},
 }
 
 

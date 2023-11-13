@@ -7,19 +7,27 @@ import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
 import { rootReducer } from "./services/reducers/root-reducer";
+import { BrowserRouter } from "react-router-dom";
+import { updateSessionStore, getSessionStore } from "./utils/session-store";
 
 const composeEnhancers =
   typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
     ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
     : compose;
 
-const store = createStore(rootReducer, {}, composeEnhancers(applyMiddleware(thunk)));
+const store = createStore(rootReducer, getSessionStore(), composeEnhancers(applyMiddleware(thunk)));
+
+store.subscribe(() => {
+  updateSessionStore(store.getState());
+})
 
 ReactDOM.render(
   <React.StrictMode>
-    <Provider store={store}>
-      <App />
-    </Provider>
+    <BrowserRouter>
+      <Provider store={store}>
+        <App />
+      </Provider>
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById("root")
 );

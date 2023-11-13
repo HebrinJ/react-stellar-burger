@@ -1,9 +1,9 @@
-import style from './ingredient-details.module.css';
+import style from './ingredient-details-modal.module.css';
 import { ingredientPropType } from '../../../utils/prop-types';
 import PropTypes from 'prop-types';
 
-export default function IngredientDetails({details, label}) {    
-
+export default function IngredientDetailsModal({details, label}) { 
+    
     return (
         <div className={style.position}>
             <h1 className={style.header+ ' text text_type_main-large'}>{label}</h1>
@@ -31,7 +31,7 @@ export default function IngredientDetails({details, label}) {
     )
 }
 
-IngredientDetails.propTypes = {
+IngredientDetailsModal.propTypes = {
     details: ingredientPropType.isRequired,
     label: PropTypes.string.isRequired,
 }
