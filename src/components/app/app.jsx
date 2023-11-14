@@ -10,7 +10,8 @@ import ProtectedRouteElement from '../protected-route/protectedRoute';
 import ModalWindow from '../modals/modal-window';
 import ModalSetter from '../modals/modal-setter';
 import AppHeader from '../app-header/appHeader';
-import { ROOT, INGREDIENT, LOGIN, REGISTRATION, FORGOT_PAS, RESET_PAS, PROFILE } from '../../utils/routes';
+import { ROOT, INGREDIENT, LOGIN, REGISTRATION, FORGOT_PAS, RESET_PAS, PROFILE, FEED } from '../../utils/routes';
+import FeedPage from '../../pages/feedPage';
 
 export default function App() {
 
@@ -30,6 +31,7 @@ export default function App() {
         <Route path={FORGOT_PAS} element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
         <Route path={RESET_PAS} element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
         <Route path={PROFILE} element={<ProtectedRouteElement element={<ProfilePage />} />} />
+        <Route path={FEED} element={<ProtectedRouteElement element={<FeedPage />} />} />
       </Route>
     </Routes>    
   );

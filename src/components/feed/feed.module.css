@@ -1,0 +1,19 @@
+.main {
+    display: flex;
+    flex-direction: column;
+    max-height: 1000px;
+    background-color: #131316;
+    color: #f2f2f3;    
+}
+  
+.content {
+    display: flex;
+    column-gap: 56px;
+    max-height: 80%;
+    overflow: hidden;
+    width: 1240px;
+}
+
+.label {
+  margin-bottom: 20px;  
+}

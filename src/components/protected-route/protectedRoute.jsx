@@ -9,6 +9,7 @@ import ResetPasswordPage from '../../pages/resetPasswordPage';
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { ROOT, LOGIN } from '../../utils/routes';
+import FeedPage from '../../pages/feedPage';
 
 export default function ProtectedRouteElement({ element }) {
 
@@ -21,6 +22,7 @@ export default function ProtectedRouteElement({ element }) {
 
     switch (element.type) {
         case MainPage:
+        case FeedPage:
             return element;
         case LoginPage:
         case RegistrationPage:
