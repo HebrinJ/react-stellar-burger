@@ -2,85 +2,79 @@ import React, { useState, useEffect } from 'react'
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { useDispatch, useSelector } from 'react-redux'
 import { getUser, updateUser, userLogout } from '../../services/actions/auth-actions'
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 import style from './profile.module.css'
 import { LOGIN } from '../../utils/routes'
+import NavBar from './nav-bar/navBar'
+import UserDataForm from './user-data-form/userDataForm'
+import { PROFILE, ORDERS } from '../../utils/routes'
+import Orders from '../orders/orders'
 
 export default function Profile() {
 
-    const [name, setName] = useState('');
-    const inputRef = React.useRef(null);
+    const location = useLocation();
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
-    const [userReady, setUserReady] = useState(false);
-    const [isVisible, setVisible] = useState(false);
+    // const [name, setName] = useState('');
+    // const inputRef = React.useRef(null);
 
-    const navigate = useNavigate();
-    const dispatch = useDispatch();
-    const auth = useSelector(state => state.auth)
-    const user = useSelector(state => state.auth.user);
+    // const [email, setEmail] = useState('');
+    // const [password, setPassword] = useState('');
+    // const [userReady, setUserReady] = useState(false);
+    // const [isVisible, setVisible] = useState(false);
 
-    useEffect(() => {
-        if(localStorage.getItem('accessToken')) {
-            dispatch(getUser());
-          }        
-    }, [])
+    // const navigate = useNavigate();
+    // const dispatch = useDispatch();
+    // const auth = useSelector(state => state.auth)
+    // const user = useSelector(state => state.auth.user);
 
-    useEffect(() => {
-        if(userReady) {
-            setName(user.name);
-            setEmail(user.email);
-        }
-    }, [userReady])
+    // useEffect(() => {
+    //     if(localStorage.getItem('accessToken')) {
+    //         dispatch(getUser());
+    //       }        
+    // }, [])
 
-    useEffect(() => {
-        if(auth.user.name) {
-            setUserReady(true);
-        }
-    }, [auth])
+    // useEffect(() => {
+    //     if(userReady) {
+    //         setName(user.name);
+    //         setEmail(user.email);
+    //     }
+    // }, [userReady])
 
-    const onIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0)
-    }
+    // useEffect(() => {
+    //     if(auth.user.name) {
+    //         setUserReady(true);
+    //     }
+    // }, [auth])
 
-    function handleLogout() {
-        if (!localStorage.getItem('accessToken')) return;
+    // const onIconClick = () => {
+    //     setTimeout(() => inputRef.current.focus(), 0)
+    // }
 
-        dispatch(userLogout());
-        navigate(LOGIN)
-    }
+    // function handleLogout() {
+    //     if (!localStorage.getItem('accessToken')) return;
 
-    function handleSave(event) {
-        event.preventDefault();
+    //     dispatch(userLogout());
+    //     navigate(LOGIN)
+    // }
 
-        dispatch(updateUser(email, name, password));
-        setVisible(false);
-    }
+    // function handleSave(event) {
+    //     event.preventDefault();
 
-    function handleCancel() {
-        setName(user.name);
-        setEmail(user.email);
-        setVisible(false);
-    }
+    //     dispatch(updateUser(email, name, password));
+    //     setVisible(false);
+    // }
+
+    // function handleCancel() {
+    //     setName(user.name);
+    //     setEmail(user.email);
+    //     setVisible(false);
+    // }
 
     return (
         <div className={style.container}>
-            <nav className={style.navBox}>
-                <ul className={style.list}>
-                    <li className={`text text_type_main-medium ${style.navLink}`}>
-                        <span className={style.pointer}>Профиль</span>
-                    </li>
-                    <li className={`text text_type_main-medium text_color_inactive ${style.navLink}`}>
-                        <span className={style.pointer}>История заказов</span>
-                    </li>
-                    <li className={`text text_type_main-medium text_color_inactive ${style.navLink}`} onClick={handleLogout}>
-                        <span className={style.pointer}>Выход</span>
-                    </li>
-                </ul>
-                <p className={`text text_type_main-small text_color_inactive`}>В этом разделе вы можете изменить свои персональные данные</p>
-            </nav>
-            <form className={style.infoBox} onSubmit={handleSave}>
+            <NavBar />
+            { location.pathname === PROFILE ? <UserDataForm /> : <Orders /> }
+            {/* <form className={style.infoBox} onSubmit={handleSave}>
                 <div className={style.input}>
                     <Input
                         type={'text'}
@@ -119,7 +113,7 @@ export default function Profile() {
                     <Button htmlType="button" type="secondary" size="medium" onClick={handleCancel}>Отмена</Button>
                     <Button htmlType="submit" type="primary" size="medium" >Сохранить</Button>
                 </div>
-            </form>
+            </form> */}
         </div>
     )
 }

@@ -22,6 +22,11 @@
     align-items: center;
 }
 
+.statusBox {
+    display: flex;
+    flex-direction: column;
+}
+
 .orderNumber {
     margin: 0;
 }

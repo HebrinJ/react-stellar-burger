@@ -1,6 +1,6 @@
 import style from './feed.module.css'
 import OrderState from './orders-state/ordersState'
-import Orders from './orders/orders'
+import Orders from '../orders/orders'
 
 export default function Feed() {
 

@@ -14,7 +14,7 @@ export default function TotalPrice() {
 
     function getOrderIds() {
         let ingredients = cart.ingredients.map((item) => item.ingredientData._id);
-        console.log(ingredients)
+        
         if(bun) {
             ingredients = ingredients.concat(bun.ingredientData._id);
         }

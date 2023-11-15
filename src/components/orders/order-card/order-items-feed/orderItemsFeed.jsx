@@ -1,0 +1,14 @@
+import { useSelector } from 'react-redux'
+import style from './orderItemsFeed.module.css'
+
+export default function OrderItemsFeed({position, id}) {   
+    
+    const ingredients = useSelector(state => state.loading.allIngredients);
+    const ingredient = ingredients.find(ingredient => ingredient._id === id);
+    const image = ingredient.image_mobile;
+
+return (
+    <div className={style.icon} style={{zIndex: `${position}`}}>
+        <img className={style.image} src={image} alt={`Ингредиент ${ingredient.name}`} />
+    </div>
+)}
