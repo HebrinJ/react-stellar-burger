@@ -4,7 +4,7 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import header from './app-header.module.css'
-import { PROFILE, ROOT, ORDERS } from '../../utils/routes'
+import { PROFILE, ROOT, ORDERS, FEED } from '../../utils/routes'
 
 export default function AppHeader() {
 
@@ -40,7 +40,7 @@ export default function AppHeader() {
                 </div>
                 <div className={header.orderList}>
                     <ListIcon type={type[1]} />
-                    <NavLink to={ORDERS} className={
+                    <NavLink to={FEED} className={
                                 ({ isActive }) => (isActive ?
                                  `text text_type_main-default ${header.activelink}` : 
                                  `text text_type_main-default ${header.link}`)}>Лента заказов</NavLink>

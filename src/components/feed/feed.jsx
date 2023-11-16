@@ -6,9 +6,9 @@ export default function Feed() {
 
     return (
         <div className={style.main}>   
-        <h2 className={`text text_type_main-large ${style.label}`}>Лента заказов</h2>              
+        <h2 className={`text text_type_main-large ${style.label}`}>Лента заказов</h2>
           <main className={style.content}>
-            <Orders />
+            <Orders all={true} />
             <OrderState />
           </main>     
       </div>

@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux'
 import style from './orderItemsFeed.module.css'
 
-export default function OrderItemsFeed({position, id}) {   
+export default function OrderItemsFeed({position, id, number}) {   
     
     const ingredients = useSelector(state => state.loading.allIngredients);
     const ingredient = ingredients.find(ingredient => ingredient._id === id);
@@ -10,5 +10,6 @@ export default function OrderItemsFeed({position, id}) {
 return (
     <div className={style.icon} style={{zIndex: `${position}`}}>
         <img className={style.image} src={image} alt={`Ингредиент ${ingredient.name}`} />
+        <p className={`text text_type_digits-default ${style.number}`}>{number}</p>
     </div>
 )}

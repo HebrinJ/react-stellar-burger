@@ -73,7 +73,7 @@ export default function Profile() {
     return (
         <div className={style.container}>
             <NavBar />
-            { location.pathname === PROFILE ? <UserDataForm /> : <Orders /> }
+            { location.pathname === PROFILE ? <UserDataForm /> : <Orders all={false}/> }
             {/* <form className={style.infoBox} onSubmit={handleSave}>
                 <div className={style.input}>
                     <Input

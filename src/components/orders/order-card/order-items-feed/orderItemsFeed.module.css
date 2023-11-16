@@ -31,4 +31,9 @@
     background-color: #131316;
     border-radius: 50%;
     border: 3px solid #131316;
+    position: relative;
+}
+
+.number {
+    position: absolute;
 }

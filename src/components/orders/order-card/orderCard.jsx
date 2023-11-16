@@ -1,9 +1,28 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './orderCard.module.css'
 import OrderItemsFeed from './order-items-feed/orderItemsFeed'
-import { useState, useEffect } from 'react'
+import { useSelector } from 'react-redux'
 
 export default function OrderCard({number, date, name, ingredients, status}) {
+
+const allIngredients = useSelector(state => state.loading.allIngredients)
+
+function calculatePrice() {
+    const price = ingredients.reduce((sum, product) => {
+        
+        const details = allIngredients.find(productDetails => productDetails._id === product);
+        
+        if(details === undefined) return sum;
+        
+        if(details.type === 'bun') {
+            return sum + (details.price * 2)
+        } else {
+            return sum + details.price;
+        }
+    }, 0)
+
+    return price;
+}
 
 function showStatus() {
     switch (status) {
@@ -57,11 +76,18 @@ return (
                 { ingredients?.map((id, index) => {
                     if(id === null) return;
 
+                    if(index === 5) {
+                        const number = ingredients.length - 6;
+                        return <OrderItemsFeed id={id} position={ingredients.length - index} number={`+${number.toString()}`}/>
+                    }
+
+                    if (index > 5) return;
+
                     return <OrderItemsFeed id={id} position={ingredients.length - index}/>
                 })}
             </div>            
             <div className={style.priceBox}>
-                <p className='text text_type_digits-default'>460</p>
+                <p className='text text_type_digits-default'>{calculatePrice()}</p>
                 <CurrencyIcon type='primary' />
             </div>
         </div>

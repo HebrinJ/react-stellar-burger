@@ -2,20 +2,22 @@ import { useEffect, useRef, useState } from 'react'
 import OrderCard from './order-card/orderCard'
 import style from './orders.module.css'
 
-export default function Orders() {
+export default function Orders({all}) {
 
 const [orders, setOrders] = useState();
-
 const token = localStorage.getItem('accessToken').slice(7);
 
+const url = all ? 'wss://norma.nomoreparties.space/orders/all' : `wss://norma.nomoreparties.space/orders?token=${token}`
+
 useEffect(() => {
-    const connection = new WebSocket(`wss://norma.nomoreparties.space/orders?token=${token}`);
+    const connection = new WebSocket(url);
     connection.onopen = event => {console.log('Connection set')}
 
     connection.onmessage = event => {
         const data = JSON.parse(event.data);
         setOrders(data.orders);
     };
+
     console.log('component orders render');
     return(() => {
         connection.close(1000, 'connection closed')
