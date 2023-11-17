@@ -2,6 +2,7 @@ import style from './feed.module.css'
 import OrderState from './orders-state/ordersState'
 import Orders from '../orders/orders'
 import { useState } from 'react'
+import { FEED_SOCKET_URL } from '../../utils/urls';
 
 export default function Feed() {
 
@@ -12,7 +13,7 @@ export default function Feed() {
         <div className={style.main}>   
         <h2 className={`text text_type_main-large ${style.label}`}>Лента заказов</h2>
           <main className={style.content}>
-            <Orders all={true} amount={setAmount} orderNumbers={setOrders}/>
+            <Orders socketUrl={FEED_SOCKET_URL} amount={setAmount} orderNumbers={setOrders}/>
             <OrderState amounts={amountOrders} orders={orderNumbers}/>
           </main>     
       </div>
