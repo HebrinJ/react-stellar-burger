@@ -13,7 +13,7 @@ export default function Feed() {
         <div className={style.main}>   
         <h2 className={`text text_type_main-large ${style.label}`}>Лента заказов</h2>
           <main className={style.content}>
-            <Orders socketUrl={FEED_SOCKET_URL} amount={setAmount} orderNumbers={setOrders}/>
+            <Orders socketUrl={FEED_SOCKET_URL} numberOfOrdersSetter={setAmount} orderNumbers={setOrders}/>
             <OrderState amounts={amountOrders} orders={orderNumbers}/>
           </main>     
       </div>

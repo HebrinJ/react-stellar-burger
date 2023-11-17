@@ -6,6 +6,7 @@ import { useSelector } from 'react-redux'
 export default function OrderCard({number, date, name, ingredients, status}) {
 
 const allIngredients = useSelector(state => state.loading.allIngredients)
+let statusColor = { color: '#fff' };
 
 function calculatePrice() {
     const price = ingredients.reduce((sum, product) => {
@@ -26,11 +27,14 @@ function calculatePrice() {
 
 function showStatus() {
     switch (status) {
-        case 'done':            
+        case 'done':
+            statusColor.color = '#00cccc';
             return 'Готов';
         case 'pending':
+            statusColor.color = '#fff';  
             return 'Готовится';
         case 'created':
+            statusColor.color = '#fff';  
             return 'Создан';    
         default:
             return '';
@@ -69,7 +73,7 @@ return (
         </div>
         <div className={style.statusBox}>
             <p className='text text_type_main-medium'>{name}</p>
-            { status !== '' && <p className='text text_type_main-small'>{showStatus()}</p>}
+            { status !== '' && <p className='text text_type_main-small' style={statusColor}>{showStatus()}</p>}
         </div>
         <div className={style.infoBox}>
             <div className={style.iconBox}>

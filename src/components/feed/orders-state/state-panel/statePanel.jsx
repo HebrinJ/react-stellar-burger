@@ -8,8 +8,8 @@ const ready = orders?.filter((order, index) => {
     }
 })
 
-const inProgress = orders?.filter((order) => {
-    if(order.state === 'pending') {
+const inProgress = orders?.filter((order, index) => {
+    if(order.state === 'pending' && index <= 19) {
         return order.number;
     }
 })

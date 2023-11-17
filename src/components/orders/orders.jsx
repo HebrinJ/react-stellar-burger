@@ -3,7 +3,7 @@ import OrderCard from './order-card/orderCard'
 import style from './orders.module.css'
 import { webSocketConnect, webSocketClose } from '../../utils/use-socket';
 
-export default function Orders({socketUrl, amount, orderNumbers}) {
+export default function Orders({socketUrl, numberOfOrdersSetter, orderNumbers}) {
 
 const [orders, setOrders] = useState();
 
@@ -21,8 +21,8 @@ function prepareData(event) {
         const data = JSON.parse(event.data);
         setOrders(data.orders);
 
-        if(amount !== undefined) {
-            amount({all: data.total, today: data.totalToday});
+        if(numberOfOrdersSetter !== undefined) {
+            numberOfOrdersSetter({all: data.total, today: data.totalToday});
         }
         
         if(orderNumbers !== undefined) {
