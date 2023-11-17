@@ -37,7 +37,8 @@ function prepareData(event) {
 return (
     <div className={`${style.container} custom-scroll`}>
         { orders?.map((order) => {
-            return <OrderCard number={order.number} date={order.createdAt} name={order.name} ingredients={order.ingredients} status={order.status}/>
+            //return <OrderCard number={order.number} date={order.createdAt} name={order.name} ingredients={order.ingredients} status={order.status} id={order._id}/>
+            return <OrderCard order={order} />
         })}
     </div>
 )}

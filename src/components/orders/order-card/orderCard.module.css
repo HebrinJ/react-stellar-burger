@@ -1,5 +1,4 @@
 .container {
-    /* height: 214px; */
     background-color: #1c1c21;
     border-radius: 40px;
     width: 584px;
@@ -44,4 +43,9 @@
     display: flex;
     justify-content: flex-start;
     
+}
+
+.link {
+    text-decoration: none;
+    color: #fff;
 }

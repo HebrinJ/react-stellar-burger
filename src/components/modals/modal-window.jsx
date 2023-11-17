@@ -31,7 +31,7 @@ export default function ModalWindow(props) {
     
 
     function handleCloseModal() {
-        if(modalType === 'info') {
+        if(modalType === 'info' || modalType === 'order-info') {
             navigate(-1);
         }
 

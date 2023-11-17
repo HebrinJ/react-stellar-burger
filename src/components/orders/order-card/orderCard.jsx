@@ -1,29 +1,38 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './orderCard.module.css'
 import OrderItemsFeed from './order-items-feed/orderItemsFeed'
-import { useSelector } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
+import { Link, useLocation } from 'react-router-dom'
+import { FEED_ID } from '../../../utils/routes'
+import { MODAL_ORDER_INFO } from '../../../services/actions/modal-actions'
+import parseDate from '../../../utils/parse-date'
+import calculatePrice from '../../../utils/calculatePrice'
 
-export default function OrderCard({number, date, name, ingredients, status}) {
+export default function OrderCard({order}) {
 
+const {number, createdAt: date, name, ingredients, status, _id: id} = order;
+
+const location = useLocation();
+const dispatch = useDispatch();
 const allIngredients = useSelector(state => state.loading.allIngredients)
 let statusColor = { color: '#fff' };
 
-function calculatePrice() {
-    const price = ingredients.reduce((sum, product) => {
+// function calculatePrice() {
+//     const price = ingredients.reduce((sum, product) => {
         
-        const details = allIngredients.find(productDetails => productDetails._id === product);
+//         const details = allIngredients.find(productDetails => productDetails._id === product);
         
-        if(details === undefined) return sum;
+//         if(details === undefined) return sum;
         
-        if(details.type === 'bun') {
-            return sum + (details.price * 2)
-        } else {
-            return sum + details.price;
-        }
-    }, 0)
+//         if(details.type === 'bun') {
+//             return sum + (details.price * 2)
+//         } else {
+//             return sum + details.price;
+//         }
+//     }, 0)
 
-    return price;
-}
+//     return price;
+// }
 
 function showStatus() {
     switch (status) {
@@ -41,35 +50,43 @@ function showStatus() {
     }
 }
 
-function setDate() {
-    let dateString = ''
+// function setDate() {
+//     let dateString = ''
     
-    const timestamp = Date.parse(date);
-    const timestampNow = Date.now();
+//     const timestamp = Date.parse(date);
+//     const timestampNow = Date.now();
 
-    if(timestampNow - timestamp <= 86400000) {
-        dateString = 'Сегодня, '
-    } else if (timestampNow - timestamp > 86400000 && timestampNow - timestamp <= 172800000) {
-        dateString = 'Вчера, '
-    } else {
-        dateString = date.slice(0,10).concat(', ');
-    }
+//     if(timestampNow - timestamp <= 86400000) {
+//         dateString = 'Сегодня, '
+//     } else if (timestampNow - timestamp > 86400000 && timestampNow - timestamp <= 172800000) {
+//         dateString = 'Вчера, '
+//     } else {
+//         dateString = date.slice(0,10).concat(', ');
+//     }
 
-    const time = date.slice(11, 16);
-    dateString = dateString.concat(time+' ');
+//     const time = date.slice(11, 16);
+//     dateString = dateString.concat(time+' ');
 
-    const utcFull = new Date(timestamp).toUTCString();
-    const utcIndex = utcFull.indexOf('GMT');
-    const utc = utcFull.slice(utcIndex);
+//     const utcFull = new Date(timestamp).toUTCString();
+//     const utcIndex = utcFull.indexOf('GMT');
+//     const utc = utcFull.slice(utcIndex);
 
-    return dateString.concat(utc);
-}
+//     return dateString.concat(utc);
+// }
+
+function openModal() { 
+    dispatch({
+        type: MODAL_ORDER_INFO,
+        payload: order,
+    })
+}  
 
 return (
-    <div className={style.container}>
+    <Link to={`${location.pathname}/${id}`} className={style.link} state={{background: location}}>
+    <div className={style.container} onClick={openModal}>
         <div className={style.labelBox}>
             <p className={`text text_type_digits-default ${style.orderNumber}`}>{`#${number}`}</p>
-            <p className={`text text_type_main-default text_color_inactive ${style.date}`}>{setDate()}</p>
+            <p className={`text text_type_main-default text_color_inactive ${style.date}`}>{parseDate(date)}</p>
         </div>
         <div className={style.statusBox}>
             <p className='text text_type_main-medium'>{name}</p>
@@ -91,9 +108,10 @@ return (
                 })}
             </div>            
             <div className={style.priceBox}>
-                <p className='text text_type_digits-default'>{calculatePrice()}</p>
+                <p className='text text_type_digits-default'>{calculatePrice(allIngredients, ingredients)}</p>
                 <CurrencyIcon type='primary' />
             </div>
         </div>
     </div>
+    </Link>
 )}
