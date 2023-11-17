@@ -2,7 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import OrderCard from './order-card/orderCard'
 import style from './orders.module.css'
 
-export default function Orders({all}) {
+export default function Orders({all, amount, orderNumbers}) {
 
 const [orders, setOrders] = useState();
 const token = localStorage.getItem('accessToken').slice(7);
@@ -16,6 +16,18 @@ useEffect(() => {
     connection.onmessage = event => {
         const data = JSON.parse(event.data);
         setOrders(data.orders);
+
+        if(amount !== undefined) {
+            amount({all: data.total, today: data.totalToday});
+        }
+        
+        if(orderNumbers !== undefined) {
+            const ordersForFeed = orders?.map((order) => {
+                return {number: order.number, state: order.status}
+            })
+
+            orderNumbers(ordersForFeed)
+        }
     };
 
     console.log('component orders render');

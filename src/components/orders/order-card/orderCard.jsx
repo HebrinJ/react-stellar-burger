@@ -39,7 +39,7 @@ function showStatus() {
 
 function setDate() {
     let dateString = ''
-
+    
     const timestamp = Date.parse(date);
     const timestampNow = Date.now();
 
@@ -76,7 +76,7 @@ return (
                 { ingredients?.map((id, index) => {
                     if(id === null) return;
 
-                    if(index === 5) {
+                    if(index === 5 && ingredients.length !== 6) {
                         const number = ingredients.length - 6;
                         return <OrderItemsFeed id={id} position={ingredients.length - index} number={`+${number.toString()}`}/>
                     }
