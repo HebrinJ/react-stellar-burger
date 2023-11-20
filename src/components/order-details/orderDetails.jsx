@@ -3,7 +3,7 @@ import parseDate from '../../utils/parse-date';
 import style from './orderDetails.module.css'
 import calculatePrice from '../../utils/calculatePrice';
 import IngredientList from './ingredient-list/ingredientList';
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { GET_ORDER_DETAILS, getOrderDetails } from '../../services/actions/order-actions';
@@ -116,7 +116,8 @@ return (
                 }
             </ul>
             <div className={style.underline}>
-                <p className='text text_type_main-default text_color_inactive'>{parseDate(orderDetails.createdAt)}</p>
+                <FormattedDate className='text text_type_main-default text_color_inactive' date={new Date(orderDetails.createdAt)} />
+                {/* <p className='text text_type_main-default text_color_inactive'>{parseDate(orderDetails.createdAt)}</p> */}
                 <div className={style.priceBox}>
                     <p className='text text_type_digits-default'>{calculatePrice(allIngredients, orderDetails.ingredients)}</p>
                     <CurrencyIcon type='primary' />

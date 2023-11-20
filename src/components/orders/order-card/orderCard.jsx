@@ -1,4 +1,4 @@
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from './orderCard.module.css'
 import OrderItemsFeed from './order-items-feed/orderItemsFeed'
 import { useDispatch, useSelector } from 'react-redux'
@@ -45,7 +45,8 @@ return (
     <div className={style.container} onClick={openModal}>
         <div className={style.labelBox}>
             <p className={`text text_type_digits-default ${style.orderNumber}`}>{`#${number}`}</p>
-            <p className={`text text_type_main-default text_color_inactive ${style.date}`}>{parseDate(date)}</p>
+            {/* <p className={`text text_type_main-default text_color_inactive ${style.date}`}>{parseDate(date)}</p> */}
+            <FormattedDate className={`text text_type_main-default text_color_inactive ${style.date}`} date={new Date(date)} />            
         </div>
         <div className={style.statusBox}>
             <p className='text text_type_main-medium'>{name}</p>

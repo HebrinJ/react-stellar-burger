@@ -38,7 +38,7 @@ useEffect(() => {
 }, [])
 
 function prepareDataToShow(data) {
-    
+        
         setOrders(data.orders);
 
         if(numberOfOrdersSetter !== undefined) {
