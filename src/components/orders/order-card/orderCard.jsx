@@ -1,37 +1,21 @@
-import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components'
-import style from './orderCard.module.css'
-import OrderItemsFeed from './order-items-feed/orderItemsFeed'
-import { useDispatch, useSelector } from 'react-redux'
-import { Link, useLocation } from 'react-router-dom'
-import { FEED_ID } from '../../../utils/routes'
-import { MODAL_ORDER_INFO } from '../../../services/actions/modal-actions'
-import parseDate from '../../../utils/parse-date'
-import calculatePrice from '../../../utils/calculatePrice'
+import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
+import OrderItemsFeed from './order-items-feed/orderItemsFeed';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation } from 'react-router-dom';
+import { MODAL_ORDER_INFO } from '../../../services/actions/modal-actions';
+import calculatePrice from '../../../utils/calculatePrice';
+import OrderShowStatus from '../../order-details/order-show-status/orderShowStatus';
+import PropTypes from 'prop-types';
+import style from './orderCard.module.css';
 
 export default function OrderCard({order}) {
 
 const {number, createdAt: date, name, ingredients, status } = order;
 
-const location = useLocation();
 const dispatch = useDispatch();
-const allIngredients = useSelector(state => state.loading.allIngredients)
-let statusColor = { color: '#fff' };
 
-function showStatus() {
-    switch (status) {
-        case 'done':
-            statusColor.color = '#00cccc';
-            return 'Готов';
-        case 'pending':
-            statusColor.color = '#fff';  
-            return 'Готовится';
-        case 'created':
-            statusColor.color = '#fff';  
-            return 'Создан';    
-        default:
-            return '';
-    }
-}
+const location = useLocation();
+const allIngredients = useSelector(state => state.loading.allIngredients)
 
 function openModal() { 
     dispatch({
@@ -45,12 +29,11 @@ return (
     <div className={style.container} onClick={openModal}>
         <div className={style.labelBox}>
             <p className={`text text_type_digits-default ${style.orderNumber}`}>{`#${number}`}</p>
-            {/* <p className={`text text_type_main-default text_color_inactive ${style.date}`}>{parseDate(date)}</p> */}
             <FormattedDate className={`text text_type_main-default text_color_inactive ${style.date}`} date={new Date(date)} />            
         </div>
         <div className={style.statusBox}>
             <p className='text text_type_main-medium'>{name}</p>
-            { status !== '' && <p className='text text_type_main-small' style={statusColor}>{showStatus()}</p>}
+            { status !== '' && <OrderShowStatus status={status} />}
         </div>
         <div className={style.infoBox}>
             <div className={style.iconBox}>
@@ -77,3 +60,13 @@ return (
     </div>
     </Link>
 )}
+
+OrderCard.propTypes = {
+    order: PropTypes.shape({
+        number: PropTypes.number,
+        createdAt: PropTypes.string,
+        name: PropTypes.string,
+        ingredients: PropTypes.array,
+        status: PropTypes.string,
+    })
+}

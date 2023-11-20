@@ -1,5 +1,6 @@
-import { useSelector } from 'react-redux'
-import style from './orderItemsFeed.module.css'
+import { useSelector } from 'react-redux';
+import PropTypes from 'prop-types';
+import style from './orderItemsFeed.module.css';
 
 export default function OrderItemsFeed({position, id, number}) {   
     
@@ -13,3 +14,9 @@ return (
         <p className={`text text_type_digits-default ${style.number}`}>{number}</p>
     </div>
 )}
+
+OrderItemsFeed.propTypes = {
+    position: PropTypes.number,
+    id: PropTypes.string,
+    number: PropTypes.string,
+}

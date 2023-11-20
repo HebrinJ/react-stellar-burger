@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { GET_ORDER_DETAILS, getOrderDetails } from '../../services/actions/order-actions';
 import { getIngredientsData } from '../../services/actions/loading-actions';
 import style from './orderDetails.module.css'
+import OrderShowStatus from './order-show-status/orderShowStatus';
 
 export default function OrderDetails() {
 
@@ -18,7 +19,6 @@ const allIngredients = useSelector(state => state.loading.allIngredients)
 const orderDetails = useSelector(state => state.order.orderDetails.orders[0]);
 
 const orderNumber = useParams();
-let statusColor = { color: '#fff' };
 
 useEffect(() => {   
     const order = findOrder();
@@ -74,28 +74,12 @@ function findIngredientAmounts() {
     }, {})
 }
 
-function showStatus() {
-    switch (orderDetails.status) {
-        case 'done':
-            statusColor.color = '#00cccc';
-            return 'Готов';
-        case 'pending':
-            statusColor.color = '#fff';  
-            return 'Готовится';
-        case 'created':
-            statusColor.color = '#fff';  
-            return 'Создан';    
-        default:
-            return '';
-    }
-}
-
 return (
     <section className={style.container}>
         <p className={`text text_type_digits-default ${style.number}`}>{`#${orderDetails.number}`}</p>
         <div className={style.header}>
             <h2 className='text text_type_main-medium'>{orderDetails.name}</h2>
-            <p className='text text_type_main-small' style={statusColor}>{showStatus()}</p>
+            <OrderShowStatus status={orderDetails.status} />
         </div>        
         <div>
             <p className='text text_type_main-medium'>Состав:</p>

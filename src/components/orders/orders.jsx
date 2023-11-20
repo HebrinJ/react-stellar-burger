@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
-import OrderCard from './order-card/orderCard'
-import style from './orders.module.css'
+import { useEffect } from 'react';
+import OrderCard from './order-card/orderCard';
 import { webSocketConnect, webSocketClose } from '../../utils/use-socket';
 import { useDispatch, useSelector } from 'react-redux';
 import { GET_ORDERS } from '../../services/actions/all-orders-actions';
 import { GET_USER_ORDERS } from '../../services/actions/user-orders-actions';
+import PropTypes from 'prop-types';
+import style from './orders.module.css';
 
 export default function Orders({socketUrl, numberOfOrdersSetter, isPersonal}) {
 
-//const [orders, setOrders] = useState();
 const orders = useSelector(state => state.orders.orders)
 const dispatch = useDispatch();
 
@@ -39,18 +39,10 @@ useEffect(() => {
 }, [])
 
 function prepareDataToShow(data) {
-        
-        //setOrders(data.orders);
 
         if(numberOfOrdersSetter) {
             numberOfOrdersSetter({all: data.total, today: data.totalToday});
-        }        
-        
-        // const ordersForFeed = orders?.map((order) => {
-        //     return {number: order.number, state: order.status}
-        // })
-
-        //orderNumbers(ordersForFeed)        
+        }      
     };
 
 return (
@@ -61,3 +53,9 @@ return (
         })}
     </div>
 )}
+
+Orders.propTypes = {
+    socketUrl: PropTypes.string.isRequired,
+    numberOfOrdersSetter: PropTypes.func.isRequired,
+    isPersonal: PropTypes.bool,
+}
