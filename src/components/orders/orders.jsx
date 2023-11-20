@@ -55,8 +55,9 @@ function prepareDataToShow(data) {
 
 return (
     <div className={`${style.container} custom-scroll`}>
-        { orders?.map((order) => {            
-            return <OrderCard order={order} />
+        { orders?.map((order, index) => {
+            const id = String(index)+order._id;
+            return <OrderCard order={order} key={id}/>
         })}
     </div>
 )}

@@ -56,15 +56,17 @@ return (
             <div className={style.iconBox}>
                 { ingredients?.map((id, index) => {
                     if(id === null) return;
+                    
+                    const key = String(index)+id;
 
                     if(index === 5 && ingredients.length !== 6) {
                         const number = ingredients.length - 6;
-                        return <OrderItemsFeed id={id} position={ingredients.length - index} number={`+${number.toString()}`}/>
+                        return <OrderItemsFeed id={id} position={ingredients.length - index} number={`+${number.toString()}`} key={key}/>
                     }
 
                     if (index > 5) return;
 
-                    return <OrderItemsFeed id={id} position={ingredients.length - index}/>
+                    return <OrderItemsFeed id={id} position={ingredients.length - index} key={key}/>
                 })}
             </div>            
             <div className={style.priceBox}>

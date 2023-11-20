@@ -22,8 +22,9 @@ return (
         <div className={style.column}>
             <h2 className={`text text_type_main-medium ${style.label}`}>Готовы: </h2>
             <div className={style.numberBox}>
-                { ready?.map((order) => {
-                    return <p className={`text text_type_digits-default ${style.ready}`}>{order.number}</p>
+                { ready?.map((order, index) => {
+                    const id = String(index)+order;
+                    return <p className={`text text_type_digits-default ${style.ready}`} key={id}>{order.number}</p>
                 })}
             </div>
         </div>
