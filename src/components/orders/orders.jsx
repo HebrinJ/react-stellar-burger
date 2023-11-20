@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 import OrderCard from './order-card/orderCard'
 import style from './orders.module.css'
 import { webSocketConnect, webSocketClose } from '../../utils/use-socket';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { GET_ORDERS } from '../../services/actions/all-orders-actions';
 import { GET_USER_ORDERS } from '../../services/actions/user-orders-actions';
 
-export default function Orders({socketUrl, numberOfOrdersSetter, orderNumbers, isPersonal}) {
+export default function Orders({socketUrl, numberOfOrdersSetter, isPersonal}) {
 
-const [orders, setOrders] = useState();
+//const [orders, setOrders] = useState();
+const orders = useSelector(state => state.orders.orders)
 const dispatch = useDispatch();
 
 useEffect(() => {
@@ -39,19 +40,17 @@ useEffect(() => {
 
 function prepareDataToShow(data) {
         
-        setOrders(data.orders);
+        //setOrders(data.orders);
 
-        if(numberOfOrdersSetter !== undefined) {
+        if(numberOfOrdersSetter) {
             numberOfOrdersSetter({all: data.total, today: data.totalToday});
-        }
+        }        
         
-        if(orderNumbers !== undefined) {
-            const ordersForFeed = orders?.map((order) => {
-                return {number: order.number, state: order.status}
-            })
+        // const ordersForFeed = orders?.map((order) => {
+        //     return {number: order.number, state: order.status}
+        // })
 
-            orderNumbers(ordersForFeed)
-        }
+        //orderNumbers(ordersForFeed)        
     };
 
 return (
