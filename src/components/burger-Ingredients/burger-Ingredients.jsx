@@ -7,7 +7,6 @@ export default function BurgerIngredients() {
     const bun = React.useRef(null);
     const sauce = React.useRef(null);
     const main = React.useRef(null);
-
     const navPanel = React.useRef(null);
 
     const [selected, setSelected] = React.useState({bun: true, sauce: false, main: false});    

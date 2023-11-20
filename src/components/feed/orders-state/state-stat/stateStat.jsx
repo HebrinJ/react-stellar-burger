@@ -1,4 +1,5 @@
-import style from './stateStat.module.css'
+import style from './stateStat.module.css';
+import PropTypes from 'prop-types';
 
 export default function StateStat({label, amount}) {    
 
@@ -8,3 +9,8 @@ return (
         <p className={`text text_type_digits-large ${style.glow}`}>{amount}</p>
     </div>
 )}
+
+StateStat.propTypes = {
+    label: PropTypes.string,
+    amount: PropTypes.number,
+}
