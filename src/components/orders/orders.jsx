@@ -2,23 +2,43 @@ import { useEffect, useState } from 'react'
 import OrderCard from './order-card/orderCard'
 import style from './orders.module.css'
 import { webSocketConnect, webSocketClose } from '../../utils/use-socket';
+import { useDispatch } from 'react-redux';
+import { GET_ORDERS } from '../../services/actions/all-orders-actions';
+import { GET_USER_ORDERS } from '../../services/actions/user-orders-actions';
 
-export default function Orders({socketUrl, numberOfOrdersSetter, orderNumbers}) {
+export default function Orders({socketUrl, numberOfOrdersSetter, orderNumbers, isPersonal}) {
 
 const [orders, setOrders] = useState();
+const dispatch = useDispatch();
 
 useEffect(() => {
     const connection = webSocketConnect(socketUrl);
-    connection.onmessage = event => { prepareData(event); }
+    connection.onmessage = event => {
+        const data = JSON.parse(event.data);
+
+        prepareDataToShow(data);
+
+        if(isPersonal) {
+            dispatch({
+                type: GET_USER_ORDERS,
+                payload: data,
+            })
+        } else {
+            dispatch({
+                type: GET_ORDERS,
+                payload: data,
+            })
+        }
+        
+    }
 
     return (() => {
         webSocketClose(connection);
     })
 }, [])
 
-function prepareData(event) {
+function prepareDataToShow(data) {
     
-        const data = JSON.parse(event.data);
         setOrders(data.orders);
 
         if(numberOfOrdersSetter !== undefined) {
@@ -36,8 +56,7 @@ function prepareData(event) {
 
 return (
     <div className={`${style.container} custom-scroll`}>
-        { orders?.map((order) => {
-            //return <OrderCard number={order.number} date={order.createdAt} name={order.name} ingredients={order.ingredients} status={order.status} id={order._id}/>
+        { orders?.map((order) => {            
             return <OrderCard order={order} />
         })}
     </div>

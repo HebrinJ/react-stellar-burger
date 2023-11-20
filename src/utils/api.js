@@ -88,6 +88,10 @@ export function updateUserData(email, userName, password) {
     });
 }
 
+export function getOrder(order) {
+    return request(`orders/${order}`);
+}
+
 function checkResponse(res) {    
     return res.ok ? res.json() : res.json().then((err) => Promise.reject(err));
 }

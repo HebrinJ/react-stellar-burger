@@ -31,9 +31,13 @@ export default function ModalWindow(props) {
     
 
     function handleCloseModal() {
-        if(modalType === 'info' || modalType === 'order-info') {
+        if(modalType === 'info') {
             navigate(-1);
         }
+
+        if(modalType === 'order-info') {
+            navigate(-1);
+        }        
 
         dispatch({
             type: MODAL_CLOSE

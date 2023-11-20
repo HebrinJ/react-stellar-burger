@@ -7,5 +7,5 @@ export const RESET_PAS = '/reset-password';
 export const PROFILE = '/profile';
 export const ORDERS = '/profile/orders';
 export const FEED = '/feed';
-export const FEED_ID = '/feed/:id';
-export const ORDER_ID = '/profile/orders/:id';
+export const FEED_NUMBER = '/feed/:number';
+export const ORDER_NUMBER = '/profile/orders/:number';

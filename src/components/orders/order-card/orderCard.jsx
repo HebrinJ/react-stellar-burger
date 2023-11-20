@@ -10,29 +10,12 @@ import calculatePrice from '../../../utils/calculatePrice'
 
 export default function OrderCard({order}) {
 
-const {number, createdAt: date, name, ingredients, status, _id: id} = order;
+const {number, createdAt: date, name, ingredients, status } = order;
 
 const location = useLocation();
 const dispatch = useDispatch();
 const allIngredients = useSelector(state => state.loading.allIngredients)
 let statusColor = { color: '#fff' };
-
-// function calculatePrice() {
-//     const price = ingredients.reduce((sum, product) => {
-        
-//         const details = allIngredients.find(productDetails => productDetails._id === product);
-        
-//         if(details === undefined) return sum;
-        
-//         if(details.type === 'bun') {
-//             return sum + (details.price * 2)
-//         } else {
-//             return sum + details.price;
-//         }
-//     }, 0)
-
-//     return price;
-// }
 
 function showStatus() {
     switch (status) {
@@ -50,30 +33,6 @@ function showStatus() {
     }
 }
 
-// function setDate() {
-//     let dateString = ''
-    
-//     const timestamp = Date.parse(date);
-//     const timestampNow = Date.now();
-
-//     if(timestampNow - timestamp <= 86400000) {
-//         dateString = 'Сегодня, '
-//     } else if (timestampNow - timestamp > 86400000 && timestampNow - timestamp <= 172800000) {
-//         dateString = 'Вчера, '
-//     } else {
-//         dateString = date.slice(0,10).concat(', ');
-//     }
-
-//     const time = date.slice(11, 16);
-//     dateString = dateString.concat(time+' ');
-
-//     const utcFull = new Date(timestamp).toUTCString();
-//     const utcIndex = utcFull.indexOf('GMT');
-//     const utc = utcFull.slice(utcIndex);
-
-//     return dateString.concat(utc);
-// }
-
 function openModal() { 
     dispatch({
         type: MODAL_ORDER_INFO,
@@ -82,7 +41,7 @@ function openModal() {
 }  
 
 return (
-    <Link to={`${location.pathname}/${id}`} className={style.link} state={{background: location}}>
+    <Link to={`${location.pathname}/${number}`} className={style.link} state={{background: location}}>
     <div className={style.container} onClick={openModal}>
         <div className={style.labelBox}>
             <p className={`text text_type_digits-default ${style.orderNumber}`}>{`#${number}`}</p>

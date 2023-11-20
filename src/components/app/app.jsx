@@ -10,7 +10,7 @@ import ProtectedRouteElement from '../protected-route/protectedRoute';
 import ModalWindow from '../modals/modal-window';
 import ModalSetter from '../modals/modal-setter';
 import AppHeader from '../app-header/appHeader';
-import { ROOT, INGREDIENT, LOGIN, REGISTRATION, FORGOT_PAS, RESET_PAS, PROFILE, FEED, ORDER_ID, FEED_ID } from '../../utils/routes';
+import { ROOT, INGREDIENT, LOGIN, REGISTRATION, FORGOT_PAS, RESET_PAS, PROFILE, FEED, ORDER_NUMBER, FEED_NUMBER } from '../../utils/routes';
 import FeedPage from '../../pages/feedPage';
 import OrderDetailsPage from '../../pages/orderDetailsPage';
 import { ORDERS } from '../../utils/routes';
@@ -34,10 +34,12 @@ export default function App() {
         <Route path={RESET_PAS} element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
         <Route path={PROFILE} element={<ProtectedRouteElement element={<ProfilePage />} />} />
         <Route path={FEED} element={<ProtectedRouteElement element={<FeedPage />} />} />
-        <Route path={FEED_ID} element={
-          background ? (<ModalWindow><ModalSetter></ModalSetter></ModalWindow>) : (<OrderDetailsPage />)
+        <Route path={FEED_NUMBER} element={
+          background ? (<ModalWindow><ModalSetter /></ModalWindow>) : (<OrderDetailsPage />)
         } />
-        <Route path={ORDER_ID} element={<ProtectedRouteElement element={<OrderDetailsPage />} />} />
+        <Route path={ORDER_NUMBER} element={
+          background ? (<ModalWindow><ModalSetter /></ModalWindow>) : (<OrderDetailsPage />)
+        } />
         <Route path={ORDERS} element={<ProtectedRouteElement element={<ProfilePage />} />} />
       </Route>
     </Routes>    
