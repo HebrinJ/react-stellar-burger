@@ -1,25 +1,24 @@
 import { useDispatch, useSelector } from 'react-redux';
-import parseDate from '../../utils/parse-date';
-import style from './orderDetails.module.css'
 import calculatePrice from '../../utils/calculatePrice';
 import IngredientList from './ingredient-list/ingredientList';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 import { GET_ORDER_DETAILS, getOrderDetails } from '../../services/actions/order-actions';
-import { getData } from '../../utils/api';
 import { getIngredientsData } from '../../services/actions/loading-actions';
+import style from './orderDetails.module.css'
 
 export default function OrderDetails() {
+
+const dispatch = useDispatch();
 
 const userOrders = useSelector(state => state.userOrders.orders);
 const allOrders = useSelector(state => state.orders.orders);
 const allIngredients = useSelector(state => state.loading.allIngredients)
-//const order = useSelector(state => state.order)
 const orderDetails = useSelector(state => state.order.orderDetails.orders[0]);
-const dispatch = useDispatch();
 
 const orderNumber = useParams();
+let statusColor = { color: '#fff' };
 
 useEffect(() => {   
     const order = findOrder();
@@ -30,22 +29,10 @@ useEffect(() => {
 
 }, [])
 
-
-//const orderDetails = order.detailsReady ? order.orderDetails[0] : null;
-
-//if(!orderDetails) return null;
-
 if(!orderDetails) return null
-//const { number, name, status, createdAt, ingredients } = orderDetails;
-let statusColor = { color: '#fff' };
 
-function findOrderInArray(orders) {
-    return orders.find(order => order.number === +orderNumber.number);
-}
-
-function findOrder() {   
-
-    let order = findOrderInArray(userOrders);
+function findOrder() {
+    let order = findOrderInOrders(userOrders);
 
     if(order) {
         dispatch({
@@ -54,7 +41,7 @@ function findOrder() {
         })
     }
 
-    order = findOrderInArray(allOrders);
+    order = findOrderInOrders(allOrders);
 
     if(order) {        
         dispatch({
@@ -62,6 +49,10 @@ function findOrder() {
             payload: order
         })
     }
+}
+
+function findOrderInOrders(orders) {
+    return orders.find(order => order.number === +orderNumber.number);
 }
 
 function getDetails(id) {
@@ -100,7 +91,7 @@ function showStatus() {
 }
 
 return (
-    <div className={style.container}>
+    <section className={style.container}>
         <p className={`text text_type_digits-default ${style.number}`}>{`#${orderDetails.number}`}</p>
         <div className={style.header}>
             <h2 className='text text_type_main-medium'>{orderDetails.name}</h2>
@@ -118,12 +109,11 @@ return (
             </ul>
             <div className={style.underline}>
                 <FormattedDate className='text text_type_main-default text_color_inactive' date={new Date(orderDetails.createdAt)} />
-                {/* <p className='text text_type_main-default text_color_inactive'>{parseDate(orderDetails.createdAt)}</p> */}
                 <div className={style.priceBox}>
                     <p className='text text_type_digits-default'>{calculatePrice(allIngredients, orderDetails.ingredients)}</p>
                     <CurrencyIcon type='primary' />
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 )}

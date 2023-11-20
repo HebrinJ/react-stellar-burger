@@ -1,5 +1,6 @@
-import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import style from './ingredientList.module.css'
+import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
+import PropTypes from 'prop-types';
+import style from './ingredientList.module.css';
 
 export default function IngredientList({product, amount}) {
 
@@ -15,3 +16,12 @@ return (
         </div>
     </div>
 )}
+
+IngredientList.propTypes = {
+    product: PropTypes.shape({
+        name: PropTypes.string,
+        icon: PropTypes.string,
+        price: PropTypes.number,
+    }),
+    amount: PropTypes.number,
+}

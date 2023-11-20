@@ -25,9 +25,8 @@ export default function ModalSetter() {
                 return (<IngredientDetailsModal details={selectedProduct} label='Детали ингридиента'/>);
             case 'loadingError':
                 return (<LoadingError errorText={modal.modalSettings.error} label='Ошибка загрузки'/>);
-            default:
-              console.log('Модальное окно не найдено');
-              return (<></>)                     
+            default:              
+              return (null)
         }
     }
 
