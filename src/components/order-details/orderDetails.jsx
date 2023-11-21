@@ -4,56 +4,40 @@ import IngredientList from './ingredient-list/ingredientList';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
-import { GET_ORDER_DETAILS, getOrderDetails } from '../../services/actions/order-actions';
+import { RESET_DETAILS, getOrderDetails } from '../../services/actions/order-actions';
 import { getIngredientsData } from '../../services/actions/loading-actions';
 import style from './orderDetails.module.css'
 import OrderShowStatus from './order-show-status/orderShowStatus';
 
-export default function OrderDetails() {
+export default function OrderDetails({orderDetails}) {
 
 const dispatch = useDispatch();
 
-const userOrders = useSelector(state => state.userOrders.orders);
-const allOrders = useSelector(state => state.orders.orders);
-const allIngredients = useSelector(state => state.loading.allIngredients)
-const orderDetails = useSelector(state => state.order.orderDetails.orders[0]);
+const allIngredients = useSelector(state => state.loading.allIngredients);
+const storeOrder = useSelector(state => state.order.orderDetails.orders[0]);
 
 const orderNumber = useParams();
 
-useEffect(() => {   
-    const order = findOrder();
-
-    if(!order) {
+useEffect(() => {  
+    console.log(orderDetails)
+    if(!orderDetails) {
+        console.log('act')
         dispatch(getOrderDetails(orderNumber.number));
     }
 
+    return (() => {
+        dispatch({
+            type: RESET_DETAILS,
+        })
+    })
+
 }, [])
 
+if(!orderDetails && storeOrder.number !== 0) {
+    orderDetails = storeOrder
+}
+
 if(!orderDetails) return null
-
-function findOrder() {
-    let order = findOrderInOrders(userOrders);
-
-    if(order) {
-        dispatch({
-            type: GET_ORDER_DETAILS,
-            payload: order
-        })
-    }
-
-    order = findOrderInOrders(allOrders);
-
-    if(order) {        
-        dispatch({
-            type: GET_ORDER_DETAILS,
-            payload: order
-        })
-    }
-}
-
-function findOrderInOrders(orders) {
-    return orders.find(order => order.number === +orderNumber.number);
-}
 
 function getDetails(id) {
     if(allIngredients.length === 0) {

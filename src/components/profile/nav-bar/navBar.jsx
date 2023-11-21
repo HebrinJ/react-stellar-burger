@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 import style from './navBar.module.css'
-import { NavLink, useLocation, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import { LOGIN, PROFILE, ORDERS } from '../../../utils/routes';
 import { userLogout } from '../../../services/actions/auth-actions';
 

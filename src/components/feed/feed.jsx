@@ -3,10 +3,11 @@ import OrderState from './orders-state/ordersState'
 import Orders from '../orders/orders'
 import { useState } from 'react'
 import { FEED_SOCKET_URL } from '../../utils/urls';
+import { useSelector } from 'react-redux';
 
 export default function Feed() {
 
-  const [amountOrders, setAmount] = useState({all: 0, today: 0});
+const [amountOrders, setAmount] = useState({all: 0, today: 0});
 
     return (
       <section className={style.main}>   

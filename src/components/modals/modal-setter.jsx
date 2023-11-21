@@ -5,10 +5,11 @@ import { useSelector } from 'react-redux';
 import OrderDetails from '../order-details/orderDetails';
 
 export default function ModalSetter() {
-
+    
     const modal = useSelector(state => state.modal);
     const order = useSelector(state => state.order);
-    const selectedProduct = JSON.parse(localStorage.getItem('selected'));    
+    const selectedProduct = JSON.parse(localStorage.getItem('selected'));  
+    
 
     function getModal() {  
         
@@ -20,7 +21,7 @@ export default function ModalSetter() {
             case 'order':                
                 return (<OrderAccept orderNum={order.orderData.order.number}/>);
             case 'order-info':
-                return (<OrderDetails order={modal.modalSettings} />);
+                return (<OrderDetails orderDetails={modal.modalSettings} />);
             case 'info':
                 return (<IngredientDetailsModal details={selectedProduct} label='Детали ингридиента'/>);
             case 'loadingError':
@@ -29,6 +30,6 @@ export default function ModalSetter() {
               return (null)
         }
     }
-
+    
     return getModal();        
 }

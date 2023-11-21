@@ -9,6 +9,7 @@ export const GET_ORDER_SUCCESS = 'GET_ORDER_SUCCESS';
 export const GET_ORDER_FAILED = 'GET_ORDER_FAILED';
 export const GET_ORDER_DETAILS = 'GET_ORDER_DETAILS';
 export const DETAILS_READY = 'DETAILS_READY';
+export const RESET_DETAILS = 'RESET_DETAILS';
 
 export function getOrderData(orderProducts) {
     return function(dispatch) {

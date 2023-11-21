@@ -41,6 +41,7 @@ export default function App() {
           background ? (<ModalWindow><ModalSetter /></ModalWindow>) : (<OrderDetailsPage />)
         } />
         <Route path={ORDERS} element={<ProtectedRouteElement element={<ProfilePage />} />} />
+        {/* <Route path={ORDERS} element={<ProfilePage />} /> */}
       </Route>
     </Routes>    
   );

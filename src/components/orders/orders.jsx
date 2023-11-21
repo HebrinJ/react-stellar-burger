@@ -10,6 +10,7 @@ import style from './orders.module.css';
 export default function Orders({socketUrl, numberOfOrdersSetter, isPersonal}) {
 
 const orders = useSelector(state => state.orders.orders)
+const userOrders = useSelector(state => state.userOrders.orders)
 const dispatch = useDispatch();
 
 useEffect(() => {
@@ -36,7 +37,7 @@ useEffect(() => {
     return (() => {
         webSocketClose(connection);
     })
-}, [])
+}, [socketUrl, isPersonal, orders])
 
 function prepareDataToShow(data) {
 
@@ -47,7 +48,11 @@ function prepareDataToShow(data) {
 
 return (
     <div className={`${style.container} custom-scroll`}>
-        { orders?.map((order, index) => {
+        { isPersonal ? userOrders?.map((order, index) => {
+            const id = String(index)+order._id;
+            return <OrderCard order={order} key={id}/>
+        }) :
+        orders?.map((order, index) => {
             const id = String(index)+order._id;
             return <OrderCard order={order} key={id}/>
         })}
@@ -56,6 +61,6 @@ return (
 
 Orders.propTypes = {
     socketUrl: PropTypes.string.isRequired,
-    numberOfOrdersSetter: PropTypes.func.isRequired,
+    numberOfOrdersSetter: PropTypes.func,
     isPersonal: PropTypes.bool,
 }
