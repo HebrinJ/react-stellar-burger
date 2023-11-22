@@ -3,22 +3,16 @@ import ReactDOM from "react-dom";
 import "./index.css";
 import App from "./components/app/app";
 import reportWebVitals from "./reportWebVitals";
-import { createStore, applyMiddleware, compose } from 'redux'
 import { Provider } from 'react-redux';
-import thunk from 'redux-thunk';
 import { rootReducer } from "./services/reducers/root-reducer";
 import { BrowserRouter } from "react-router-dom";
 import { updateSessionStore, getSessionStore } from "./utils/session-store";
 import { configureStore } from "@reduxjs/toolkit";
 import middlewareCreator from "./services/socket-middleware/socket-middleware";
 import { WS_CLOSE, WS_CONNECT, WS_CONNECTING, WS_DISCONNECT, WS_ERROR, WS_MESSAGE, WS_OPEN } from "./services/actions/all-orders-actions";
+import { WS_USER_CONNECT, WS_USER_OPEN, WS_USER_CLOSE, WS_USER_ERROR, WS_USER_MESSAGE, WS_USER_CONNECTING, WS_USER_DISCONNECT } from "./services/actions/user-orders-actions";
 
-const composeEnhancers =
-  typeof window === 'object' && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-    ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__({})
-    : compose;
-
-const socketMiddleware = middlewareCreator({
+const feedMiddleware = middlewareCreator({
   wsConnect: WS_CONNECT,
   onOpen: WS_OPEN,
   onClose: WS_CLOSE,
@@ -28,11 +22,20 @@ const socketMiddleware = middlewareCreator({
   wsDisconnect: WS_DISCONNECT,
 })
 
-//const store = createStore(rootReducer, getSessionStore(), composeEnhancers(applyMiddleware(thunk)));
+const userFeedMiddleware = middlewareCreator({
+  wsConnect: WS_USER_CONNECT,
+  onOpen: WS_USER_OPEN,
+  onClose: WS_USER_CLOSE,
+  onError: WS_USER_ERROR,
+  onMessage: WS_USER_MESSAGE,
+  wsConnecting: WS_USER_CONNECTING,
+  wsDisconnect: WS_USER_DISCONNECT
+})
+
 const store = configureStore({
   reducer: rootReducer,
   middleware: (getDefaultMiddleware) => {
-    return getDefaultMiddleware().concat(socketMiddleware).concat(thunk)
+    return getDefaultMiddleware().concat(feedMiddleware).concat(userFeedMiddleware)
   },
   preloadedState: getSessionStore(),
 })

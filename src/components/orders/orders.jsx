@@ -7,47 +7,27 @@ import { GET_USER_ORDERS } from '../../services/actions/user-orders-actions';
 import PropTypes from 'prop-types';
 import style from './orders.module.css';
 import { connect, disconnect } from '../../services/actions/all-orders-actions';
+import { connect as userFeedConnect, disconnect as userFeedDisconnect } from '../../services/actions/user-orders-actions';
 
 export default function Orders({socketUrl, numberOfOrdersSetter, isPersonal}) {
 
-//const orders = useSelector(state => state.orders.orders)
-//const userOrders = useSelector(state => state.userOrders.orders)
-const { data: orders, status } = useSelector(state => state.orders);
-const isDisconnect = status !== webSocketStatus.ONLINE;
+const { userData } = useSelector(state => state.userOrders)
+const { data } = useSelector(state => state.orders);
+//const isDisconnect = status !== webSocketStatus.ONLINE;
 
 const dispatch = useDispatch();
 
-//const connect = () => dispatch(connect(socketUrl));
-//const disconnect = () => dispatch(disconnect());
-
 useEffect(() => {
-    // const connection = webSocketConnect(socketUrl);
-    // connection.onmessage = event => {
-    //     const data = JSON.parse(event.data);
 
-    //     prepareDataToShow(data);
-
-    //     if(isPersonal) {
-    //         dispatch({
-    //             type: GET_USER_ORDERS,
-    //             payload: data,
-    //         })
-    //     } else {
-    //         dispatch({
-    //             type: GET_ORDERS,
-    //             payload: data,
-    //         })
-    //     }
-    
-    // }    
-    dispatch(connect(socketUrl));
-
-    prepareDataToShow(orders)
-
+    if(isPersonal) {
+        dispatch(userFeedConnect(socketUrl));
+    } else {
+        dispatch(connect(socketUrl));
+        prepareDataToShow(data);
+    }
 
     return (() => {
-        dispatch(disconnect());
-        //webSocketClose(connection);
+        isPersonal ? dispatch(userFeedDisconnect()) : dispatch(disconnect())
     })
 }, [])
 
@@ -60,14 +40,14 @@ function prepareDataToShow(data) {
 
 return (
     <div className={`${style.container} custom-scroll`}>
-        {/* { isPersonal ? userOrders?.map((order, index) => {
+        { isPersonal ? userData.orders?.map((order, index) => {
             const id = String(index)+order._id;
             return <OrderCard order={order} key={id}/>
-        }) : */}
-        {/* {orders?.map((order, index) => {
+        }) :
+        data.orders?.map((order, index) => {
             const id = String(index)+order._id;
             return <OrderCard order={order} key={id}/>
-        })} */}
+        })}
     </div>
 )}
 

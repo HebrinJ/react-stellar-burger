@@ -1,22 +1,63 @@
 import { GET_USER_ORDERS } from "../actions/user-orders-actions"
+import { webSocketStatus } from "../../utils/use-socket"
+import { WS_USER_CLOSE, WS_USER_CONNECTING, WS_USER_ERROR, WS_USER_MESSAGE, WS_USER_OPEN, WS_CONNECT } from "../actions/user-orders-actions";
+
+// const initialState = {
+//     orders: [],
+//     total: 0,
+//     totalToday: 0,
+// }
+
+// export default function userOrdersReducer(state = initialState, action) { 
+
+//     switch (action.type) {
+//         case GET_USER_ORDERS:
+//             return {
+//                 orders: action.payload.orders,
+//                 total: action.payload.total,
+//                 totalToday: action.payload.totalToday,
+//             }   
+//         default:
+//             return state;
+//     }
+
+// }
 
 const initialState = {
-    orders: [],
-    total: 0,
-    totalToday: 0,
+    status: webSocketStatus.OFFLINE,
+    userData: {},
+    error: null,
 }
 
-export default function userOrdersReducer(state = initialState, action) { 
+export default function userOrdersReducer(state = initialState, action) {
 
     switch (action.type) {
-        case GET_USER_ORDERS:
+        case WS_USER_CONNECTING:
             return {
-                orders: action.payload.orders,
-                total: action.payload.total,
-                totalToday: action.payload.totalToday,
-            }   
+                ...state,
+                status: webSocketStatus.CONNECTING,
+            }
+        case WS_USER_OPEN:
+            return {
+                ...state,
+                status: webSocketStatus.ONLINE,
+            }
+        case WS_USER_ERROR:
+            return {
+                ...state,
+                error: action.payload,
+            }
+        case WS_USER_MESSAGE:
+            return {
+                ...state,
+                userData: action.payload,
+            }
+        case WS_USER_CLOSE:
+            return {
+                ...state,
+                status: webSocketStatus.OFFLINE,
+            }
         default:
             return state;
     }
-
 }

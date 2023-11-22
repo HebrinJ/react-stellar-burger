@@ -31,7 +31,6 @@ const initialState = {
 }
 
 export default function allOrdersReducer(state = initialState, action) {
-    console.log(action)
 
     switch (action.type) {
         case WS_CONNECTING:
