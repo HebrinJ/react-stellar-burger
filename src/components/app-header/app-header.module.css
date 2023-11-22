@@ -27,7 +27,6 @@
     display: flex;
     grid-column: 2;
     justify-self: start;
-    margin-left: -40px;
     gap: 8px;
 }
 

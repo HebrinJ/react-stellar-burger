@@ -1,5 +1,3 @@
-//export const GET_USER_ORDERS = 'GET_USER_ORDERS';
-
 export const WS_USER_CONNECT = 'WS_USER_CONNECT';
 export const WS_USER_DISCONNECT = 'WS_USER_DISCONNECT';
 

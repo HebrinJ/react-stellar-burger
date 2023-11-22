@@ -16,7 +16,7 @@ export default function TotalPrice() {
         let ingredients = cart.ingredients.map((item) => item.ingredientData._id);
         
         if(bun) {
-            ingredients = ingredients.concat(bun.ingredientData._id);
+            ingredients = ingredients.concat(bun.ingredientData._id, bun.ingredientData._id);
         }
 
         return ingredients;

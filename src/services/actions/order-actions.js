@@ -1,4 +1,3 @@
-import { useSelector } from "react-redux";
 import { getOrder, makeOrder } from "../../utils/api";
 
 import { MODAL_ORDER } from "./modal-actions";

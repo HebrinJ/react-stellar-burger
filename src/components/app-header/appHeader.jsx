@@ -32,29 +32,29 @@ export default function AppHeader() {
         <>
         <header className={header.appHeader}>
             <nav className={header.headerBox}>
-                <div className={header.constructor}>
-                    <BurgerIcon type={iconTypes[0]} />
+                <div className={header.constructor}>                    
                     <NavLink to={ROOT} className={
                                 ({ isActive }) => (isActive ?
-                                 `text text_type_main-default ${header.activelink}` : 
-                                 `text text_type_main-default ${header.link}`)}>Конструктор</NavLink>
+                                 `text text_type_main-default ${header.activelink} ${header.constructor}` : 
+                                 `text text_type_main-default ${header.link} ${header.constructor}`)}>
+                        <BurgerIcon type={iconTypes[0]} />Конструктор</NavLink>
                 </div>
-                <div className={header.orderList}>
-                    <ListIcon type={iconTypes[1]} />
+                <div className={header.orderList}>                    
                     <NavLink to={FEED} className={
                                 ({ isActive }) => (isActive ?
-                                 `text text_type_main-default ${header.activelink}` : 
-                                 `text text_type_main-default ${header.link}`)}>Лента заказов</NavLink>
+                                 `text text_type_main-default ${header.activelink} ${header.orderList}` : 
+                                 `text text_type_main-default ${header.link} ${header.orderList}`)}>
+                        <ListIcon type={iconTypes[1]} />Лента заказов</NavLink>
                 </div>
                 <div className={header.logo}>
                     <Logo />
                 </div>
-                <div className={header.profile}>
-                    <ProfileIcon type={iconTypes[2]} />
+                <div className={header.profile}>                    
                     <NavLink to={PROFILE} className={
                                 ({ isActive }) => (isActive ?
-                                 `text text_type_main-default ${header.activelink}` : 
-                                 `text text_type_main-default ${header.link}`)}>Личный кабинет</NavLink>
+                                 `text text_type_main-default ${header.activelink} ${header.profile}` : 
+                                 `text text_type_main-default ${header.link} ${header.profile}`)}>
+                        <ProfileIcon type={iconTypes[2]} />Личный кабинет</NavLink>
                 </div>
             </nav>
         </header>
