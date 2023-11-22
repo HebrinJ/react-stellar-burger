@@ -69,8 +69,8 @@ return (
             <p className='text text_type_main-medium'>Состав:</p>
             <ul className={`${style.list} custom-scroll`}>
                 {
-                    Object.entries(findIngredientAmounts()).map(([id, amount], index) => {
-                        const key = String(index)+id;
+                    Object.entries(findIngredientAmounts()).map(([id, amount]) => {
+                        const key = id;
                         return <IngredientList product={getDetails(id)} amount={amount} key={key} />
                     })
                 }
