@@ -3,26 +3,50 @@ import calculatePrice from '../../utils/calculatePrice';
 import IngredientList from './ingredient-list/ingredientList';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { RESET_DETAILS, getOrderDetails } from '../../services/actions/order-actions';
 import { getIngredientsData } from '../../services/actions/loading-actions';
-import style from './orderDetails.module.css'
 import OrderShowStatus from './order-show-status/orderShowStatus';
+import { getOrder } from '../../utils/api';
+import style from './orderDetails.module.css'
 
-export default function OrderDetails({orderDetails}) {
+export default function OrderDetails({details}) {
 
 const dispatch = useDispatch();
+const orderNumber = useParams();
 
 const allIngredients = useSelector(state => state.loading.allIngredients);
 const storeOrder = useSelector(state => state.order.orderDetails.orders[0]);
 
-const orderNumber = useParams();
+const [orderDetails, setOrderDetails] = useState(null);
 
-useEffect(() => {  
-    console.log(orderDetails)
-    if(!orderDetails) {
-        console.log('act')
-        dispatch(getOrderDetails(orderNumber.number));
+useEffect(() => {
+    if(!details) {
+        if(storeOrder.number !== 0) {
+            setOrderDetails({
+                    name: storeOrder.name,
+                    status: storeOrder.status,
+                    number: storeOrder.number,
+                    ingredients: storeOrder.ingredients,
+                    _id: storeOrder._id
+            })
+        }
+    }
+    
+    if(!orderDetails || orderDetails.number === 0) {
+        
+        const sendRequest = async () => {
+            const response = await getOrder(orderNumber.number);
+
+            if (response) {
+                setOrderDetails(response.orders[0])
+                return;
+            }
+        }
+        
+        if(!orderDetails) {            
+            sendRequest()            
+        }
     }
 
     return (() => {
@@ -32,10 +56,6 @@ useEffect(() => {
     })
 
 }, [])
-
-if(!orderDetails && storeOrder.number !== 0) {
-    orderDetails = storeOrder
-}
 
 if(!orderDetails) return null
 

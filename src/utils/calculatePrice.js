@@ -6,11 +6,7 @@ export default function calculatePrice(allIngredients, currentIngredients) {
         
         if(details === undefined) return sum;
         
-        if(details.type === 'bun') {
-            return sum + (details.price * 2)
-        } else {
-            return sum + details.price;
-        }
+        return sum + details.price;
     }, 0)
 
     return price;
