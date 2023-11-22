@@ -7,27 +7,7 @@ import header from './app-header.module.css'
 import { PROFILE, ROOT, FEED, ORDERS } from '../../utils/routes'
 
 export default function AppHeader() {
-
-    const location = useLocation();
-    let iconTypes = ['primary', 'secondary', 'secondary'];
-    setSelected();
-
-    function setSelected() {
-        
-        switch (location.pathname) {
-            case ROOT:                
-                iconTypes = ['primary', 'secondary', 'secondary']
-                break;
-            case PROFILE:
-            case ORDERS:
-                iconTypes = ['secondary', 'secondary', 'primary']
-                break;
-            case FEED:
-                iconTypes = ['secondary', 'primary', 'secondary']
-                break;
-        }
-    }
-
+   
     return (
         <>
         <header className={header.appHeader}>
@@ -36,15 +16,17 @@ export default function AppHeader() {
                     <NavLink to={ROOT} className={
                                 ({ isActive }) => (isActive ?
                                  `text text_type_main-default ${header.activelink} ${header.constructor}` : 
-                                 `text text_type_main-default ${header.link} ${header.constructor}`)}>
-                        <BurgerIcon type={iconTypes[0]} />Конструктор</NavLink>
+                                 `text text_type_main-default ${header.link} ${header.constructor}`)}>                        
+                        {({isActive}) => (<><BurgerIcon type={ isActive ? 'primary' : 'secondary'} />Конструктор</>)}                        
+                    </NavLink>
                 </div>
                 <div className={header.orderList}>                    
                     <NavLink to={FEED} className={
                                 ({ isActive }) => (isActive ?
                                  `text text_type_main-default ${header.activelink} ${header.orderList}` : 
                                  `text text_type_main-default ${header.link} ${header.orderList}`)}>
-                        <ListIcon type={iconTypes[1]} />Лента заказов</NavLink>
+                        {({isActive}) => (<><ListIcon type={ isActive ? 'primary' : 'secondary'} />Лента заказов</>)}
+                    </NavLink>
                 </div>
                 <div className={header.logo}>
                     <Logo />
@@ -54,7 +36,8 @@ export default function AppHeader() {
                                 ({ isActive }) => (isActive ?
                                  `text text_type_main-default ${header.activelink} ${header.profile}` : 
                                  `text text_type_main-default ${header.link} ${header.profile}`)}>
-                        <ProfileIcon type={iconTypes[2]} />Личный кабинет</NavLink>
+                        {({isActive}) => (<><ProfileIcon type={ isActive ? 'primary' : 'secondary'} />Личный кабинет</>)}
+                    </NavLink>
                 </div>
             </nav>
         </header>
