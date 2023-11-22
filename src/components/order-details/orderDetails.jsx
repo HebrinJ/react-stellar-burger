@@ -21,6 +21,7 @@ const storeOrder = useSelector(state => state.order.orderDetails.orders[0]);
 const [orderDetails, setOrderDetails] = useState(null);
 
 useEffect(() => {
+    
     if(!details) {
         if(storeOrder.number !== 0) {
             setOrderDetails({
@@ -31,22 +32,24 @@ useEffect(() => {
                     _id: storeOrder._id
             })
         }
-    }
-    
-    if(!orderDetails || orderDetails.number === 0) {
-        
-        const sendRequest = async () => {
-            const response = await getOrder(orderNumber.number);
 
-            if (response) {
-                setOrderDetails(response.orders[0])
-                return;
+        if((!orderDetails) || (orderDetails?.number === 0)) {
+        
+            const sendRequest = async () => {
+                const response = await getOrder(orderNumber.number);
+    
+                if (response) {
+                    setOrderDetails(response.orders[0])
+                    return;
+                }
+            }
+            
+            if(!orderDetails) {            
+                sendRequest()            
             }
         }
-        
-        if(!orderDetails) {            
-            sendRequest()            
-        }
+    } else {
+        setOrderDetails(details)
     }
 
     return (() => {

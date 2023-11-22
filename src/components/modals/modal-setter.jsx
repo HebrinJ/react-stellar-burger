@@ -21,7 +21,7 @@ export default function ModalSetter() {
             case 'order':                
                 return (<OrderAccept orderNum={order.orderData.order.number}/>);
             case 'order-info':
-                return (<OrderDetails orderDetails={modal.modalSettings} />);
+                return (<OrderDetails details={modal.modalSettings} />);
             case 'info':
                 return (<IngredientDetailsModal details={selectedProduct} label='Детали ингридиента'/>);
             case 'loadingError':
