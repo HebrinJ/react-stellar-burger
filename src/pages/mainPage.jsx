@@ -14,11 +14,16 @@ import ModalSetter from '../components/modals/modal-setter';
 export default function MainPage(props) {
 
   const openModal = useSelector(state => state.modal.visible)
+  const ingredients = useSelector(state =>  state.loading.allIngredients)
 
   const dispatch = useDispatch();
 
     React.useEffect(() => {
-      dispatch(getIngredientsData());
+
+      if(ingredients.length === 0) {        
+        dispatch(getIngredientsData());
+      }
+      
   }, [])    
 
   return (
