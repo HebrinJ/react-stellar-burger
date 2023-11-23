@@ -62,6 +62,8 @@ useEffect(() => {
 
 if(!orderDetails) return null
 
+const date = new Date(orderDetails.createdAt);
+
 function getDetails(id) {
     if(allIngredients.length === 0) {
         dispatch(getIngredientsData())
@@ -99,7 +101,7 @@ return (
                 }
             </ul>
             <div className={style.underline}>
-                <FormattedDate className='text text_type_main-default text_color_inactive' date={new Date(orderDetails.createdAt)} />
+                <FormattedDate className='text text_type_main-default text_color_inactive' date={date} />
                 <div className={style.priceBox}>
                     <p className='text text_type_digits-default'>{calculatePrice(allIngredients, orderDetails.ingredients)}</p>
                     <CurrencyIcon type='primary' />

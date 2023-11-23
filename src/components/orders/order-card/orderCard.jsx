@@ -38,16 +38,14 @@ return (
         <div className={style.infoBox}>
             <div className={style.iconBox}>
                 { ingredients?.map((id, index) => {
-                    if(id === null) return;
-                    
-                    const key = String(index)+id;
+                    if(id === null || index > 5) return;
+
+                    const key = String(index) + id;
 
                     if(index === 5 && ingredients.length !== 6) {
                         const number = ingredients.length - 6;
-                        return <OrderItemsFeed id={id} position={ingredients.length - index} number={`+${number.toString()}`} key={key}/>
+                        return <OrderItemsFeed id={id} position={ingredients.length - index} number={`+${number}`} key={key}/>
                     }
-
-                    if (index > 5) return;
 
                     return <OrderItemsFeed id={id} position={ingredients.length - index} key={key}/>
                 })}

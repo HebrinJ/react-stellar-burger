@@ -31,6 +31,8 @@ useEffect(() => {
     })
 }, [])
 
+const currentOrders = isPersonal ? userData : data;
+
 function prepareDataToShow(data) {
 
         if(numberOfOrdersSetter) {
@@ -40,13 +42,8 @@ function prepareDataToShow(data) {
 
 return (
     <div className={`${style.container} custom-scroll`}>
-        { isPersonal ? userData.orders?.map((order, index) => {
-            const id = String(index)+order._id;
-            return <OrderCard order={order} key={id}/>
-        }) :
-        data.orders?.map((order, index) => {
-            const id = String(index)+order._id;
-            return <OrderCard order={order} key={id}/>
+        { currentOrders.orders?.map((order) => {            
+            return <OrderCard order={order} key={order.number}/>
         })}
     </div>
 )}

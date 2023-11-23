@@ -34,12 +34,9 @@ export default function App() {
         <Route path={RESET_PAS} element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
         <Route path={PROFILE} element={<ProtectedRouteElement element={<ProfilePage />} />} />
         <Route path={FEED} element={<ProtectedRouteElement element={<FeedPage />} />} />
-        <Route path={FEED_NUMBER} element={
-          background ? (<ModalWindow><ModalSetter /></ModalWindow>) : (<OrderDetailsPage />)
-        } />
-        <Route path={ORDER_NUMBER} element={
-          background ? (<ModalWindow><ModalSetter /></ModalWindow>) : (<OrderDetailsPage />)
-        } />
+        {[ORDER_NUMBER, FEED_NUMBER].map((path, index) => (
+          <Route path={path} element={background ? (<ModalWindow><ModalSetter /></ModalWindow>) : (<OrderDetailsPage />)} key={index} />
+        ))}        
         <Route path={ORDERS} element={<ProtectedRouteElement element={<ProfilePage />} />} />
       </Route>
     </Routes>    
