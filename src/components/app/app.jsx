@@ -10,7 +10,10 @@ import ProtectedRouteElement from '../protected-route/protectedRoute';
 import ModalWindow from '../modals/modal-window';
 import ModalSetter from '../modals/modal-setter';
 import AppHeader from '../app-header/appHeader';
-import { ROOT, INGREDIENT, LOGIN, REGISTRATION, FORGOT_PAS, RESET_PAS, PROFILE } from '../../utils/routes';
+import { ROOT, INGREDIENT, LOGIN, REGISTRATION, FORGOT_PAS, RESET_PAS, PROFILE, FEED, ORDER_NUMBER, FEED_NUMBER } from '../../utils/routes';
+import FeedPage from '../../pages/feedPage';
+import OrderDetailsPage from '../../pages/orderDetailsPage';
+import { ORDERS } from '../../utils/routes';
 
 export default function App() {
 
@@ -30,6 +33,11 @@ export default function App() {
         <Route path={FORGOT_PAS} element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
         <Route path={RESET_PAS} element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
         <Route path={PROFILE} element={<ProtectedRouteElement element={<ProfilePage />} />} />
+        <Route path={FEED} element={<ProtectedRouteElement element={<FeedPage />} />} />
+        {[ORDER_NUMBER, FEED_NUMBER].map((path, index) => (
+          <Route path={path} element={background ? (<ModalWindow><ModalSetter /></ModalWindow>) : (<OrderDetailsPage />)} key={index} />
+        ))}        
+        <Route path={ORDERS} element={<ProtectedRouteElement element={<ProfilePage />} />} />
       </Route>
     </Routes>    
   );

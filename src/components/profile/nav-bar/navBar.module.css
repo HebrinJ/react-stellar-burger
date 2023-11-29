@@ -1,0 +1,31 @@
+.navLink {
+    list-style-type: none;
+    height: 64px;
+    line-height: 64px;    
+}
+
+.navLink:last-child {
+    margin-bottom: 80px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.list {
+    margin: 0;
+    padding: 0;
+}
+
+.navBox {
+    grid-column: 1;
+}
+
+.linkDecoration {
+    text-decoration: none;    
+}
+
+.linkColor {
+    text-decoration: none;
+    color: #fff;
+}

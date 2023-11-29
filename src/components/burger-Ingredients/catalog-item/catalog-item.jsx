@@ -7,7 +7,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { SELECT_ITEM } from '../../../services/actions/select-actions';
 import { MODAL_INGR_INFO } from '../../../services/actions/modal-actions';
 import { useDrag } from "react-dnd";
-import { useLocation, useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { SET_ROOT } from '../../../services/actions/route-actions';
 import { Link } from 'react-router-dom';
 
@@ -18,7 +18,6 @@ export default function CatalogItem({ingredientData}) {
     const data = useSelector(state => state.loading.allIngredients);
     const selectedProduct = useSelector(state => state.selected);
     const dispatch = useDispatch();
-    const navigate = useNavigate();
     const location = useLocation();
     
     const [{isDrag}, dragRef] = useDrag({
@@ -49,8 +48,6 @@ export default function CatalogItem({ingredientData}) {
         dispatch({
             type: SET_ROOT
         })
-
-        //navigate(`ingredients/${clickedProductId}`);
 
         setIngredientData(clickedProductId);
         openModal();

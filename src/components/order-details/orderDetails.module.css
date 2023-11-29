@@ -1,0 +1,40 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    width: 638px;
+}
+
+.header {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    margin-bottom: 60px;
+}
+
+.number {
+    align-self: center;
+    margin: 20px 0 20px;
+}
+
+.list {
+    display: flex;
+    flex-direction: column;
+    max-height: 320px;
+    gap: 18px;
+    list-style-type: none;
+    padding-left: 26px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    margin-bottom: 48px;
+}
+
+.underline {
+    display: flex;
+    justify-content: space-between;
+}
+
+.priceBox {
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}

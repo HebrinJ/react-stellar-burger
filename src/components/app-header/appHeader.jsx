@@ -4,56 +4,40 @@ import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { NavLink, Outlet, useLocation } from 'react-router-dom'
 import header from './app-header.module.css'
-import { PROFILE, ROOT, ORDERS } from '../../utils/routes'
+import { PROFILE, ROOT, FEED, ORDERS } from '../../utils/routes'
 
 export default function AppHeader() {
-
-    const location = useLocation();
-    let type = ['primary', 'secondary', 'secondary'];
-    setSelected();
-
-    function setSelected() {
-        
-        switch (location.pathname) {
-            case ROOT:                
-                type = ['primary', 'secondary', 'secondary']
-                break;
-            case PROFILE:
-                type = ['secondary', 'secondary', 'primary']
-                break;
-            case ORDERS:
-                type = ['secondary', 'primary', 'secondary']
-                break;
-        }
-    }
-
+   
     return (
         <>
         <header className={header.appHeader}>
             <nav className={header.headerBox}>
-                <div className={header.constructor}>
-                    <BurgerIcon type={type[0]} />
+                <div className={header.constructor}>                    
                     <NavLink to={ROOT} className={
                                 ({ isActive }) => (isActive ?
-                                 `text text_type_main-default ${header.activelink}` : 
-                                 `text text_type_main-default ${header.link}`)}>Конструктор</NavLink>
+                                 `text text_type_main-default ${header.activelink} ${header.constructor}` : 
+                                 `text text_type_main-default ${header.link} ${header.constructor}`)}>                        
+                        {({isActive}) => (<><BurgerIcon type={ isActive ? 'primary' : 'secondary'} />Конструктор</>)}                        
+                    </NavLink>
                 </div>
-                <div className={header.orderList}>
-                    <ListIcon type={type[1]} />
-                    <NavLink to={ORDERS} className={
+                <div className={header.orderList}>                    
+                    <NavLink to={FEED} className={
                                 ({ isActive }) => (isActive ?
-                                 `text text_type_main-default ${header.activelink}` : 
-                                 `text text_type_main-default ${header.link}`)}>Лента заказов</NavLink>
+                                 `text text_type_main-default ${header.activelink} ${header.orderList}` : 
+                                 `text text_type_main-default ${header.link} ${header.orderList}`)}>
+                        {({isActive}) => (<><ListIcon type={ isActive ? 'primary' : 'secondary'} />Лента заказов</>)}
+                    </NavLink>
                 </div>
                 <div className={header.logo}>
                     <Logo />
                 </div>
-                <div className={header.profile}>
-                    <ProfileIcon type={type[2]} />
+                <div className={header.profile}>                    
                     <NavLink to={PROFILE} className={
                                 ({ isActive }) => (isActive ?
-                                 `text text_type_main-default ${header.activelink}` : 
-                                 `text text_type_main-default ${header.link}`)}>Личный кабинет</NavLink>
+                                 `text text_type_main-default ${header.activelink} ${header.profile}` : 
+                                 `text text_type_main-default ${header.link} ${header.profile}`)}>
+                        {({isActive}) => (<><ProfileIcon type={ isActive ? 'primary' : 'secondary'} />Личный кабинет</>)}
+                    </NavLink>
                 </div>
             </nav>
         </header>

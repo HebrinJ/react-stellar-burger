@@ -1,13 +1,15 @@
 import IngredientDetailsModal from './types/ingredient-details-modal';
-import OrderDetails from '../modals/types/order-details';
+import OrderAccept from './types/order-accept';
 import LoadingError from '../modals/types/loading-error';
 import { useSelector } from 'react-redux';
+import OrderDetails from '../order-details/orderDetails';
 
 export default function ModalSetter() {
-
+    
     const modal = useSelector(state => state.modal);
     const order = useSelector(state => state.order);
-    const selectedProduct = JSON.parse(localStorage.getItem('selected'));    
+    const selectedProduct = JSON.parse(localStorage.getItem('selected'));  
+    
 
     function getModal() {  
         
@@ -17,16 +19,17 @@ export default function ModalSetter() {
         
         switch (modal.type) {
             case 'order':                
-                return (<OrderDetails orderNum={order.orderData.order.number}/>);
-             case 'info':
+                return (<OrderAccept orderNum={order.orderData.order.number}/>);
+            case 'order-info':
+                return (<OrderDetails details={modal.modalSettings} />);
+            case 'info':
                 return (<IngredientDetailsModal details={selectedProduct} label='Детали ингридиента'/>);
-             case 'loadingError':
+            case 'loadingError':
                 return (<LoadingError errorText={modal.modalSettings.error} label='Ошибка загрузки'/>);
-            default:
-              console.log('Модальное окно не найдено');
-              return (<></>)                     
+            default:              
+              return (null)
         }
     }
-
+    
     return getModal();        
 }

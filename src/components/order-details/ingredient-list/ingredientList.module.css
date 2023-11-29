@@ -1,0 +1,50 @@
+.container {
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+}
+
+.priceBox {
+    display: flex;
+    justify-content: flex-end;
+    width: 180px;
+    gap: 8px;
+}
+
+.name {
+    padding-left: 16px;
+    width: 400px;
+}
+
+.image {
+    display: block;
+    width: 56px;
+    height: 56px;
+    object-fit: cover;
+    background-color: #131316;
+    border-radius: 50%;
+    border: 3px solid #131316;
+    position: relative;
+}
+
+.icon {  
+    width: 64px;
+    height: 64px;
+    position: relative; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-left: -20px;
+}
+
+.icon::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    border-radius: 50%;
+    background: linear-gradient(#801ab2, #4c4cff) border-box;
+    border: 2px solid transparent;
+    mask: linear-gradient(#fff 0 0) padding-box, linear-gradient(#fff 0 0);
+    mask-composite: exclude;
+}
