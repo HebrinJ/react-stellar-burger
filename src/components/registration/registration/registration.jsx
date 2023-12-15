@@ -4,7 +4,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
 import style from '../registration.module.css'
-import { userRegistration } from '../../../services/actions/auth-actions'
+import { registrationUser } from '../../../services/actions/auth-actions'
 import { LOGIN } from '../../../utils/routes'
 
 export default function Registration() {
@@ -20,7 +20,7 @@ export default function Registration() {
     function handleRegister(event) {
         event.preventDefault();
         
-        dispatch(userRegistration(email, password, userName));
+        dispatch(registrationUser(email, password, userName));
     }
 
     return (

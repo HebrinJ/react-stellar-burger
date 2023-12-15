@@ -1,5 +1,6 @@
 export function getSessionStore() {
     const stringData = sessionStorage.getItem('store');
+    
     if(stringData === null) {
         return {};
     }

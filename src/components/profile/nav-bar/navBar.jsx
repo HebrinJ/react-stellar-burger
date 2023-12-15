@@ -2,7 +2,7 @@ import { useDispatch } from 'react-redux';
 import style from './navBar.module.css'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LOGIN, PROFILE, ORDERS } from '../../../utils/routes';
-import { userLogout } from '../../../services/actions/auth-actions';
+import { logoutUser } from '../../../services/actions/auth-actions';
 
 export default function NavBar() {
 
@@ -12,7 +12,7 @@ const navigate = useNavigate();
 function handleLogout() {
     if (!localStorage.getItem('accessToken')) return;
 
-    dispatch(userLogout());
+    dispatch(logoutUser());
     navigate(LOGIN)
 }
 

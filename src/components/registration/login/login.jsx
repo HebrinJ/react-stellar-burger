@@ -4,7 +4,7 @@ import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from '../registration.module.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
-import { userSignin } from '../../../services/actions/auth-actions'
+import { signinUser } from '../../../services/actions/auth-actions'
 
 export default function Login() {    
 
@@ -26,7 +26,7 @@ export default function Login() {
     function handleSignin(event) {
         event.preventDefault();
 
-        dispatch(userSignin(email, password))
+        dispatch(signinUser(email, password))
     }
 
     return (

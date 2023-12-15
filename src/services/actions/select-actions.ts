@@ -1,0 +1,15 @@
+import { TIngredient } from "../../utils/typesDescription";
+
+export const SELECT_ITEM: 'SELECT_ITEM' = 'SELECT_ITEM';
+export const UNSELECT: 'UNSELECT' = 'UNSELECT';
+
+export interface ISelectItem {
+    readonly type: typeof SELECT_ITEM,
+    ingredient: TIngredient,
+}
+
+export interface IUnselect {
+    readonly type: typeof UNSELECT,
+}
+
+export type TSelectedActions = ISelectItem | IUnselect;
