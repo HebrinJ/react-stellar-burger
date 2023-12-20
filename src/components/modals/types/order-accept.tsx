@@ -1,8 +1,17 @@
 import style from './order-accept.module.css'
 import done from '../../../images/done.png'
+import { useSelector } from '../../../utils/hooks';
 import PropTypes from 'prop-types';
 
-export default function OrderAccept({orderNum}) {
+// type TOrderAcceptProps = {
+//     orderNum: number | undefined;
+// }
+
+//export default function OrderAccept({orderNum}: TOrderAcceptProps): JSX.Element {
+    export default function OrderAccept(): JSX.Element {
+
+    const order = useSelector(state => state.order);
+    const orderNum: number = order.orderData.order?.number!;
 
     return (
         <div className={style.position}>
@@ -15,6 +24,6 @@ export default function OrderAccept({orderNum}) {
     )
 }
 
-OrderAccept.propTypes = {
-    orderNum: PropTypes.number.isRequired,
-}
+// OrderAccept.propTypes = {
+//     orderNum: PropTypes.number.isRequired,
+// }

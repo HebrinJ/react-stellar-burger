@@ -6,7 +6,7 @@ import { WS_USER_CLOSE, WS_USER_CONNECT, WS_USER_CONNECTING, WS_USER_DISCONNECT,
 export type TIngredient = {
     _id: string;
     name: string;
-    type: '' | 'bun' | 'sauce' | 'main';
+    type: TIngredientTypes;
     proteins: number;
     fat: number;
     carbohydrates: number;
@@ -17,6 +17,8 @@ export type TIngredient = {
     image_large: string;
     __v?: number;
 };
+
+export type TIngredientTypes = '' | 'bun' | 'sauce' | 'main';
 
 // export type TWebSocketActions = TWebSocketUserActions | TWebSocketOrdersActions
 
@@ -40,3 +42,47 @@ export type TWebSocketActions = {
    wsDisconnect: typeof WS_DISCONNECT | typeof WS_USER_DISCONNECT;
 };
 
+export type TOrderDetails = {
+    _id: string;
+    ingredients: Array<string>,
+    owner: string;
+    status: string;
+    name: string;
+    createdAt: string;
+    updatedAt: string;
+    number: number;
+};
+
+export type TOrderData = {
+    success: boolean;
+    name: string;
+    order: {
+        ingredients: ReadonlyArray<TIngredient>;
+        _id: string;
+        owner: {
+            name: string;
+            email: string;
+            createdAt: string;
+            updatedAt: string;
+        },
+        status: string;
+        name: string;
+        createdAt: string;
+        updatedAt: string;
+        number: number;
+        price: number;
+    } | null;
+}
+
+export type TGetOrder = {
+    success: boolean;
+    orders: ReadonlyArray<TOrderDetails>;
+}
+
+export type TMakeOrderResponse = {
+    name: string;
+    order: {
+        number: number;
+    };
+    success: boolean;
+}

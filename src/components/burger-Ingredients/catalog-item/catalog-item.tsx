@@ -52,7 +52,8 @@ export default function CatalogItem({ ingredientData }: TingredientData) {
     }  
 
     function showInrgedientData(event: any) {
-        const clickedProductId = event.currentTarget.getAttribute('name');
+        const clickedProductId = event.currentTarget.getAttribute('data-name');
+        
         dispatch({
             type: SET_ROOT
         })
@@ -61,7 +62,8 @@ export default function CatalogItem({ ingredientData }: TingredientData) {
         openModal();
     }
 
-    function setIngredientData(clickedProductId: string) {
+    function setIngredientData(clickedProductId: string) {        
+        
         const foundedProduct = data.find(allItemsIds => allItemsIds._id === clickedProductId);
         
         dispatch({

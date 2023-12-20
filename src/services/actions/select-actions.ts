@@ -5,7 +5,7 @@ export const UNSELECT: 'UNSELECT' = 'UNSELECT';
 
 export interface ISelectItem {
     readonly type: typeof SELECT_ITEM,
-    ingredient: TIngredient,
+    payload: TIngredient,
 }
 
 export interface IUnselect {

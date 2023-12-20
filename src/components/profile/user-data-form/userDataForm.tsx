@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, FormEventHandler, FormEvent } from 'react'
 import { EmailInput, PasswordInput, Input, Button } from '@ya.praktikum/react-developer-burger-ui-components'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../../utils/hooks'
 import { getUser, updateUser } from '../../../services/actions/auth-actions'
 import style from './userDataForm.module.css'
 
@@ -8,7 +8,7 @@ import style from './userDataForm.module.css'
 export default function UserDataForm() {
 
     const [name, setName] = useState('');
-    const inputRef = React.useRef(null);
+    const inputRef = React.useRef<HTMLInputElement>(null);
 
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -39,10 +39,10 @@ export default function UserDataForm() {
     }, [auth])
 
     const onIconClick = () => {
-        setTimeout(() => inputRef.current.focus(), 0)
+        setTimeout(() => inputRef.current!.focus(), 0)
     }
 
-    function handleSave(event) {
+    function handleSave(event: FormEvent): void {
         event.preventDefault();
 
         dispatch(updateUser(email, name, password));

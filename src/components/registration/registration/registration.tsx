@@ -1,5 +1,5 @@
 import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import React from 'react'
+import React, { FormEvent } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router-dom'
 import { useDispatch } from 'react-redux'
@@ -10,14 +10,14 @@ import { LOGIN } from '../../../utils/routes'
 export default function Registration() {
 
     const [userName, setUserName] = React.useState('')
-    const userNameRef = React.useRef(null)
+    const userNameRef = React.useRef<HTMLInputElement>(null)
 
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
 
     const dispatch = useDispatch();
 
-    function handleRegister(event) {
+    function handleRegister(event: FormEvent) {
         event.preventDefault();
         
         dispatch(registrationUser(email, password, userName));

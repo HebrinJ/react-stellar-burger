@@ -21,10 +21,10 @@ export function selectReducer(state = initialState, action: TSelectedActions) {
     
     switch (action.type) {
         case SELECT_ITEM:
-            localStorage.setItem('selected', JSON.stringify(action.ingredient));
-            return action.ingredient;
+            localStorage.setItem('selected', JSON.stringify(action.payload));
+            return action.payload;
         case UNSELECT:
-            localStorage.setItem('selected', '');
+            localStorage.setItem('selected', null!);
             return initialState;
         default:
             return state;

@@ -1,6 +1,10 @@
 import style from './pageBox.module.css'
 
-export default function PageBox(props) {
+type TPageBox = {
+    children?: React.ReactNode;
+}
+
+export default function PageBox(props: TPageBox) {
 
     return (
         <div className={style.container}>

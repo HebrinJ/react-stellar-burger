@@ -5,7 +5,7 @@ import style from './orderItemsFeed.module.css';
 type TOrderItems = {
     position: number;
     id: string;
-    number: number;
+    number?: string;
 }
 
 export default function OrderItemsFeed({position, id, number}: TOrderItems) {   

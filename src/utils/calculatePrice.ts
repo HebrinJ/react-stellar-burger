@@ -1,5 +1,6 @@
+import { TIngredient } from "./typesDescription";
 
-export default function calculatePrice(allIngredients, currentIngredients) {
+export default function calculatePrice(allIngredients: ReadonlyArray<TIngredient>, currentIngredients: ReadonlyArray<string>) {
     const price = currentIngredients.reduce((sum, product) => {
         
         const details = allIngredients.find(productDetails => productDetails._id === product);

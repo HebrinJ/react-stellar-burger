@@ -1,4 +1,4 @@
-import { useDispatch } from 'react-redux';
+import { useDispatch } from '../../../utils/hooks';
 import style from './navBar.module.css'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LOGIN, PROFILE, ORDERS } from '../../../utils/routes';

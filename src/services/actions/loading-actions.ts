@@ -28,7 +28,7 @@ export function getIngredientsData() {
         });
         
         getData().then(res  => {
-          
+            
             if (res.success) {
               dispatch({
                 type: LOAD_INGR_SUCCESS,

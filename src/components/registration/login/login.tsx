@@ -1,9 +1,9 @@
 import { EmailInput, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import React from 'react'
+import React, { FormEvent } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from '../registration.module.css'
 import { Link, useNavigate } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch, useSelector } from '../../../utils/hooks'
 import { signinUser } from '../../../services/actions/auth-actions'
 
 export default function Login() {    
@@ -23,7 +23,7 @@ export default function Login() {
 
     const dispatch = useDispatch();
 
-    function handleSignin(event) {
+    function handleSignin(event: FormEvent) {
         event.preventDefault();
 
         dispatch(signinUser(email, password))

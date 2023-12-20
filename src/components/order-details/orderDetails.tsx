@@ -1,24 +1,38 @@
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../utils/hooks';
 import calculatePrice from '../../utils/calculatePrice';
 import IngredientList from './ingredient-list/ingredientList';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { RESET_DETAILS, getOrderDetails } from '../../services/actions/order-actions';
+import { RESET_DETAILS } from '../../services/actions/order-actions';
 import { getIngredientsData } from '../../services/actions/loading-actions';
 import OrderShowStatus from './order-show-status/orderShowStatus';
 import { getOrder } from '../../utils/api';
 import style from './orderDetails.module.css'
+import { TIngredient, TOrderDetails } from '../../utils/typesDescription';
 
-export default function OrderDetails({details}) {
+//export default function OrderDetails({details}) {
+export default function OrderDetails() {
+
+const order = useSelector(state => state.order);
+const details = order.orderDetails;
 
 const dispatch = useDispatch();
-const orderNumber = useParams();
+const { number } = useParams();
 
 const allIngredients = useSelector(state => state.loading.allIngredients);
 const storeOrder = useSelector(state => state.order.orderDetails.orders[0]);
 
-const [orderDetails, setOrderDetails] = useState(null);
+const [orderDetails, setOrderDetails] = useState<TOrderDetails>({
+    _id: '',
+    ingredients: [],
+    owner: '',
+    status: '',
+    name: '',
+    createdAt: '',
+    updatedAt: '',
+    number: 0
+});
 
 useEffect(() => {
     
@@ -29,19 +43,23 @@ useEffect(() => {
                     status: storeOrder.status,
                     number: storeOrder.number,
                     ingredients: storeOrder.ingredients,
-                    _id: storeOrder._id
+                    _id: storeOrder._id,
+                    owner: storeOrder.owner,
+                    createdAt: storeOrder.createdAt,
+                    updatedAt: storeOrder.updatedAt,
             })
         }
 
         if((!orderDetails) || (orderDetails?.number === 0)) {
         
             const sendRequest = async () => {
-                const response = await getOrder(orderNumber.number);
+                if(number) {
+                const response = await getOrder(number);
     
                 if (response) {
                     setOrderDetails(response.orders[0])
                     return;
-                }
+                }}
             }
             
             if(!orderDetails) {            
@@ -49,7 +67,7 @@ useEffect(() => {
             }
         }
     } else {
-        setOrderDetails(details)
+        //setOrderDetails(details)
     }
 
     return (() => {
@@ -64,18 +82,20 @@ if(!orderDetails) return null
 
 const date = new Date(orderDetails.createdAt);
 
-function getDetails(id) {
+function getDetails(id: string):TIngredient {
     if(allIngredients.length === 0) {
         dispatch(getIngredientsData())
     }
     
     const details = allIngredients.find(product => product._id === id);
-    return { name: details?.name, icon: details?.image_mobile, price: details?.price}
+    //return { name: details?.name, icon: details?.image_mobile, price: details?.price}
+    return details!;
 }
 
-function findIngredientAmounts() {  
-    
-    return orderDetails.ingredients.reduce((accum, id) => {
+function findIngredientAmounts(): Record<string, number> {
+
+    return orderDetails.ingredients.reduce<Record<string, number>>((accum, id) => {
+
         return {
             ...accum,
             [id]: (accum[id] || 0) + 1,

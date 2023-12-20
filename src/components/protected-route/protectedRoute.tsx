@@ -12,7 +12,11 @@ import { useSelector } from 'react-redux';
 import { ROOT, LOGIN } from '../../utils/routes';
 import FeedPage from '../../pages/feedPage';
 
-export default function ProtectedRouteElement({ element }) {
+type TProtectedRouteProps = {
+    element: JSX.Element;
+};
+
+export default function ProtectedRouteElement({ element }: TProtectedRouteProps) {
 
     const isLogin = !!localStorage.getItem('accessToken');
 

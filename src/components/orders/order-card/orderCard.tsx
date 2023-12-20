@@ -1,14 +1,19 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderItemsFeed from './order-items-feed/orderItemsFeed';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch, useSelector } from '../../../utils/hooks';
 import { Link, useLocation } from 'react-router-dom';
 import { MODAL_ORDER_INFO } from '../../../services/actions/modal-actions';
 import calculatePrice from '../../../utils/calculatePrice';
 import OrderShowStatus from '../../order-details/order-show-status/orderShowStatus';
 import PropTypes from 'prop-types';
 import style from './orderCard.module.css';
+import { TOrder } from '../../../utils/use-socket';
 
-export default function OrderCard({order}) {
+type TOrderCardProps = {
+    order: TOrder;
+}
+
+export default function OrderCard({order}: TOrderCardProps) {
 
 const {number, createdAt: date, name, ingredients, status } = order;
 
@@ -59,12 +64,12 @@ return (
     </Link>
 )}
 
-OrderCard.propTypes = {
-    order: PropTypes.shape({
-        number: PropTypes.number,
-        createdAt: PropTypes.string,
-        name: PropTypes.string,
-        ingredients: PropTypes.array,
-        status: PropTypes.string,
-    })
-}
+// OrderCard.propTypes = {
+//     order: PropTypes.shape({
+//         number: PropTypes.number,
+//         createdAt: PropTypes.string,
+//         name: PropTypes.string,
+//         ingredients: PropTypes.array,
+//         status: PropTypes.string,
+//     })
+// }

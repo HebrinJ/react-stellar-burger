@@ -4,6 +4,7 @@ import { MODAL_ORDER } from "./modal-actions";
 import { CLEAR_CART } from "./cart-actions";
 
 import { AppThunk } from "../..";
+import { TOrderData, TOrderDetails } from "../../utils/typesDescription";
 
 export const GET_ORDER_DATA: 'GET_ORDER_DATA' = 'GET_ORDER_DATA';
 export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
@@ -18,7 +19,7 @@ export interface IGetOrderData {
 
 export interface IGetOrderSuccess {
   readonly type: typeof GET_ORDER_SUCCESS,
-  orderData: object;
+  payload: TOrderData;
 }
 
 export interface IGetOrderFailed {
@@ -27,7 +28,7 @@ export interface IGetOrderFailed {
 
 export interface IGetOrderDetails {
   readonly type: typeof GET_ORDER_DETAILS,
-  orderData: object;
+  payload: Array<TOrderDetails>;
 }
 
 export interface IDetailsReady {
@@ -74,27 +75,27 @@ export function getOrderData(orderProducts: ReadonlyArray<string>) {
     }
 }
 
-export function getOrderDetails(number: number) {
-  return function(dispatch: AppThunk<Promise<unknown>>) {
+// export function getOrderDetails(number: number) {
+//   return function(dispatch: AppThunk<Promise<unknown>>) {
 
-    getOrder(number).then(res => {
-      if(res) {        
-        dispatch({
-          type: GET_ORDER_DETAILS,
-          payload: res.orders
-        });
+//     getOrder(number).then(res => {
+//       if(res) {        
+//         dispatch({
+//           type: GET_ORDER_DETAILS,
+//           payload: res.orders
+//         });
 
-        dispatch({
-          type: DETAILS_READY,
-        })
-      }
-    }).catch( err => {                  
-      dispatch({
-        type: GET_ORDER_FAILED,
-      })
-    })      
-  }
-}
+//         dispatch({
+//           type: DETAILS_READY,
+//         })
+//       }
+//     }).catch( err => {                  
+//       dispatch({
+//         type: GET_ORDER_FAILED,
+//       })
+//     })      
+//   }
+// }
 
 export type TOrderActions = IGetOrderData |
   IGetOrderSuccess |

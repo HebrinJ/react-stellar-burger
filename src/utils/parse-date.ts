@@ -1,4 +1,4 @@
-export default function parseDate(date) {
+export default function parseDate(date: string) {
     let dateString = ''
     
     const timestamp = Date.parse(date);

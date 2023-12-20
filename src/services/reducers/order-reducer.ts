@@ -1,20 +1,25 @@
+import { TOrderData, TOrderDetails } from "../../utils/typesDescription";
 import { GET_ORDER_DATA, GET_ORDER_SUCCESS, GET_ORDER_FAILED, GET_ORDER_DETAILS, DETAILS_READY, RESET_DETAILS } from "../actions/order-actions";
 import { TOrderActions } from "../actions/order-actions";
 
-type TOrderDetails = {
-    orders: Array<object>;
+type TOrderDetailsObject = {
+    orders: Array<TOrderDetails>;
 }
 
 type TOrderState = {
-    orderData: object;
+    orderData: TOrderData;
     isLoading: boolean;
     isError: boolean;
-    orderDetails: TOrderDetails;
+    orderDetails: TOrderDetailsObject;
     detailsReady: boolean;
 }
 
 const initialState: TOrderState = {
-    orderData: {},
+    orderData: {
+        success: false,
+        name: '',
+        order: null,
+    },
     isLoading: false,
     isError: false,
     orderDetails: {
@@ -32,7 +37,7 @@ const initialState: TOrderState = {
     detailsReady: false,
 }
 
-export default function orderReducer(state = initialState, action: TOrderActions) {    
+export default function orderReducer(state = initialState, action: TOrderActions): TOrderState {    
     switch (action.type) {
         case GET_ORDER_DATA:
             return {
@@ -40,7 +45,7 @@ export default function orderReducer(state = initialState, action: TOrderActions
             }
         case GET_ORDER_SUCCESS:
             return {
-                ...state, orderData: action.orderData, isLoading: false
+                ...state, orderData: action.payload, isLoading: false
             }
         case GET_ORDER_FAILED:
             return {
@@ -49,7 +54,7 @@ export default function orderReducer(state = initialState, action: TOrderActions
         case GET_ORDER_DETAILS:
             return {
                 ...state, orderDetails: {
-                    orders: action.orderData
+                    orders: action.payload
                 }
             }
         case DETAILS_READY:

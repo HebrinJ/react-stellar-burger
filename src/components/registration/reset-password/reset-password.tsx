@@ -1,5 +1,5 @@
 import { Input, PasswordInput } from '@ya.praktikum/react-developer-burger-ui-components'
-import React from 'react'
+import React, { FormEvent } from 'react'
 import { passwordReset } from '../../../utils/api'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import style from '../registration.module.css'
@@ -10,9 +10,9 @@ export default function ResetPassword() {
 
     const [password, setPassword] = React.useState('')
     const [code, setCode] = React.useState('')
-    const input = React.useRef(null);
+    const input = React.useRef<HTMLInputElement>(null);
 
-    function handleSubmit(event) {
+    function handleSubmit(event: FormEvent) {
         event.preventDefault();
 
         passwordReset(password, code)

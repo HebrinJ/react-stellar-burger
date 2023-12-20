@@ -1,7 +1,11 @@
 import style from './modal-overlay.module.css';
 import PropTypes from 'prop-types';
 
-export default function ModalOverlay({handleCloseModal}) {
+type TModalOverlayProp = {
+    handleCloseModal: () => void;
+}
+
+export default function ModalOverlay({handleCloseModal}: TModalOverlayProp) {
 
     return (
         <div className={style.overlay} onClick={handleCloseModal}>
