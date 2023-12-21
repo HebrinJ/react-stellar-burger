@@ -60,14 +60,12 @@ useEffect(() => {
                     setOrderDetails(response.orders[0])
                     return;
                 }}
-            }
+            }          
             
-            if(!orderDetails) {            
-                sendRequest()            
-            }
+            sendRequest();
         }
     } else {
-        setOrderDetails(details)
+        setOrderDetails(details);
     }
 
     return (() => {
