@@ -15,11 +15,6 @@ type TForgotPas = {
     success: boolean;
 }
 
-type TRejectError = {
-    success: boolean;
-    message: string;
-}
-
 const config = {
     baseUrl: `https://norma.nomoreparties.space/api/`,
     main: {
@@ -142,11 +137,14 @@ async function requestWithRefresh<T>(endPoint: string, settings: RequestInit): P
                 localStorage.setItem('accessToken', newTokens.accessToken);
                 localStorage.setItem('refreshToken', newTokens.refreshToken);
                 
-                const newSettings = {        
-                    authorization: newTokens.accessToken,
-                    "Content-Type": "application/json",        
-                } as Record<string, string>               
-
+                const newSettings = {    
+                    ...settings,
+                    headers: {
+                        authorization: newTokens.accessToken,
+                        "Content-Type": "application/json",
+                    },
+                }
+                
                 return await request(endPoint, newSettings)
             } else {
                 return Promise.reject(error);

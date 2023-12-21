@@ -1,5 +1,5 @@
 import { TOrderLoadingError, TOrderSettings } from "../reducers/modal-reducer";
-import { TIngredient } from "../../utils/typesDescription";
+import { TIngredient, TOrderDetails } from "../../utils/typesDescription";
 import { TOrderData } from "../../utils/typesDescription";
 
 export const MODAL_ORDER: 'MODAL_ORDER' = 'MODAL_ORDER';
@@ -25,7 +25,7 @@ export interface IModalLoadingError {
 
 export interface IModalOrderInfo {
     readonly type: typeof MODAL_ORDER_INFO;
-    payload: TOrderData;
+    payload: TOrderDetails;
 }
 
 export interface IModalClose {

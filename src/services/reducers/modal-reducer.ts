@@ -1,4 +1,4 @@
-import { TIngredient, TOrderData } from "../../utils/typesDescription";
+import { TIngredient, TOrderData, TOrderDetails } from "../../utils/typesDescription";
 import { MODAL_ORDER, MODAL_INGR_INFO, MODAL_LOADING_ERROR, MODAL_CLOSE, MODAL_ORDER_INFO } from "../actions/modal-actions"
 import { TModalActions } from "../actions/modal-actions"
 
@@ -29,7 +29,7 @@ export type TOrderLoadingError = {
 
 type TModalSettings = {
     orderSettings: TOrderSettings | null;
-    orderInfo: TOrderData | null;
+    orderInfo: TOrderDetails | null;
     orderLoadingError: TOrderLoadingError | null;
     ingredientInfo: TIngredient | null;
 }

@@ -22,7 +22,7 @@ const dispatch = useDispatch();
 const location = useLocation();
 const allIngredients = useSelector(state => state.loading.allIngredients)
 
-function openModal() { 
+function openModal() {
     dispatch({
         type: MODAL_ORDER_INFO,
         payload: order,

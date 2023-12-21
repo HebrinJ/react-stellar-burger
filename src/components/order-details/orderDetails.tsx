@@ -15,7 +15,7 @@ import { TIngredient, TOrderDetails } from '../../utils/typesDescription';
 export default function OrderDetails() {
 
 const order = useSelector(state => state.order);
-const details = order.orderDetails;
+const details = useSelector(state => state.modal.modalSettings.orderInfo);
 
 const dispatch = useDispatch();
 const { number } = useParams();
@@ -67,7 +67,7 @@ useEffect(() => {
             }
         }
     } else {
-        //setOrderDetails(details)
+        setOrderDetails(details)
     }
 
     return (() => {
