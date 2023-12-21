@@ -15,6 +15,11 @@ type TForgotPas = {
     success: boolean;
 }
 
+type TRejectError = {
+    success: boolean;
+    message: string;
+}
+
 const config = {
     baseUrl: `https://norma.nomoreparties.space/api/`,
     main: {
@@ -31,7 +36,7 @@ export function getData(): Promise<TReturnedIngredients> {
     return request('ingredients');
 }
 
-export function makeOrder(ingredients: ReadonlyArray<string>): Promise<TMakeOrderResponse> {
+export function makeOrder(ingredients: ReadonlyArray<string>): Promise<TMakeOrderResponse | undefined> {
     return requestWithRefresh('orders', {
         method: 'POST',
         headers: config.authorized,
@@ -79,7 +84,7 @@ export function logout() {
     })
 }
 
-export function getUserData() {
+export function getUserData() {    
     return requestWithRefresh('auth/user', {
         method: 'GET',
         headers: config.authorized,
@@ -120,15 +125,15 @@ export const refreshToken = (): Promise<TTokenRefresh> => {
      }); 
 }
 
-async function requestWithRefresh<T>(endPoint: string, settings: RequestInit): Promise<T> { 
+async function requestWithRefresh<T>(endPoint: string, settings: RequestInit): Promise<T | undefined> { 
     
     try {
         return await request(endPoint, settings);
     }
-    catch(error) {   
-        
-        if(error instanceof Error) {        
-                     
+    catch(error: any) {
+        //if(error instanceof TRejectError) {
+            
+        if(Object.hasOwn(error, 'message')) { 
             if(error.message === 'jwt expired') {            
                 const newTokens = await refreshToken();
                 
