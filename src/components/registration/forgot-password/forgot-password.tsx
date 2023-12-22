@@ -1,5 +1,5 @@
 import React, { ChangeEvent, FormEvent } from 'react'
-import { forgotReset } from '../../../utils/api'
+import { forgotPass } from '../../../utils/api'
 import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-components"
 import style from '../registration.module.css'
 import { useNavigate } from 'react-router-dom'
@@ -16,7 +16,7 @@ export default function ForgotPassword(): JSX.Element {
     function handleClick(event: FormEvent) {
         event.preventDefault();
         
-        forgotReset(value).then(res => {
+        forgotPass(value).then(res => {
             if(res.success) {
                 navigate('/reset-password')}
         })

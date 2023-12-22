@@ -2,22 +2,27 @@ import { ADD_BUN, ADD_INGR, REMOVE_INGR, MOVE_INGR, STOP_MOVE, CLEAR_CART } from
 import { TCartActions } from '../actions/cart-actions';
 import { TIngredient } from "../../utils/types-description";
 
-type TConstructIngredient = {
+export type TConstructIngredient = {
     ingredientData: TIngredient;
     key: string;
-}
+};
+
+export type TDragIndexes = {
+    dragIndex: number;
+    hoverIndex: number;
+};
 
 type TCartState = {
     bun: TConstructIngredient | null;
     ingredients: Array<TConstructIngredient>;
     isDragging: number;
-}
+};
 
 const initialState: TCartState = {
     bun: null,
     ingredients: [],
     isDragging: -1,
-}
+};
 
 
 export default function cartReducer(state = initialState, action: TCartActions): TCartState {

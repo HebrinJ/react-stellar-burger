@@ -1,5 +1,5 @@
 import { AppThunk } from "../..";
-import { authorization, getUserData, logout, registration, updateUserData } from "../../utils/api";
+import { TAuthorization, TRegister, TUserData, authorization, getUserData, logout, registration, updateUserData } from "../../utils/api";
 
 export const SIGNIN: 'SIGNIN' = 'SIGNIN';
 export const LOGOUT: 'LOGOUT' = 'LOGOUT';
@@ -9,12 +9,12 @@ export const UPDATE_USER: 'UPDATE_USER' = 'UPDATE_USER';
 
 export interface ISingIn {
     readonly type: typeof SIGNIN;
-    readonly payload: any;
+    readonly payload: TAuthorization;
 }
 
 export interface IRegister {
     readonly type: typeof REGISTER;
-    readonly payload: any;
+    readonly payload: TRegister;
 }
 
 export interface ILogout {
@@ -23,12 +23,12 @@ export interface ILogout {
 
 export interface IGetUser {
     readonly type: typeof GETUSER;
-    readonly payload: any;
+    readonly payload: TUserData;
 }
 
 export interface IUpdateUser {
     readonly type: typeof UPDATE_USER;
-    readonly payload: any;
+    readonly payload: TUserData;
 }
 
 export function registrationUser(email: string, password: string, userName: string) {

@@ -1,3 +1,5 @@
+import { TOrdersData } from "../../utils/use-socket";
+
 export const WS_CONNECT: 'WS_CONNECT' = 'WS_CONNECT';
 export const WS_DISCONNECT: 'WS_DISCONNECT' = 'WS_DISCONNECT';
 
@@ -26,7 +28,7 @@ export interface IWsOpenAction {
 
 export interface IWsMessageAction {
     readonly type: typeof WS_MESSAGE;
-    readonly payload: any;
+    readonly payload: TOrdersData;
 }
 
 export interface IWsErrorAction {

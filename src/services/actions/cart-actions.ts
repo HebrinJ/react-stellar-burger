@@ -1,3 +1,5 @@
+import { TConstructIngredient, TDragIndexes } from "../reducers/cart-reducer";
+
 export const ADD_BUN: 'ADD_BUN' = 'ADD_BUN';
 export const ADD_INGR: 'ADD_INGR' = 'ADD_INGR';
 export const REMOVE_INGR: 'REMOVE_INGR' = 'REMOVE_INGR';
@@ -7,12 +9,12 @@ export const STOP_MOVE: 'STOP_MOVE' = 'STOP_MOVE';
 
 export interface IAddBun {
     readonly type: typeof ADD_BUN;
-    readonly payload: any;
+    readonly payload: TConstructIngredient;
 }
 
 export interface IAddIngredient {
     readonly type: typeof ADD_INGR;
-    readonly payload: any;
+    readonly payload: TConstructIngredient;
 }
 
 export interface IRemoveIngredient {
@@ -26,7 +28,7 @@ export interface IClearCart {
 
 export interface IMoveIngredient {
     readonly type: typeof MOVE_INGR;
-    readonly payload: any
+    readonly payload: TDragIndexes
 }
 
 export interface IStopMove {

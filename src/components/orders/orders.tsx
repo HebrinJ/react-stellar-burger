@@ -36,7 +36,7 @@ useEffect(() => {
     return (() => {
         isPersonal ? dispatch(userFeedDisconnect()) : dispatch(disconnect())
     })
-}, [])
+}, [allOrdersData, userOrdersData])
 
 const currentOrders = isPersonal ? userOrdersData : allOrdersData;
 

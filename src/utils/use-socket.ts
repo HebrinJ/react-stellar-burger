@@ -17,10 +17,12 @@ export type TOrdersData = {
     totalToday: number;
 };
 
+export type TOrderStatus = '' | 'done' | 'pending' | 'created';
+
 export type TOrder = {
     _id: string;
     ingredients: Array<string>;
-    status: '' | 'done' | 'pending' | 'created';
+    status: TOrderStatus;
     name: string;
     createdAt: string;
     updatedAt: string;
