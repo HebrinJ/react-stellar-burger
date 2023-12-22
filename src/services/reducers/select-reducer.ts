@@ -1,6 +1,6 @@
 import { SELECT_ITEM, UNSELECT } from "../actions/select-actions";
 import { TSelectedActions } from "../actions/select-actions";
-import { TIngredient } from "../../utils/typesDescription";
+import { TIngredient } from "../../utils/types-description";
 
 const initialState: TIngredient = {
     _id: '',
@@ -15,9 +15,9 @@ const initialState: TIngredient = {
     image_large: '',
     image_mobile: '',
     __v: 0,
-}
+};
 
-export function selectReducer(state = initialState, action: TSelectedActions) {   
+export function selectReducer(state = initialState, action: TSelectedActions): TIngredient {   
     
     switch (action.type) {
         case SELECT_ITEM:

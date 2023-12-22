@@ -7,13 +7,13 @@ import style from '../registration.module.css'
 import { registrationUser } from '../../../services/actions/auth-actions'
 import { LOGIN } from '../../../utils/routes'
 
-export default function Registration() {
+export default function Registration(): JSX.Element {
 
-    const [userName, setUserName] = React.useState('')
+    const [userName, setUserName] = React.useState<string>('')
     const userNameRef = React.useRef<HTMLInputElement>(null)
 
-    const [email, setEmail] = React.useState('')
-    const [password, setPassword] = React.useState('')
+    const [email, setEmail] = React.useState<string>('')
+    const [password, setPassword] = React.useState<string>('')
 
     const dispatch = useDispatch();
 

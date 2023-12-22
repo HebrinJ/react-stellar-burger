@@ -2,7 +2,7 @@ import { Tab } from '@ya.praktikum/react-developer-burger-ui-components';
 import ItemsBlock from './items-block/items-block';
 import React from 'react';
 import style from './burger-ingredients.module.css';
-import { TIngredientTypes } from '../../utils/typesDescription';
+import { TIngredientTypes } from '../../utils/types-description';
 
 type TActiveTabStates = {
     bun: boolean;
@@ -10,7 +10,7 @@ type TActiveTabStates = {
     main: boolean;
 };
 
-export default function BurgerIngredients() {
+export default function BurgerIngredients(): JSX.Element {
     const bun = React.useRef<HTMLDivElement>(null);
     const sauce = React.useRef<HTMLDivElement>(null);
     const main = React.useRef<HTMLDivElement>(null);
@@ -18,7 +18,7 @@ export default function BurgerIngredients() {
 
     const [selected, setSelected] = React.useState<TActiveTabStates>({bun: true, sauce: false, main: false});    
 
-    const handleClick = (elementRef: React.RefObject<HTMLElement>, type: TIngredientTypes) => {        
+    const handleClick = (elementRef: React.RefObject<HTMLElement>, type: TIngredientTypes): void => {        
         elementRef.current?.scrollIntoView({behavior: 'smooth'});
 
         let currentSelectedType: string | null = null;
@@ -31,7 +31,7 @@ export default function BurgerIngredients() {
         setSelected({...selected, [currentSelectedType as keyof TActiveTabStates]: false, [type]: true})
     }
 
-    const handleScroll = () => {        
+    const handleScroll = (): void => {        
         const bunCoords = bun.current?.getBoundingClientRect();
         const sauceCoords = sauce.current?.getBoundingClientRect();
         const mainCoords = main.current?.getBoundingClientRect();

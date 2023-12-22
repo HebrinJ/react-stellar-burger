@@ -1,4 +1,4 @@
-import { TGetOrder, TIngredient, TMakeOrderResponse, TOrderData, TOrderDetails } from "./typesDescription";
+import { TGetOrder, TIngredient, TMakeOrderResponse, TOrderData, TOrderDetails } from "./types-description";
 
 type TTokenRefresh = {
     success: boolean;

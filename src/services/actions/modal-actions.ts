@@ -1,6 +1,5 @@
 import { TOrderLoadingError, TOrderSettings } from "../reducers/modal-reducer";
-import { TIngredient, TOrderDetails } from "../../utils/typesDescription";
-import { TOrderData } from "../../utils/typesDescription";
+import { TIngredient, TOrderDetails } from "../../utils/types-description";
 
 export const MODAL_ORDER: 'MODAL_ORDER' = 'MODAL_ORDER';
 export const MODAL_INGR_INFO: 'MODAL_INGR_INFO' = 'MODAL_INGR_INFO';

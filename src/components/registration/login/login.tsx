@@ -6,13 +6,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from '../../../utils/hooks'
 import { signinUser } from '../../../services/actions/auth-actions'
 
-export default function Login() {    
+export default function Login(): JSX.Element {    
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('')
+    const [email, setEmail] = React.useState<string>('');
+    const [password, setPassword] = React.useState<string>('');
 
     const navigate = useNavigate();
-    const auth = useSelector(state => state.auth.success)
+    const auth = useSelector(state => state.auth.success);
     const isLogin = localStorage.getItem('accessToken');
 
     React.useEffect(() => {

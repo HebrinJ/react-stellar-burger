@@ -1,5 +1,5 @@
 import ReactDOM from 'react-dom';
-import React, { SyntheticEvent } from 'react';
+import React from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './modal-overlay';
 import { useDispatch, useSelector } from '../../utils/hooks';

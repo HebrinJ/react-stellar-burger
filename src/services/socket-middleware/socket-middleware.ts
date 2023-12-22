@@ -1,13 +1,12 @@
 import { RootState } from "../..";
-import { TWebSocketActions } from "../../utils/typesDescription";
-import { AppDispatch } from "../..";
+import { TWebSocketActions } from "../../utils/types-description";
 import { Middleware } from "redux";
 
 export default function middlewareCreator(wsActions: TWebSocketActions): Middleware<{}, RootState> {
     
     return (store) => {
         let socket: WebSocket | null = null;
-        const { wsConnect, /*wsSendMessage,*/ onOpen, onClose, onError, onMessage, wsConnecting, wsDisconnect } = wsActions
+        const { wsConnect, onOpen, onClose, onError, onMessage, wsConnecting, wsDisconnect } = wsActions
 
         return (next) => (action) => {
             const { dispatch } = store;
@@ -43,10 +42,6 @@ export default function middlewareCreator(wsActions: TWebSocketActions): Middlew
                     dispatch({ type: onClose });
                 }
             }
-
-            // if(wsSendMessage && type === wsSendMessage && socket) {
-            //     socket.send(JSON.stringify(action.payload));
-            // }
 
             if(type === wsDisconnect && socket) {
                 socket.close()

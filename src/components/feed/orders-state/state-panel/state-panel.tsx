@@ -1,22 +1,35 @@
 import { useSelector } from '../../../../utils/hooks';
-import { TOrder, TOrdersData } from '../../../../utils/use-socket';
-import style from './statePanel.module.css'
+import { TOrder } from '../../../../utils/use-socket';
+import style from './state-panel.module.css'
 
-export default function StatePanel() {
+export default function StatePanel(): JSX.Element {
 
 const orders = useSelector(state => state.orders.data?.orders)
 
-const ready = orders?.filter((order: TOrder, index: number) => {
-    if(order.status === 'done' && index <= 19) {
-        return order.number;
-    }
-})
+// Будет убрано после полной проверки работоспособности
 
-const inProgress = orders?.filter((order: TOrder, index: number) => {
-    if(order.status === 'pending' && index <= 19) {
-        return order.number;
-    }
-})
+// const ready = orders?.filter((order: TOrder, index: number) => {
+//     if(order.status === 'done' && index <= 19) {
+//         return order.number;
+//     }
+// })
+
+// const inProgress = orders?.filter((order: TOrder, index: number) => {
+//     if(order.status === 'pending' && index <= 19) {
+//         return order.number;
+//     }
+// })
+
+const ready = getOrdersByStatus(orders!, 'done');
+const inProgress = getOrdersByStatus(orders!, 'pending');
+
+function getOrdersByStatus(orders: TOrder[], status: string): TOrder[] {
+    return orders?.filter((order: TOrder, index: number) => {
+        if(order.status === status && index <= 19) {
+            return order.number;
+        }
+    });
+}
 
 return (
     <section className={style.container}>

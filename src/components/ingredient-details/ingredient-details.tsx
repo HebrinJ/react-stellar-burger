@@ -3,9 +3,9 @@ import React, { useState } from 'react'
 import { useParams } from 'react-router-dom';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { getIngredientsData } from '../../services/actions/loading-actions';
-import { TIngredient } from '../../utils/typesDescription';
+import { TIngredient } from '../../utils/types-description';
 
-export default function IngredientDetails() { 
+export default function IngredientDetails(): JSX.Element { 
 
     const dispatch = useDispatch();
     const product = useParams();   

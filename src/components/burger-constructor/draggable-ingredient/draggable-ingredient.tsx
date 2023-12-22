@@ -6,8 +6,7 @@ import style from '../draggable-ingredient/draggable-ingredient.module.css'
 import { useDispatch, useSelector } from '../../../utils/hooks';
 import { STOP_MOVE } from '../../../services/actions/cart-actions';
 import { Identifier } from 'dnd-core';
-import PropTypes from 'prop-types';
-import { TIngredient } from '../../../utils/typesDescription';
+import { TIngredient } from '../../../utils/types-description';
 
 export type TDragObject = {
   id: string,
@@ -78,6 +77,7 @@ export default function DraggableIngredient({ productData, index, handleClose, m
   })
 
   const id = productData._id;
+  const opacity = index === tmpIndex ? 0.2 : 1
 
   const [{isDragging}, drag] = useDrag<TDragObject, unknown, TDragCollectedProps>({
     type: "element",
@@ -90,15 +90,12 @@ export default function DraggableIngredient({ productData, index, handleClose, m
       })
     },
   })
-
-  const opacity = index === tmpIndex ? 0.2 : 1
-
-
-  drag(drop(productItem))
-
+  
   function handleClickRemove() {
     handleClose(id);
   }
+
+  drag(drop(productItem))
 
   return (
     <ul className={style.ingredient} style={{ opacity }} ref={productItem} data-handler-id={handlerId}>
@@ -106,12 +103,4 @@ export default function DraggableIngredient({ productData, index, handleClose, m
       <ConstructorElement text={productData?.name} price={productData?.price} thumbnail={productData?.image} handleClose={handleClickRemove} />
     </ul>
   );
-
 }
-
-// DraggableIngredient.propTypes = {
-//   productData: PropTypes.shape({name: PropTypes.string, price: PropTypes.number, imgae: PropTypes.string}).isRequired,
-//   index: PropTypes.number.isRequired,
-//   handleClose: PropTypes.func.isRequired,
-//   moveProduct: PropTypes.func.isRequired,
-// }

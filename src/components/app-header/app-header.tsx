@@ -2,9 +2,9 @@ import { Logo } from '@ya.praktikum/react-developer-burger-ui-components'
 import { BurgerIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ListIcon } from '@ya.praktikum/react-developer-burger-ui-components'
 import { ProfileIcon } from '@ya.praktikum/react-developer-burger-ui-components'
-import { NavLink, Outlet, useLocation } from 'react-router-dom'
+import { NavLink, Outlet } from 'react-router-dom'
 import header from './app-header.module.css'
-import { PROFILE, ROOT, FEED, ORDERS } from '../../utils/routes'
+import { PROFILE, ROOT, FEED } from '../../utils/routes'
 
 export default function AppHeader() {
    

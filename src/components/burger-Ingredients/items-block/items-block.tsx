@@ -1,4 +1,3 @@
-import PropTypes from 'prop-types';
 import Label from './label/label';
 import style from './items-block.module.css';
 import CatalogItem from '../catalog-item/catalog-item';
@@ -9,7 +8,7 @@ type TItemsBlockProps = {
     type: 'bun' | 'sauce' | 'main';
 }
 
-export default function ItemsBlock({label, type}: TItemsBlockProps) {
+export default function ItemsBlock({label, type}: TItemsBlockProps): JSX.Element {
     const ingredientsData = useSelector(state => state.loading.allIngredients);    
     
     return (
@@ -26,8 +25,3 @@ export default function ItemsBlock({label, type}: TItemsBlockProps) {
         </>
     )
 }
-
-// ItemsBlock.propTypes = {
-//     label: PropTypes.string.isRequired,
-//     type: PropTypes.oneOf(['bun', 'sauce', 'main']).isRequired,
-// }

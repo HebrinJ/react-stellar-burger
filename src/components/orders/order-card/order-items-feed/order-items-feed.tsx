@@ -1,6 +1,5 @@
 import { useSelector } from '../../../../utils/hooks';
-import PropTypes from 'prop-types';
-import style from './orderItemsFeed.module.css';
+import style from './order-items-feed.module.css';
 
 type TOrderItems = {
     position: number;
@@ -20,9 +19,3 @@ return (
         <p className={`text text_type_digits-default ${style.number}`}>{number}</p>
     </div>
 )}
-
-// OrderItemsFeed.propTypes = {
-//     position: PropTypes.number,
-//     id: PropTypes.string,
-//     number: PropTypes.string,
-// }

@@ -2,7 +2,7 @@ export enum TWebSocketStatus {
     CONNECTING,
     ONLINE,
     OFFLINE,
-}
+};
 
 export type TWebSocketState = {
     status: TWebSocketStatus;
@@ -15,14 +15,14 @@ export type TOrdersData = {
     success: boolean;
     total: number;
     totalToday: number;
-}
+};
 
 export type TOrder = {
     _id: string;
     ingredients: Array<string>;
-    status: string;
+    status: '' | 'done' | 'pending' | 'created';
     name: string;
     createdAt: string;
     updatedAt: string;
     number: number;
-}
+};

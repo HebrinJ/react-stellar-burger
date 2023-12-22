@@ -1,6 +1,6 @@
 import { RootState } from "..";
 
-export function getSessionStore() {
+export function getSessionStore(): RootState | {} {
     const stringData = sessionStorage.getItem('store');
     
     if(stringData === null) {
@@ -10,6 +10,6 @@ export function getSessionStore() {
     return JSON.parse(stringData);
 }
 
-export function updateSessionStore(store: RootState) {
+export function updateSessionStore(store: RootState): void {
     sessionStorage.setItem('store', JSON.stringify(store));
 }

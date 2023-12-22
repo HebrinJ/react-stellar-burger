@@ -4,7 +4,7 @@ import { MODAL_ORDER } from "./modal-actions";
 import { CLEAR_CART } from "./cart-actions";
 
 import { AppThunk } from "../..";
-import { TOrderData, TOrderDetails } from "../../utils/typesDescription";
+import { TOrderData, TOrderDetails } from "../../utils/types-description";
 
 export const GET_ORDER_DATA: 'GET_ORDER_DATA' = 'GET_ORDER_DATA';
 export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';

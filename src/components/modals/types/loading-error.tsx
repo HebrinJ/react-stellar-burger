@@ -1,13 +1,5 @@
-import PropTypes from 'prop-types';
 import { useSelector } from '../../../utils/hooks';
-import type { TOrderLoadingError } from '../../../services/reducers/modal-reducer';
 
-// type TLoadingErrorProps = {
-//     errorText: string;
-//     label: string;
-// }
-
-//export default function LoadingError({errorText, label}: TLoadingErrorProps): JSX.Element {
 export default function LoadingError(): JSX.Element {
     
     const label: string = 'Ошибка загрузки';
@@ -20,8 +12,3 @@ export default function LoadingError(): JSX.Element {
         </>
     )
 }
-
-// LoadingError.propTypes = {
-//     label: PropTypes.string.isRequired,
-//     errorText: PropTypes.string,
-// }

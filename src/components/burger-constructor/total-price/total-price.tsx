@@ -6,11 +6,8 @@ import { useDispatch, useSelector } from '../../../utils/hooks';
 import { getOrderData } from '../../../services/actions/order-actions';
 import { useNavigate } from 'react-router-dom';
 import { LOGIN } from '../../../utils/routes';
-import { TIngredient } from '../../../utils/typesDescription';
 
-//type TConstructIngredient = TIngredient & {key: string};
-
-export default function TotalPrice() {
+export default function TotalPrice(): JSX.Element {
     const cart = useSelector(state => state.cart);
     const bun = useSelector(state => state.cart.bun);
     const navigate = useNavigate();
@@ -34,7 +31,7 @@ export default function TotalPrice() {
     }, [cart])
     
     const countPrice = () => {
-        let currentPrice = cart.ingredients.reduce((price: number, ingredient) => {                   
+        let currentPrice = cart.ingredients.reduce((price, ingredient) => {                   
             price += ingredient.ingredientData.price;
             return price;
         }, 0)

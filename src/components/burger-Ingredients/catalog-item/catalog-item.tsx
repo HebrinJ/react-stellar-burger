@@ -1,5 +1,4 @@
-import PropTypes from 'prop-types';
-import React from 'react';
+import React, { SyntheticEvent } from 'react';
 import { Counter } from '@ya.praktikum/react-developer-burger-ui-components';
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useDispatch, useSelector } from '../../../utils/hooks';
@@ -10,17 +9,15 @@ import { useLocation } from 'react-router-dom';
 import { SET_ROOT } from '../../../services/actions/route-actions';
 import { Link } from 'react-router-dom';
 import style from './catalog-item.module.css';
-import { TIngredient } from '../../../utils/typesDescription';
+import { TIngredient } from '../../../utils/types-description';
 
-// type TingredientType = 'bun' | 'sauce' | 'main';
-
-type TingredientData = {
+type TCatalogItemProps = {
     ingredientData: TIngredient
 };
 
-export default function CatalogItem({ ingredientData }: TingredientData) {    
+export default function CatalogItem({ ingredientData }: TCatalogItemProps): JSX.Element {    
 
-    const [count, setCount] = React.useState(0);
+    const [count, setCount] = React.useState<number>(0);
 
     const cart = useSelector(state => state.cart);
     const data = useSelector(state => state.loading.allIngredients);
@@ -51,18 +48,21 @@ export default function CatalogItem({ ingredientData }: TingredientData) {
         setCount(products.length);      
     }  
 
-    function showInrgedientData(event: any) {
+    function showInrgedientData(event: SyntheticEvent) {
         const clickedProductId = event.currentTarget.getAttribute('data-name');
         
-        dispatch({
-            type: SET_ROOT
-        })
+        if(clickedProductId) {
+            dispatch({
+                type: SET_ROOT
+            })
+        
+            setIngredientData(clickedProductId);
 
-        setIngredientData(clickedProductId);
-        openModal();
+            openModal();
+        }
     }
 
-    function setIngredientData(clickedProductId: string) {        
+    function setIngredientData(clickedProductId: string): void {        
         
         const foundedProduct = data.find(allItemsIds => allItemsIds._id === clickedProductId);
         
@@ -84,7 +84,7 @@ export default function CatalogItem({ ingredientData }: TingredientData) {
         });        
     }    
 
-    function openModal() { 
+    function openModal(): void { 
         dispatch({
             type: MODAL_INGR_INFO,
             payload: selectedProduct,
@@ -107,19 +107,3 @@ export default function CatalogItem({ ingredientData }: TingredientData) {
         </Link>
     )
 }
-
-// CatalogItem.propTypes = {
-//     ingredientData: PropTypes.shape({
-//         _id: PropTypes.string,
-//         type: PropTypes.oneOf(['bun', 'sauce', 'main']),
-//         name: PropTypes.string,
-//         proteins: PropTypes.number,
-//         price: PropTypes.number,
-//         fat: PropTypes.number,
-//         carbohydrates: PropTypes.number,
-//         calories: PropTypes.number,
-//         image: PropTypes.string,
-//         image_large: PropTypes.string,
-//         image_mobile: PropTypes.string,
-//     }),
-// }

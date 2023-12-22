@@ -5,9 +5,9 @@ import { v4 as uuidv4 } from 'uuid';
 import { useDispatch, useSelector } from '../../utils/hooks';
 import { useDrop } from "react-dnd";
 import { ADD_BUN, ADD_INGR, REMOVE_INGR, MOVE_INGR } from '../../services/actions/cart-actions';
-import DraggableIngredient, { TDragObject, TDraggableIngredientProps } from './draggable-ingredient/draggable-ingredient';
+import DraggableIngredient from './draggable-ingredient/draggable-ingredient';
 import { useCallback } from 'react';
-import { TIngredient } from '../../utils/typesDescription';
+import { TIngredient } from '../../utils/types-description';
 
 type TBunSide = 'top' | 'bottom';
 
@@ -19,7 +19,7 @@ type TDroppedCollectedProps = {
     isOver: boolean
 }
 
-export default function BurgerConstructor() {
+export default function BurgerConstructor(): JSX.Element {
 
     const cartIngredients = useSelector(state => state.cart);
     const selectedBun = useSelector(state => state.cart.bun);
@@ -59,7 +59,7 @@ export default function BurgerConstructor() {
         })
     }
 
-    function AddBun(type: TBunSide): JSX.Element | undefined {
+    function AddBun(type: TBunSide): JSX.Element | null {
         const bunData = selectedBun!.ingredientData;
 
         if (type === 'top') {
@@ -72,6 +72,9 @@ export default function BurgerConstructor() {
                 <ConstructorElement type='bottom' text={bunData.name + ' низ'} price={bunData.price}
                     thumbnail={bunData.image} isLocked={true} />
             );
+        } else {
+            console.log('Не определен тип булки');
+            return null;
         }
     }
 
@@ -80,7 +83,7 @@ export default function BurgerConstructor() {
             type: MOVE_INGR,
             payload: { dragIndex, hoverIndex }
         })
-    }, [cartIngredients])
+    }, [cartIngredients]);
 
     return (
         <section className={style.constructorSection}>

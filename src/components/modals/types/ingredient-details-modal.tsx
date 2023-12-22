@@ -1,14 +1,6 @@
 import style from './ingredient-details-modal.module.css';
-import { ingredientPropType } from '../../../utils/prop-types';
-import PropTypes from 'prop-types';
-import { TIngredient } from '../../../utils/typesDescription';
+import { TIngredient } from '../../../utils/types-description';
 
-// type TIngredientDetailsModalProps = {
-//     details: TIngredient | null;
-//     label: string;
-// }
-
-//export default function IngredientDetailsModal({details, label}: TIngredientDetailsModalProps): JSX.Element { 
 export default function IngredientDetailsModal(): JSX.Element { 
     
     const label: string = 'Детали ингридиента';
@@ -40,8 +32,3 @@ export default function IngredientDetailsModal(): JSX.Element {
         </div>
     )
 }
-
-// IngredientDetailsModal.propTypes = {
-//     details: ingredientPropType.isRequired,
-//     label: PropTypes.string.isRequired,
-// }

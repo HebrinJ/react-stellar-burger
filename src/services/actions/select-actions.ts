@@ -1,4 +1,4 @@
-import { TIngredient } from "../../utils/typesDescription";
+import { TIngredient } from "../../utils/types-description";
 
 export const SELECT_ITEM: 'SELECT_ITEM' = 'SELECT_ITEM';
 export const UNSELECT: 'UNSELECT' = 'UNSELECT';

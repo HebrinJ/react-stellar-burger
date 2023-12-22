@@ -1,8 +1,6 @@
-import StatePanel from './state-panel/statePanel';
-import React from 'react';
-import style from './orderState.module.css'
-import StateStat from './state-stat/stateStat';
-import PropTypes from 'prop-types'
+import StatePanel from './state-panel/state-panel';
+import style from './order-state.module.css'
+import StateStat from './state-stat/state-stat';
 
 type TOrderStateProps = {
     amounts: TAmountProps,
@@ -22,10 +20,3 @@ return (
         <StateStat label={'Выполнено за сегодня:'} amount={amounts.today}/>
     </section>
 )}
-
-OrderState.propTypes = {
-    amounts: PropTypes.shape({
-        all: PropTypes.number,
-        today: PropTypes.number,
-    })
-}

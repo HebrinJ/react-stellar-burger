@@ -6,10 +6,10 @@ import style from '../registration.module.css'
 import { Link } from 'react-router-dom'
 import { LOGIN } from '../../../utils/routes'
 
-export default function ResetPassword() {
+export default function ResetPassword(): JSX.Element {
 
-    const [password, setPassword] = React.useState('')
-    const [code, setCode] = React.useState('')
+    const [password, setPassword] = React.useState<string>('');
+    const [code, setCode] = React.useState<string>('');
     const input = React.useRef<HTMLInputElement>(null);
 
     function handleSubmit(event: FormEvent) {

@@ -4,13 +4,13 @@ import { EmailInput, Button } from "@ya.praktikum/react-developer-burger-ui-comp
 import style from '../registration.module.css'
 import { useNavigate } from 'react-router-dom'
 
-export default function ForgotPassword() {
+export default function ForgotPassword(): JSX.Element {
 
-    const [value, setValue] = React.useState('')
+    const [value, setValue] = React.useState<string>('')
     const navigate = useNavigate();
     
     const onChange = (e: ChangeEvent<HTMLInputElement>) => {
-            setValue(e.target.value)
+            setValue(e.target.value);
         }
 
     function handleClick(event: FormEvent) {
@@ -19,7 +19,7 @@ export default function ForgotPassword() {
         forgotReset(value).then(res => {
             if(res.success) {
                 navigate('/reset-password')}
-    })
+        })
     }
 
     return (

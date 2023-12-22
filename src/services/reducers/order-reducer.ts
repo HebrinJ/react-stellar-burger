@@ -1,10 +1,10 @@
-import { TOrderData, TOrderDetails } from "../../utils/typesDescription";
+import { TOrderData, TOrderDetails } from "../../utils/types-description";
 import { GET_ORDER_DATA, GET_ORDER_SUCCESS, GET_ORDER_FAILED, GET_ORDER_DETAILS, DETAILS_READY, RESET_DETAILS } from "../actions/order-actions";
 import { TOrderActions } from "../actions/order-actions";
 
 type TOrderDetailsObject = {
     orders: Array<TOrderDetails>;
-}
+};
 
 type TOrderState = {
     orderData: TOrderData;
@@ -12,7 +12,7 @@ type TOrderState = {
     isError: boolean;
     orderDetails: TOrderDetailsObject;
     detailsReady: boolean;
-}
+};
 
 const initialState: TOrderState = {
     orderData: {
@@ -35,7 +35,7 @@ const initialState: TOrderState = {
         }],        
     },
     detailsReady: false,
-}
+};
 
 export default function orderReducer(state = initialState, action: TOrderActions): TOrderState {    
     switch (action.type) {

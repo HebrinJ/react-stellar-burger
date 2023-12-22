@@ -19,4 +19,4 @@ export const rootReducer = combineReducers({
     userOrders: userOrdersReducer,
     auth: authReducer,
     route: routeReducer,
-})
+});

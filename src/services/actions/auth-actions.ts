@@ -46,20 +46,6 @@ export function registrationUser(email: string, password: string, userName: stri
     }
 }
 
-// export const registrationUser: AppThunk = (email: string, password: string, userName: string) => 
-// (dispatch) => {
-    
-//     registration(email, password, userName)
-//     .then(res => {
-//         if(res) {
-//             dispatch({
-//                 type: SIGNIN,
-//                 userData: res,
-//             })
-//         }
-//     })
-// }; 
-
 export function signinUser(email: string, password: string) {
     return function(dispatch: AppThunk<Promise<unknown>>) {
 

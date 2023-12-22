@@ -1,6 +1,6 @@
 import { getData } from "../../utils/api";
 import { AppThunk } from "../..";
-import { TIngredient } from "../../utils/typesDescription";
+import { TIngredient } from "../../utils/types-description";
 
 export const LOAD_INGR_DATA: 'LOAD_INGR_DATA' = 'LOAD_INGR_DATA';
 export const LOAD_INGR_SUCCESS: 'LOAD_INGR_SUCCESS' = 'LOAD_INGR_SUCCESS';

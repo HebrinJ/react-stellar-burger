@@ -1,10 +1,7 @@
-//import { webSocketStatus } from "../../utils/use-socket"
 import { WS_CLOSE, WS_CONNECTING, WS_ERROR, WS_MESSAGE, WS_OPEN } from "../actions/all-orders-actions";
 import type { TWebSocketOrdersActions } from "../actions/all-orders-actions";
 import { TWebSocketStatus } from "../../utils/use-socket";
 import type { TWebSocketState } from "../../utils/use-socket";
-import type { TOrdersData } from "../../utils/use-socket";
-
 
 const initialState: TWebSocketState = {
     status: TWebSocketStatus.OFFLINE,

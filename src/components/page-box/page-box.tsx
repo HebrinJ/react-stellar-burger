@@ -1,4 +1,4 @@
-import style from './pageBox.module.css'
+import style from './page-box.module.css'
 
 type TPageBox = {
     children?: React.ReactNode;

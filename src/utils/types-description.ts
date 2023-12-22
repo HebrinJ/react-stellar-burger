@@ -1,5 +1,3 @@
-import { TWebSocketOrdersActions } from "../services/actions/all-orders-actions";
-import { TWebSocketUserActions } from "../services/actions/user-orders-actions";
 import { WS_CLOSE, WS_CONNECT, WS_CONNECTING, WS_DISCONNECT, WS_ERROR, WS_MESSAGE, WS_OPEN  } from "../services/actions/all-orders-actions";
 import { WS_USER_CLOSE, WS_USER_CONNECT, WS_USER_CONNECTING, WS_USER_DISCONNECT, WS_USER_ERROR, WS_USER_MESSAGE, WS_USER_OPEN } from "../services/actions/user-orders-actions";
 
@@ -20,18 +18,6 @@ export type TIngredient = {
 
 export type TIngredientTypes = '' | 'bun' | 'sauce' | 'main';
 
-// export type TWebSocketActions = TWebSocketUserActions | TWebSocketOrdersActions
-
-// export type TWebSocketTemplate = {
-//   wsConnect: TWebSocketActions;
-//   onOpen: TWebSocketActions;
-//   onClose: TWebSocketActions;
-//   onError: TWebSocketActions;
-//   onMessage: TWebSocketActions;
-//   wsConnecting: TWebSocketActions;
-//   wsDisconnect: TWebSocketActions;
-// };
-
 export type TWebSocketActions = {
    wsConnect: typeof WS_CONNECT | typeof WS_USER_CONNECT;
    onOpen: typeof WS_OPEN | typeof WS_USER_OPEN;
@@ -46,7 +32,7 @@ export type TOrderDetails = {
     _id: string;
     ingredients: Array<string>,
     owner: string;
-    status: string;
+    status: '' | 'done' | 'pending' | 'created';
     name: string;
     createdAt: string;
     updatedAt: string;

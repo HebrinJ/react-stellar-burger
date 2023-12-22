@@ -9,7 +9,7 @@ const initialState: TRouteState = {
     route: ''
 }
 
-export function routeReducer(state = initialState, action: TRouteActions) {   
+export function routeReducer(state = initialState, action: TRouteActions): TRouteState {   
     
     switch (action.type) {
         case SET_ROOT:

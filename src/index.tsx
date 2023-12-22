@@ -12,9 +12,8 @@ import middlewareCreator from "./services/socket-middleware/socket-middleware";
 import { TWebSocketOrdersActions, WS_CLOSE, WS_CONNECT, WS_CONNECTING, WS_DISCONNECT, WS_ERROR, WS_MESSAGE, WS_OPEN } from "./services/actions/all-orders-actions";
 import { WS_USER_CONNECT, WS_USER_OPEN, WS_USER_CLOSE, WS_USER_ERROR, WS_USER_MESSAGE, WS_USER_CONNECTING, WS_USER_DISCONNECT, TWebSocketUserActions } from "./services/actions/user-orders-actions";
 import { ThunkAction } from 'redux-thunk';
-import { Action, ActionCreator, Dispatch } from 'redux';
+import { ActionCreator, Dispatch } from 'redux';
 import { TAuthActions } from "./services/actions/auth-actions";
-import { TWebSocketActions } from "./utils/typesDescription";
 
 const feedMiddleware = middlewareCreator({
   wsConnect: WS_CONNECT,
@@ -42,16 +41,15 @@ const store = configureStore({
     return getDefaultMiddleware().concat(feedMiddleware).concat(userFeedMiddleware)
   },
   preloadedState: getSessionStore(),
-})
+});
 
 store.subscribe(() => {
   updateSessionStore(store.getState());
-})
+});
 
-//export type RootState = ReturnType<typeof store.getState>;
 export type RootState = ReturnType<typeof rootReducer>;
 
-export type TApplicationActions = TWebSocketOrdersActions | TWebSocketUserActions | TAuthActions
+export type TApplicationActions = TWebSocketOrdersActions | TWebSocketUserActions | TAuthActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, unknown, TApplicationActions>>;
 

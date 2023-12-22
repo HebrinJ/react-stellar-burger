@@ -1,13 +1,17 @@
 import style from './feed.module.css'
-import OrderState from './orders-state/ordersState'
+import OrderState from './orders-state/orders-state'
 import Orders from '../orders/orders'
 import { useState } from 'react'
 import { FEED_SOCKET_URL } from '../../utils/urls';
-import { useSelector } from 'react-redux';
 
-export default function Feed() {
+type TFeedState = {
+  all: number;
+  today: number;
+};
 
-const [amountOrders, setAmount] = useState({all: 0, today: 0});
+export default function Feed(): JSX.Element {
+
+const [amountOrders, setAmount] = useState<TFeedState>({all: 0, today: 0});
 
     return (
       <section className={style.main}>   

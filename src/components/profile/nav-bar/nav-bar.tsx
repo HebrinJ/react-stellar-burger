@@ -1,10 +1,10 @@
 import { useDispatch } from '../../../utils/hooks';
-import style from './navBar.module.css'
+import style from './nav-bar.module.css'
 import { NavLink, useNavigate } from 'react-router-dom';
 import { LOGIN, PROFILE, ORDERS } from '../../../utils/routes';
 import { logoutUser } from '../../../services/actions/auth-actions';
 
-export default function NavBar() {
+export default function NavBar(): JSX.Element {
 
 const dispatch = useDispatch();
 const navigate = useNavigate();
@@ -13,7 +13,7 @@ function handleLogout() {
     if (!localStorage.getItem('accessToken')) return;
 
     dispatch(logoutUser());
-    navigate(LOGIN)
+    navigate(LOGIN);
 }
 
 return (

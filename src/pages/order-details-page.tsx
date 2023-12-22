@@ -1,5 +1,5 @@
-import PageBox from "../components/pageBox/pageBox";
-import OrderDetails from "../components/order-details/orderDetails";
+import PageBox from "../components/page-box/page-box";
+import OrderDetails from "../components/order-details/order-details";
 
 export default function OrderDetailsPage() {
 

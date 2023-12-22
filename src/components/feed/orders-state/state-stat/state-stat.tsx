@@ -1,6 +1,4 @@
-import style from './stateStat.module.css';
-import React from 'react';
-import PropTypes from 'prop-types';
+import style from './state-stat.module.css';
 
 type TStatProps = {
     label: string,
@@ -15,8 +13,3 @@ return (
         <p className={`text text_type_digits-large ${style.glow}`}>{amount}</p>
     </div>
 )}
-
-// StateStat.propTypes = {
-//     label: PropTypes.string,
-//     amount: PropTypes.number,
-// }

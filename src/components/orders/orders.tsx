@@ -1,10 +1,6 @@
 import { useEffect } from 'react';
-import OrderCard from './order-card/orderCard';
-//import { webSocketConnect, webSocketClose, webSocketStatus } from '../../utils/use-socket';
+import OrderCard from './order-card/order-card';
 import { useDispatch, useSelector } from '../../utils/hooks';
-//import { GET_ORDERS } from '../../services/actions/all-orders-actions';
-//import { GET_USER_ORDERS } from '../../services/actions/user-orders-actions';
-import PropTypes from 'prop-types';
 import style from './orders.module.css';
 import { connect, disconnect } from '../../services/actions/all-orders-actions';
 import { connect as userFeedConnect, disconnect as userFeedDisconnect } from '../../services/actions/user-orders-actions';
@@ -21,11 +17,10 @@ type TOrdersSettings = {
     isPersonal: boolean;
 }
 
-export default function Orders({socketUrl, numberOfOrdersSetter, isPersonal}: TOrdersSettings) {
+export default function Orders({socketUrl, numberOfOrdersSetter, isPersonal}: TOrdersSettings): JSX.Element {
 
 const userOrdersData = useSelector(state => state.userOrders.data);
 const allOrdersData = useSelector(state => state.orders.data);
-//const isDisconnect = status !== webSocketStatus.ONLINE;
 
 const dispatch = useDispatch();
 
@@ -59,9 +54,3 @@ return (
         })}
     </div>
 )}
-
-// Orders.propTypes = {
-//     socketUrl: PropTypes.string.isRequired,
-//     numberOfOrdersSetter: PropTypes.func,
-//     isPersonal: PropTypes.bool,
-// }

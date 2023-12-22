@@ -1,6 +1,6 @@
 import { ADD_BUN, ADD_INGR, REMOVE_INGR, MOVE_INGR, STOP_MOVE, CLEAR_CART } from "../actions/cart-actions";
 import { TCartActions } from '../actions/cart-actions';
-import { TIngredient } from "../../utils/typesDescription";
+import { TIngredient } from "../../utils/types-description";
 
 type TConstructIngredient = {
     ingredientData: TIngredient;

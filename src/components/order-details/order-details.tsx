@@ -1,20 +1,18 @@
 import { useDispatch, useSelector } from '../../utils/hooks';
 import calculatePrice from '../../utils/calculatePrice';
-import IngredientList from './ingredient-list/ingredientList';
+import IngredientList from './ingredient-list/ingredient-list';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import { useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { RESET_DETAILS } from '../../services/actions/order-actions';
 import { getIngredientsData } from '../../services/actions/loading-actions';
-import OrderShowStatus from './order-show-status/orderShowStatus';
+import OrderShowStatus from './order-show-status/order-show-status';
 import { getOrder } from '../../utils/api';
-import style from './orderDetails.module.css'
-import { TIngredient, TOrderDetails } from '../../utils/typesDescription';
+import style from './order-details.module.css'
+import { TIngredient, TOrderDetails } from '../../utils/types-description';
 
-//export default function OrderDetails({details}) {
-export default function OrderDetails() {
+export default function OrderDetails(): JSX.Element | null {
 
-const order = useSelector(state => state.order);
 const details = useSelector(state => state.modal.modalSettings.orderInfo);
 
 const dispatch = useDispatch();
@@ -86,7 +84,6 @@ function getDetails(id: string):TIngredient {
     }
     
     const details = allIngredients.find(product => product._id === id);
-    //return { name: details?.name, icon: details?.image_mobile, price: details?.price}
     return details!;
 }
 

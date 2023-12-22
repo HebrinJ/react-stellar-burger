@@ -1,7 +1,6 @@
 import { CurrencyIcon } from '@ya.praktikum/react-developer-burger-ui-components';
-import PropTypes from 'prop-types';
-import style from './ingredientList.module.css';
-import { TIngredient } from '../../../utils/typesDescription';
+import style from './ingredient-list.module.css';
+import { TIngredient } from '../../../utils/types-description';
 
 type TIngredientListProps = {
     product: TIngredient;
@@ -22,12 +21,3 @@ return (
         </div>
     </div>
 )}
-
-// IngredientList.propTypes = {
-//     product: PropTypes.shape({
-//         name: PropTypes.string,
-//         icon: PropTypes.string,
-//         price: PropTypes.number,
-//     }),
-//     amount: PropTypes.number,
-// }

@@ -17,7 +17,7 @@ const initialState: TAuthState = {
   }
 }
 
-export default function authReducer(state = initialState, action: TAuthActions) {    
+export default function authReducer(state = initialState, action: TAuthActions): TAuthState {    
     
     switch (action.type) {
         case REGISTER:            
