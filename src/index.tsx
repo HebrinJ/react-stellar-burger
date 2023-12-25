@@ -14,6 +14,10 @@ import { WS_USER_CONNECT, WS_USER_OPEN, WS_USER_CLOSE, WS_USER_ERROR, WS_USER_ME
 import { ThunkAction } from 'redux-thunk';
 import { ActionCreator, Dispatch } from 'redux';
 import { TAuthActions } from "./services/actions/auth-actions";
+import { TLoadActions } from "./services/actions/loading-actions";
+import { TOrderActions } from "./services/actions/order-actions";
+import { TCartActions } from "./services/actions/cart-actions";
+import { TModalActions } from "./services/actions/modal-actions";
 
 const feedMiddleware = middlewareCreator({
   wsConnect: WS_CONNECT,
@@ -49,7 +53,13 @@ store.subscribe(() => {
 
 export type RootState = ReturnType<typeof rootReducer>;
 
-export type TApplicationActions = TWebSocketOrdersActions | TWebSocketUserActions | TAuthActions;
+export type TApplicationActions = TWebSocketOrdersActions 
+| TWebSocketUserActions 
+| TAuthActions 
+| TLoadActions 
+| TOrderActions 
+| TCartActions 
+| TModalActions;
 
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, unknown, TApplicationActions>>;
 

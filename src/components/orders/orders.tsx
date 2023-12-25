@@ -49,7 +49,7 @@ function prepareDataToShow(data: TOrdersData | null): void {
 
 return (
     <div className={`${style.container} custom-scroll`}>
-        { currentOrders?.orders.map((order: TOrder) => {         
+        { currentOrders?.orders.map((order) => {         
             return <OrderCard order={order} key={order.number}/>
         })}
     </div>

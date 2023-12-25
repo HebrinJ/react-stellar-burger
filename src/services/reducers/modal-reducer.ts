@@ -28,7 +28,7 @@ export type TOrderLoadingError = {
 };
 
 type TModalSettings = {
-    orderSettings: TOrderSettings | null;
+    orderSettings: number | null;
     orderInfo: TOrderDetails | null;
     orderLoadingError: TOrderLoadingError | null;
     ingredientInfo: TIngredient | null;

@@ -3,7 +3,7 @@ import { getOrder, makeOrder } from "../../utils/api";
 import { MODAL_ORDER } from "./modal-actions";
 import { CLEAR_CART } from "./cart-actions";
 
-import { AppThunk } from "../..";
+import { AppDispatch, AppThunk } from "../..";
 import { TOrderData, TOrderDetails } from "../../utils/types-description";
 
 export const GET_ORDER_DATA: 'GET_ORDER_DATA' = 'GET_ORDER_DATA';
@@ -40,7 +40,7 @@ export interface IResetDetails {
 }
 
 export function getOrderData(orderProducts: ReadonlyArray<string>) {
-    return function(dispatch: AppThunk<Promise<unknown>>) {
+    return function(dispatch: AppDispatch) {
 
         dispatch({
             type: GET_ORDER_DATA
@@ -55,7 +55,7 @@ export function getOrderData(orderProducts: ReadonlyArray<string>) {
             });
                 dispatch({
                 type: MODAL_ORDER,
-                payload: res.order.number,
+                payload: res.order!.number,
             });
               dispatch({
                 type: CLEAR_CART,

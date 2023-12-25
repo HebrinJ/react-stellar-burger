@@ -2,7 +2,7 @@ import { Input, EmailInput, PasswordInput } from '@ya.praktikum/react-developer-
 import React, { FormEvent } from 'react'
 import { Button } from '@ya.praktikum/react-developer-burger-ui-components'
 import { Link } from 'react-router-dom'
-import { useDispatch } from 'react-redux'
+import { useDispatch } from '../../../utils/hooks'
 import style from '../registration.module.css'
 import { registrationUser } from '../../../services/actions/auth-actions'
 import { LOGIN } from '../../../utils/routes'

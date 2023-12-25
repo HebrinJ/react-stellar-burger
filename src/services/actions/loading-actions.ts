@@ -1,5 +1,5 @@
 import { getData } from "../../utils/api";
-import { AppThunk } from "../..";
+import { AppDispatch, AppThunk } from "../..";
 import { TIngredient } from "../../utils/types-description";
 
 export const LOAD_INGR_DATA: 'LOAD_INGR_DATA' = 'LOAD_INGR_DATA';
@@ -21,7 +21,7 @@ export interface ILoadIngredientFailed {
 
 export function getIngredientsData() {
 
-    return function(dispatch: AppThunk<Promise<unknown>>) {
+    return function(dispatch: AppDispatch) {
         
         dispatch({
             type: LOAD_INGR_DATA

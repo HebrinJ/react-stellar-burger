@@ -1,5 +1,6 @@
 import { WS_CLOSE, WS_CONNECT, WS_CONNECTING, WS_DISCONNECT, WS_ERROR, WS_MESSAGE, WS_OPEN  } from "../services/actions/all-orders-actions";
 import { WS_USER_CLOSE, WS_USER_CONNECT, WS_USER_CONNECTING, WS_USER_DISCONNECT, WS_USER_ERROR, WS_USER_MESSAGE, WS_USER_OPEN } from "../services/actions/user-orders-actions";
+import { TOrderStatus } from "./use-socket";
 
 export type TIngredient = {
     _id: string;
@@ -32,7 +33,7 @@ export type TOrderDetails = {
     _id: string;
     ingredients: Array<string>,
     owner: string;
-    status: '' | 'done' | 'pending' | 'created';
+    status: TOrderStatus;
     name: string;
     createdAt: string;
     updatedAt: string;
@@ -65,10 +66,10 @@ export type TGetOrder = {
     orders: ReadonlyArray<TOrderDetails>;
 }
 
-export type TMakeOrderResponse = {
-    name: string;
-    order: {
-        number: number;
-    };
-    success: boolean;
-}
+// export type TMakeOrderResponse = {
+//     name: string;
+//     order: {
+//         number: number;
+//     };
+//     success: boolean;
+// }

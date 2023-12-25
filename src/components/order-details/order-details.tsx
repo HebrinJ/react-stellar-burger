@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import calculatePrice from '../../utils/calculatePrice';
 import IngredientList from './ingredient-list/ingredient-list';
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState } from 'react';
 import { RESET_DETAILS } from '../../services/actions/order-actions';
 import { getIngredientsData } from '../../services/actions/loading-actions';
@@ -16,6 +16,7 @@ export default function OrderDetails(): JSX.Element | null {
 const details = useSelector(state => state.modal.modalSettings.orderInfo);
 
 const dispatch = useDispatch();
+const navigate = useNavigate();
 const { number } = useParams();
 
 const allIngredients = useSelector(state => state.loading.allIngredients);
@@ -70,6 +71,7 @@ useEffect(() => {
         dispatch({
             type: RESET_DETAILS,
         })
+        navigate(-1);
     })
 
 }, [])

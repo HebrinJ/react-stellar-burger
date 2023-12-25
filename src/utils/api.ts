@@ -1,4 +1,4 @@
-import { TGetOrder, TIngredient, TMakeOrderResponse } from "./types-description";
+import { TGetOrder, TIngredient, TOrderData } from "./types-description";
 
 type TTokenRefresh = {
     success: boolean;
@@ -8,7 +8,7 @@ type TTokenRefresh = {
 
 type TReturnedIngredients = {
     success: boolean,
-    data: ReadonlyArray<TIngredient>;
+    data: Array<TIngredient>;
 };
 
 type TForgotPas = {
@@ -69,7 +69,7 @@ export function getData(): Promise<TReturnedIngredients> {
     return request('ingredients');
 }
 
-export function makeOrder(ingredients: ReadonlyArray<string>): Promise<TMakeOrderResponse | undefined> {
+export function makeOrder(ingredients: ReadonlyArray<string>): Promise<TOrderData | undefined> {
     const headers = new Headers(config.main);
     headers.set('authorization', localStorage.getItem('accessToken')!);
 

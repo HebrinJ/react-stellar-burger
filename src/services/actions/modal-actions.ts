@@ -9,7 +9,7 @@ export const MODAL_CLOSE: 'MODAL_CLOSE' = 'MODAL_CLOSE';
 
 export interface IModalOrder {
     readonly type: typeof MODAL_ORDER;
-    payload: TOrderSettings;
+    payload: number;
 }
 
 export interface IModalIngredientInfo {

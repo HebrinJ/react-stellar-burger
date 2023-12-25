@@ -1,4 +1,4 @@
-import { AppThunk } from "../..";
+import { AppDispatch } from "../..";
 import { TAuthorization, TRegister, TUserData, authorization, getUserData, logout, registration, updateUserData } from "../../utils/api";
 
 export const SIGNIN: 'SIGNIN' = 'SIGNIN';
@@ -32,14 +32,14 @@ export interface IUpdateUser {
 }
 
 export function registrationUser(email: string, password: string, userName: string) {
-    return function(dispatch: AppThunk<Promise<unknown>>) {
+    return function(dispatch: AppDispatch) {
         
         registration(email, password, userName)
         .then(res => {
             if(res) {
                 dispatch({
                     type: REGISTER,
-                    userData: res,
+                    payload: res,
                 })
             }
         })
@@ -47,7 +47,7 @@ export function registrationUser(email: string, password: string, userName: stri
 }
 
 export function signinUser(email: string, password: string) {
-    return function(dispatch: AppThunk<Promise<unknown>>) {
+    return function(dispatch: AppDispatch) {
 
         authorization(email, password)
         .then(res => {
@@ -62,7 +62,7 @@ export function signinUser(email: string, password: string) {
 }
 
 export function logoutUser() {
-    return function(dispatch: AppThunk<Promise<unknown>>) {
+    return function(dispatch: AppDispatch) {
 
         logout().then(res => {
             if(res) {
@@ -75,7 +75,7 @@ export function logoutUser() {
 }
 
 export function getUser() {
-    return function(dispatch: AppThunk<Promise<unknown>>) {
+    return function(dispatch: AppDispatch) {
 
         getUserData().then(res => {
             if(res) {
@@ -89,7 +89,7 @@ export function getUser() {
 }
 
 export function updateUser(email: string, userName: string, password: string) {
-    return function(dispatch: AppThunk<Promise<unknown>>) {
+    return function(dispatch: AppDispatch) {
 
         updateUserData(email, userName, password).then(res => {
             if(res) {
