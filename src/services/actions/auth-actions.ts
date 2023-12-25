@@ -1,5 +1,6 @@
 import { AppDispatch } from "../..";
 import { TAuthorization, TRegister, TUserData, authorization, getUserData, logout, registration, updateUserData } from "../../utils/api";
+import { handleError } from "../../utils/handleError";
 
 export const SIGNIN: 'SIGNIN' = 'SIGNIN';
 export const LOGOUT: 'LOGOUT' = 'LOGOUT';
@@ -43,6 +44,9 @@ export function registrationUser(email: string, password: string, userName: stri
                 })
             }
         })
+        .catch( err => {
+            handleError(err);
+        })
     }
 }
 
@@ -58,6 +62,9 @@ export function signinUser(email: string, password: string) {
                 })
             }
         })
+        .catch( err => {
+            handleError(err);
+        })
     }
 }
 
@@ -70,6 +77,9 @@ export function logoutUser() {
                     type: LOGOUT,
                 })
             }
+        })
+        .catch( err => {
+            handleError(err);
         });
     }
 }
@@ -85,6 +95,9 @@ export function getUser() {
                 })
             }
         })
+        .catch( err => {
+            handleError(err);
+        })
     }
 }
 
@@ -98,6 +111,9 @@ export function updateUser(email: string, userName: string, password: string) {
                     payload: res,
                 })
             }
+        })
+        .catch( err => {
+            handleError(err);
         })
     }
 }

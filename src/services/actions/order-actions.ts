@@ -5,6 +5,7 @@ import { CLEAR_CART } from "./cart-actions";
 
 import { AppDispatch, AppThunk } from "../..";
 import { TOrderData, TOrderDetails } from "../../utils/types-description";
+import { handleError } from "../../utils/handleError";
 
 export const GET_ORDER_DATA: 'GET_ORDER_DATA' = 'GET_ORDER_DATA';
 export const GET_ORDER_SUCCESS: 'GET_ORDER_SUCCESS' = 'GET_ORDER_SUCCESS';
@@ -59,43 +60,16 @@ export function getOrderData(orderProducts: ReadonlyArray<string>) {
             });
               dispatch({
                 type: CLEAR_CART,
-              })
-
-            } else {
-              dispatch({
-                type: GET_ORDER_FAILED,
-              })
-            }
-          }).catch( err => {                  
-              dispatch({
-                type: GET_ORDER_FAILED,
-              })
-          })          
-          
+            })
+          }
+        }).catch( err => {                  
+          dispatch({
+            type: GET_ORDER_FAILED,
+          })
+          handleError(err);
+        })          
     }
 }
-
-// export function getOrderDetails(number: number) {
-//   return function(dispatch: AppThunk<Promise<unknown>>) {
-
-//     getOrder(number).then(res => {
-//       if(res) {        
-//         dispatch({
-//           type: GET_ORDER_DETAILS,
-//           payload: res.orders
-//         });
-
-//         dispatch({
-//           type: DETAILS_READY,
-//         })
-//       }
-//     }).catch( err => {                  
-//       dispatch({
-//         type: GET_ORDER_FAILED,
-//       })
-//     })      
-//   }
-// }
 
 export type TOrderActions = IGetOrderData |
   IGetOrderSuccess |
