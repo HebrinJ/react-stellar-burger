@@ -7,7 +7,17 @@ type TIngredientListProps = {
     amount: number;
 }
 
-export default function IngredientList({product, amount}: TIngredientListProps): JSX.Element {
+export default function IngredientList({product, amount}: TIngredientListProps): JSX.Element | null {    
+
+function validateProps() {
+    if(product === undefined || null) {
+        return false;
+    }
+}
+
+if(validateProps() === false) {
+    return null;
+}
 
 return (
     <div className={style.container}>

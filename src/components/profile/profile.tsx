@@ -1,4 +1,4 @@
-import { useMatch } from 'react-router-dom'
+import { Outlet, useMatch } from 'react-router-dom'
 import style from './profile.module.css'
 import NavBar from './nav-bar/nav-bar'
 import UserDataForm from './user-data-form/user-data-form'
@@ -14,6 +14,7 @@ export default function Profile() {
     return (
         <div className={style.container}>
             <NavBar />
+            <Outlet />            
             { isProfile ? <UserDataForm /> : <Orders socketUrl={`${USER_FEED_SOCKET_URL}${token}`} isPersonal={true} /> }
         </div>
     )

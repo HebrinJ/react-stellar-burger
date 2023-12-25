@@ -21,24 +21,32 @@ export default function App() {
   const background = location.state?.background;
 
   return ( 
-    <Routes>
+    <>
+    <Routes location={background || location}>
       <Route path={ROOT} element={<AppHeader />}>
         <Route path={ROOT} element={<ProtectedRouteElement element={<MainPage />} />} />
-        <Route path={INGREDIENT} element={ 
-            background ? (<MainPage ><ModalWindow ><ModalSetter /></ModalWindow></MainPage>) :
-            ( <IngredientPage />) 
-          } />
+        <Route path={INGREDIENT} element={<IngredientPage />} />
         <Route path={LOGIN} element={<ProtectedRouteElement element={<LoginPage />} />} />
         <Route path={REGISTRATION} element={<ProtectedRouteElement element={<RegistrationPage />} />} />
         <Route path={FORGOT_PAS} element={<ProtectedRouteElement element={<ForgotPasswordPage />} />} />
         <Route path={RESET_PAS} element={<ProtectedRouteElement element={<ResetPasswordPage />} />} />
         <Route path={PROFILE} element={<ProtectedRouteElement element={<ProfilePage />} />} />
+        <Route path={ORDER_NUMBER} element={<ProtectedRouteElement element={<OrderDetailsPage />} />} />
         <Route path={FEED} element={<ProtectedRouteElement element={<FeedPage />} />} />
-        {[ORDER_NUMBER, FEED_NUMBER].map((path, index) => (
-          <Route path={path} element={background ? (<ModalWindow><ModalSetter /></ModalWindow>) : (<OrderDetailsPage />)} key={index} />
-        ))}        
+        <Route path={FEED_NUMBER} element={<ProtectedRouteElement element={<OrderDetailsPage />} />} />
         <Route path={ORDERS} element={<ProtectedRouteElement element={<ProfilePage />} />} />
       </Route>
-    </Routes>    
+    </Routes>  
+    {background && (
+      <Routes>
+        {/* <Route path={ORDER_NUMBER} element={<ModalWindow><ModalSetter /></ModalWindow>} />
+        <Route path={FEED_NUMBER} element={<ModalWindow><ModalSetter /></ModalWindow>} />
+        <Route path={INGREDIENT} element={<ModalWindow><ModalSetter /></ModalWindow>} /> */}
+        {[ORDER_NUMBER, FEED_NUMBER, INGREDIENT].map((path, index) => (
+          <Route path={path} element={<ModalWindow><ModalSetter /></ModalWindow>} key={index} />
+        ))}        
+      </Routes>
+    )}
+    </> 
   );
 }
