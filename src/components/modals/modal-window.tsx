@@ -2,19 +2,18 @@ import ReactDOM from 'react-dom';
 import React from 'react';
 import { CloseIcon } from '@ya.praktikum/react-developer-burger-ui-components';
 import ModalOverlay from './modal-overlay';
-import { useDispatch } from '../../utils/hooks';
-import { MODAL_CLOSE } from '../../services/actions/modal-actions';
-import { UNSELECT } from '../../services/actions/select-actions';
-import { REMOVE_ROOT } from '../../services/actions/route-actions';
 import style from './modal-window.module.css';
+import { useNavigate } from 'react-router-dom';
 
 type TModalProps = {
     children?: React.ReactNode;
+    origin?: string;
+    onClose?: () => void;
 }
 
-export default function ModalWindow({ children }:TModalProps ): JSX.Element {     
+export default function ModalWindow({ children, origin, onClose }:TModalProps ): JSX.Element {     
 
-    const dispatch = useDispatch();
+    const navigate = useNavigate();
     
     React.useEffect(() => {
         const handleKey = (e: KeyboardEvent) => {
@@ -32,15 +31,13 @@ export default function ModalWindow({ children }:TModalProps ): JSX.Element {
 
     function handleCloseModal(): void {
 
-        dispatch({
-            type: MODAL_CLOSE
-        })
-        dispatch({
-            type: UNSELECT
-        })
-        dispatch({
-            type: REMOVE_ROOT
-        })
+        if(!!origin) {
+            navigate(origin);
+        }
+
+        if(!!onClose) {
+            onClose();
+        }
     }
 
     const modalContainer = document.querySelector('#modals');

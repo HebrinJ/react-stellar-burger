@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from '../../utils/hooks';
 import style from './orders.module.css';
 import { connect, disconnect } from '../../services/actions/all-orders-actions';
 import { connect as userFeedConnect, disconnect as userFeedDisconnect } from '../../services/actions/user-orders-actions';
-import { TOrder, TOrdersData } from '../../utils/use-socket';
+import { TOrdersData } from '../../utils/use-socket';
 
 type TOrdersQuantityObject = {
     all: number;

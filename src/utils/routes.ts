@@ -9,3 +9,4 @@ export const ORDERS = '/profile/orders';
 export const FEED = '/feed';
 export const FEED_NUMBER = '/feed/:number';
 export const ORDER_NUMBER = '/profile/orders/:number';
+export const ORDER_ACCEPT = '/order-accept'

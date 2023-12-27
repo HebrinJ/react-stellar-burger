@@ -1,6 +1,6 @@
 import style from './order-accept.module.css'
 import done from '../../../images/done.png'
-import { useSelector } from '../../../utils/hooks';
+import {  useSelector } from '../../../utils/hooks';
 
 export default function OrderAccept(): JSX.Element {
 

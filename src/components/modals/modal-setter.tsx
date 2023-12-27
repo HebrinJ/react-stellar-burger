@@ -1,11 +1,16 @@
-import IngredientDetailsModal from './types/ingredient-details-modal';
+
+// TODO: Компонент более не используется. Удалить после тестирования.
+//
+//
+//
+
 import OrderAccept from './types/order-accept';
 import LoadingError from './types/loading-error';
 import { useSelector } from '../../utils/hooks';
 import OrderDetails from '../order-details/order-details';
 import { TIngredient } from '../../utils/types-description';
 
-export default function ModalSetter(): JSX.Element | null {
+ export default function ModalSetter(): JSX.Element | null {
     
     const modal = useSelector(state => state.modal);
     const selectedProduct: TIngredient | undefined = tryGetSelectedProduct();
@@ -25,7 +30,7 @@ export default function ModalSetter(): JSX.Element | null {
     function getModal() {  
         
         if(selectedProduct && modal.visible) {
-            return (<IngredientDetailsModal />);
+            //return (<IngredientDetailsModal />);
         }
         
         switch (modal.type) {
@@ -34,7 +39,7 @@ export default function ModalSetter(): JSX.Element | null {
             case 'order-info':
                 return (<OrderDetails />);
             case 'info':
-                return (<IngredientDetailsModal />);
+              //  return (<IngredientDetailsModal />);
             case 'loadingError':
                 return (<LoadingError />);
             default:              
@@ -42,5 +47,5 @@ export default function ModalSetter(): JSX.Element | null {
         }
     }
     
-    return getModal();        
-}
+    return getModal();
+ }

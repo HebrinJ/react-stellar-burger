@@ -45,7 +45,7 @@ export default function orderReducer(state = initialState, action: TOrderActions
             }
         case GET_ORDER_SUCCESS:
             return {
-                ...state, orderData: action.payload, isLoading: false
+                ...state, orderData: action.payload, isLoading: false, detailsReady: true
             }
         case GET_ORDER_FAILED:
             return {

@@ -1,8 +1,7 @@
 import { CurrencyIcon, FormattedDate } from '@ya.praktikum/react-developer-burger-ui-components';
 import OrderItemsFeed from './order-items-feed/order-items-feed';
-import { useDispatch, useSelector } from '../../../utils/hooks';
+import { useSelector } from '../../../utils/hooks';
 import { Link, useLocation } from 'react-router-dom';
-import { MODAL_ORDER_INFO } from '../../../services/actions/modal-actions';
 import calculatePrice from '../../../utils/calculatePrice';
 import OrderShowStatus from '../../order-details/order-show-status/order-show-status';
 import style from './order-card.module.css';
@@ -16,21 +15,12 @@ export default function OrderCard({order}: TOrderCardProps): JSX.Element {
 
 const {number, createdAt: date, name, ingredients, status } = order;
 
-const dispatch = useDispatch();
-
 const location = useLocation();
-const allIngredients = useSelector(state => state.loading.allIngredients)
-
-function openModal() {
-    dispatch({
-        type: MODAL_ORDER_INFO,
-        payload: order,
-    })
-}  
+const allIngredients = useSelector(state => state.loading.allIngredients) 
 
 return (
     <Link to={`${location.pathname}/${number}`} className={style.link} state={{background: location}}>
-    <div className={style.container} onClick={openModal}>
+    <div className={style.container} >
         <div className={style.labelBox}>
             <p className={`text text_type_digits-default ${style.orderNumber}`}>{`#${number}`}</p>
             <FormattedDate className={`text text_type_main-default text_color_inactive ${style.date}`} date={new Date(date)} />            

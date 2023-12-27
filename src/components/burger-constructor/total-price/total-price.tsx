@@ -52,10 +52,11 @@ export default function TotalPrice(): JSX.Element {
             }            
             
             dispatch(getOrderData(getOrderIds()));
+            
         } else {
             navigate(LOGIN);
         }        
-      }
+    }
 
     return (
         <div className={style.order}>
@@ -63,7 +64,7 @@ export default function TotalPrice(): JSX.Element {
                     <p className='text text_type_digits-medium'>{price}</p>
                     <CurrencyIcon type='primary' />
                 </div>
-                <Button htmlType='button' type='primary' size='medium' onClick={handleOrder}>Оформить заказ</Button>
+                <Button htmlType='button' type='primary' size='medium' onClick={handleOrder}>Оформить заказ</Button>                
         </div>
     )
 }

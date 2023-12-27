@@ -1,21 +1,21 @@
 import style from './ingredient-details-modal.module.css';
 import { TIngredient } from '../../../utils/types-description';
-import { useEffect } from 'react';
-import { useLocation, useNavigate, useParams } from 'react-router-dom';
-import { INGREDIENT, ROOT } from '../../../utils/routes';
+import { useSelector } from '../../../utils/hooks';
 
-export default function IngredientDetailsModal(): JSX.Element { 
+type TIngredientDetailsProps = {
+    id: string;
+};
+
+export default function IngredientDetailsModal({ id }: TIngredientDetailsProps): JSX.Element { 
     
     const label: string = 'Детали ингридиента';
-    const details: TIngredient | null = JSON.parse(localStorage.getItem('selected')!);
-    const navigate = useNavigate();
+    const data = useSelector(state => state.loading.allIngredients);
+
+    const details = getDetails(id);
     
-    useEffect(() => {
-        
-        return (() => {            
-            navigate(ROOT);            
-        })
-    }, [])
+    function getDetails(id: string): TIngredient | undefined {
+        return data.find(allItemsIds => allItemsIds._id === id);         
+    }
 
     return (
         <div className={style.position}>

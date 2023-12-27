@@ -6,20 +6,6 @@ export default function StatePanel(): JSX.Element {
 
 const orders = useSelector(state => state.orders.data?.orders)
 
-// Будет убрано после полной проверки работоспособности
-
-// const ready = orders?.filter((order: TOrder, index: number) => {
-//     if(order.status === 'done' && index <= 19) {
-//         return order.number;
-//     }
-// })
-
-// const inProgress = orders?.filter((order: TOrder, index: number) => {
-//     if(order.status === 'pending' && index <= 19) {
-//         return order.number;
-//     }
-// })
-
 const ready = getOrdersByStatus(orders!, 'done');
 const inProgress = getOrdersByStatus(orders!, 'pending');
 
