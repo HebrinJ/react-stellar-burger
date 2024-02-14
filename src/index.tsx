@@ -63,11 +63,11 @@ export type TApplicationActions = TWebSocketOrdersActions
 
 export type AppThunk<TReturn = void> = ActionCreator<ThunkAction<TReturn, RootState, unknown, TApplicationActions>>;
 
-export type AppDispatch = Dispatch<TApplicationActions>; 
+export type AppDispatch = Dispatch<TApplicationActions>;
 
 ReactDOM.render(
   <React.StrictMode>
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Provider store={store}>
         <App />
       </Provider>
